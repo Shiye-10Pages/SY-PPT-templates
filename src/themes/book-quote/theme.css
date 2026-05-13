@@ -1,0 +1,16 @@
+[data-theme="book-quote"] {
+  --bg: #E8DCC0;
+  --bg-grad-from: #E8DCC0;
+  --bg-grad-to: #DCC9A8;
+  --fg: #3D2817;
+  --fg-muted: rgba(61, 40, 23, 0.6);
+  --accent: #8B4513;
+  --accent-2: #3D2817;
+  --accent-glow-1: rgba(139, 69, 19, 0);
+  --accent-glow-2: rgba(139, 69, 19, 0);
+  --display-font: "Iowan Old Style", "Source Han Serif SC", "Songti SC", Georgia, serif;
+  --body-font: "Iowan Old Style", "Source Han Serif SC", "Songti SC", Georgia, serif;
+  --display-weight: 700;
+  --display-tracking: -0.005em;
+  --slide-radius: 0px;
+}

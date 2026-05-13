@@ -1,0 +1,16 @@
+[data-theme="govt-red"] {
+  --bg: #FFFFFF;
+  --bg-grad-from: #FFFFFF;
+  --bg-grad-to: #FFFAF5;
+  --fg: #1A1A1A;
+  --fg-muted: rgba(26, 26, 26, 0.6);
+  --accent: #C8161D;
+  --accent-2: #E6B800;
+  --accent-glow-1: rgba(200, 22, 29, 0.04);
+  --accent-glow-2: rgba(230, 184, 0, 0.04);
+  --display-font: "STSong", "Source Han Serif SC", "Songti SC", "SimSun", serif;
+  --body-font: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --display-weight: 700;
+  --display-tracking: 0;
+  --slide-radius: 0px;
+}

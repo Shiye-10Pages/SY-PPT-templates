@@ -1,0 +1,16 @@
+[data-theme="xhs-pastel"] {
+  --bg: #FFF5F7;
+  --bg-grad-from: #FFF5F7;
+  --bg-grad-to: #FFE6EC;
+  --fg: #2A1A22;
+  --fg-muted: rgba(42, 26, 34, 0.55);
+  --accent: #FF4D6D;
+  --accent-2: #A06CD5;
+  --accent-glow-1: rgba(255, 77, 109, 0.10);
+  --accent-glow-2: rgba(160, 108, 213, 0.08);
+  --display-font: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --body-font: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --display-weight: 800;
+  --display-tracking: -0.02em;
+  --slide-radius: 0px;
+}

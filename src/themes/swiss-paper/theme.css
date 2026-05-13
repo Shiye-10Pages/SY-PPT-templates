@@ -1,0 +1,16 @@
+[data-theme="swiss-paper"] {
+  --bg: #f5f4ef;
+  --bg-grad-from: #f5f4ef;
+  --bg-grad-to: #f5f4ef;
+  --fg: #111111;
+  --fg-muted: rgba(17, 17, 17, 0.55);
+  --accent: #d72638;
+  --accent-2: #d72638;
+  --accent-glow-1: rgba(215, 38, 56, 0);
+  --accent-glow-2: rgba(215, 38, 56, 0);
+  --display-font: "Iowan Old Style", "Source Han Serif SC", "Songti SC", Georgia, serif;
+  --body-font: "Inter", "PingFang SC", "Hiragino Sans GB", system-ui, sans-serif;
+  --display-weight: 700;
+  --display-tracking: -0.02em;
+  --slide-radius: 0px;
+}

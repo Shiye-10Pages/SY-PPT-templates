@@ -1,0 +1,16 @@
+[data-theme="party-class"] {
+  --bg: #FFF8F2;
+  --bg-grad-from: #FFF8F2;
+  --bg-grad-to: #FFFAF0;
+  --fg: #2A0E0E;
+  --fg-muted: rgba(42, 14, 14, 0.6);
+  --accent: #9B0E0E;
+  --accent-2: #FFD700;
+  --accent-glow-1: rgba(155, 14, 14, 0.06);
+  --accent-glow-2: rgba(255, 215, 0, 0.06);
+  --display-font: "STSong", "Source Han Serif SC", "Songti SC", "SimSun", serif;
+  --body-font: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --display-weight: 700;
+  --display-tracking: 0;
+  --slide-radius: 0px;
+}

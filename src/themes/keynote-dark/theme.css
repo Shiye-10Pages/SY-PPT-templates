@@ -1,0 +1,16 @@
+[data-theme="keynote-dark"] {
+  --bg: #0a0a0a;
+  --bg-grad-from: #0a0a0a;
+  --bg-grad-to: #1a1a2e;
+  --fg: #fafafa;
+  --fg-muted: rgba(250, 250, 250, 0.6);
+  --accent: #6366f1;
+  --accent-2: #818cf8;
+  --accent-glow-1: rgba(99, 102, 241, 0.30);
+  --accent-glow-2: rgba(99, 102, 241, 0.22);
+  --display-font: "Inter", "PingFang SC", "Hiragino Sans GB", system-ui, sans-serif;
+  --body-font: "Inter", "PingFang SC", "Hiragino Sans GB", system-ui, sans-serif;
+  --display-weight: 800;
+  --display-tracking: -0.04em;
+  --slide-radius: 0px;
+}

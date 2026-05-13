@@ -1,0 +1,16 @@
+[data-theme="industry-graphite"] {
+  --bg: #F5F5F5;
+  --bg-grad-from: #F5F5F5;
+  --bg-grad-to: #E8E8E8;
+  --fg: #1A1A1A;
+  --fg-muted: rgba(26, 26, 26, 0.6);
+  --accent: #FF6B00;
+  --accent-2: #1A1A1A;
+  --accent-glow-1: rgba(255, 107, 0, 0.04);
+  --accent-glow-2: rgba(26, 26, 26, 0.03);
+  --display-font: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --body-font: "JetBrains Mono", "SF Mono", "PingFang SC", monospace;
+  --display-weight: 800;
+  --display-tracking: -0.01em;
+  --slide-radius: 0px;
+}

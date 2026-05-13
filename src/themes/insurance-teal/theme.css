@@ -1,0 +1,16 @@
+[data-theme="insurance-teal"] {
+  --bg: #FAFBFC;
+  --bg-grad-from: #FAFBFC;
+  --bg-grad-to: #EEF4F5;
+  --fg: #0E2A33;
+  --fg-muted: rgba(14, 42, 51, 0.6);
+  --accent: #005670;
+  --accent-2: #C9A66B;
+  --accent-glow-1: rgba(0, 86, 112, 0.06);
+  --accent-glow-2: rgba(201, 166, 107, 0.06);
+  --display-font: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --body-font: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --display-weight: 700;
+  --display-tracking: -0.01em;
+  --slide-radius: 0px;
+}

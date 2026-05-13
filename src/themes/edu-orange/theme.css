@@ -1,0 +1,16 @@
+[data-theme="edu-orange"] {
+  --bg: #FFF9F2;
+  --bg-grad-from: #FFF9F2;
+  --bg-grad-to: #FFF9F2;
+  --fg: #1A2540;
+  --fg-muted: rgba(26, 37, 64, 0.6);
+  --accent: #F2762D;
+  --accent-2: #1C4DFF;
+  --accent-glow-1: rgba(242, 118, 45, 0.10);
+  --accent-glow-2: rgba(28, 77, 255, 0.05);
+  --display-font: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --body-font: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --display-weight: 800;
+  --display-tracking: -0.02em;
+  --slide-radius: 0px;
+}

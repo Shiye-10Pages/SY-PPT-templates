@@ -1,0 +1,16 @@
+[data-theme="data-dashboard"] {
+  --bg: #0F1419;
+  --bg-grad-from: #0F1419;
+  --bg-grad-to: #14202B;
+  --fg: #E6EDF3;
+  --fg-muted: rgba(230, 237, 243, 0.55);
+  --accent: #00D4FF;
+  --accent-2: #00FF88;
+  --accent-glow-1: rgba(0, 212, 255, 0.10);
+  --accent-glow-2: rgba(0, 255, 136, 0.06);
+  --display-font: "Inter", "PingFang SC", system-ui, sans-serif;
+  --body-font: "JetBrains Mono", "SF Mono", "Inter", monospace;
+  --display-weight: 800;
+  --display-tracking: -0.02em;
+  --slide-radius: 0px;
+}

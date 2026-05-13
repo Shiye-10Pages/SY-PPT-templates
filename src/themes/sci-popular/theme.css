@@ -1,0 +1,16 @@
+[data-theme="sci-popular"] {
+  --bg: #F8F6F1;
+  --bg-grad-from: #F8F6F1;
+  --bg-grad-to: #F8F6F1;
+  --fg: #1B1B1B;
+  --fg-muted: rgba(27, 27, 27, 0.55);
+  --accent: #0066CC;
+  --accent-2: #1B1B1B;
+  --accent-glow-1: rgba(0, 102, 204, 0);
+  --accent-glow-2: rgba(0, 102, 204, 0);
+  --display-font: "Iowan Old Style", "Source Han Serif SC", "Songti SC", Georgia, serif;
+  --body-font: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --display-weight: 700;
+  --display-tracking: -0.01em;
+  --slide-radius: 0px;
+}

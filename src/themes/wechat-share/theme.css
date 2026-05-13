@@ -1,0 +1,16 @@
+[data-theme="wechat-share"] {
+  --bg: #FFFFFF;
+  --bg-grad-from: #FFFFFF;
+  --bg-grad-to: #FAFAFA;
+  --fg: #1A1A1A;
+  --fg-muted: rgba(26, 26, 26, 0.55);
+  --accent: #07C160;
+  --accent-2: #1A1A1A;
+  --accent-glow-1: rgba(7, 193, 96, 0);
+  --accent-glow-2: rgba(7, 193, 96, 0);
+  --display-font: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --body-font: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --display-weight: 600;
+  --display-tracking: -0.01em;
+  --slide-radius: 0px;
+}

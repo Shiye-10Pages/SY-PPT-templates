@@ -1,0 +1,16 @@
+[data-theme="restaurant-promo"] {
+  --bg: #FFF8E7;
+  --bg-grad-from: #FFF8E7;
+  --bg-grad-to: #FFEDC2;
+  --fg: #2A1810;
+  --fg-muted: rgba(42, 24, 16, 0.55);
+  --accent: #E63946;
+  --accent-2: #FFB400;
+  --accent-glow-1: rgba(255, 180, 0, 0.18);
+  --accent-glow-2: rgba(230, 57, 70, 0.10);
+  --display-font: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --body-font: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --display-weight: 900;
+  --display-tracking: -0.02em;
+  --slide-radius: 0px;
+}

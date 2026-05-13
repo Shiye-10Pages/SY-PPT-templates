@@ -1,0 +1,16 @@
+[data-theme="solo-founder"] {
+  --bg: #0A0A0A;
+  --bg-grad-from: #0A0A0A;
+  --bg-grad-to: #0A0A0A;
+  --fg: #FFFFFF;
+  --fg-muted: rgba(255, 255, 255, 0.6);
+  --accent: #FFFFFF;
+  --accent-2: #FFFFFF;
+  --accent-glow-1: rgba(255, 255, 255, 0.03);
+  --accent-glow-2: rgba(255, 255, 255, 0.02);
+  --display-font: "Inter", "PingFang SC", system-ui, sans-serif;
+  --body-font: "Inter", "PingFang SC", system-ui, sans-serif;
+  --display-weight: 900;
+  --display-tracking: -0.04em;
+  --slide-radius: 0px;
+}

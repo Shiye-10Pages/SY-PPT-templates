@@ -1,4 +1,47 @@
+import type { ReactNode } from 'react'
 import type { SlideAST } from '../parser/types'
+import { getIconSvg } from '../assets/icons'
+
+const INLINE_ICON_RE = /:([a-z0-9-]+):/g
+
+/**
+ * Render a plain string into ReactNode where `:icon-name:` tokens become inline
+ * SVG glyphs. Unknown names are kept verbatim. Used by text-heavy slide types
+ * (cover subtitle, list items, section body, quote, etc).
+ */
+function renderInlineIcons(text: string): ReactNode {
+  if (!text || !text.includes(':')) return text
+  const parts: ReactNode[] = []
+  let last = 0
+  let key = 0
+  for (const m of text.matchAll(INLINE_ICON_RE)) {
+    const svg = getIconSvg(m[1])
+    if (!svg) continue
+    if (m.index! > last) parts.push(text.slice(last, m.index))
+    parts.push(
+      <span
+        key={`ic-${key++}`}
+        className="inline-flex items-center"
+        style={{
+          width: '1em',
+          height: '1em',
+          marginInline: '0.12em',
+          color: 'var(--accent)',
+          verticalAlign: '-0.15em',
+        }}
+        dangerouslySetInnerHTML={{
+          __html: svg
+            .replace('width="24"', 'width="100%"')
+            .replace('height="24"', 'height="100%"'),
+        }}
+      />,
+    )
+    last = m.index! + m[0].length
+  }
+  if (last === 0) return text
+  if (last < text.length) parts.push(text.slice(last))
+  return parts
+}
 
 type Props = {
   slide: SlideAST
@@ -46,36 +89,57 @@ function SlideBody({ slide }: { slide: SlideAST }) {
   switch (slide.type) {
     case 'cover':
       return (
-        <div className="flex h-full flex-col justify-center">
-          <div
-            className="mb-6 text-sm uppercase tracking-[0.3em]"
-            style={{ color: 'var(--fg-muted)' }}
-          >
-            Cover
-          </div>
-          <h1
-            className="leading-[0.95]"
-            style={{
-              fontFamily: 'var(--display-font)',
-              fontSize: 'clamp(48px, 13cqi, 140px)',
-              fontWeight: 'var(--display-weight)',
-              letterSpacing: 'var(--display-tracking)',
-            }}
-          >
-            {slide.title}
-          </h1>
-          {slide.subtitle && (
-            <p
-              className="mt-8 max-w-[820px] text-balance"
+        <div className="relative flex h-full flex-col justify-center">
+          {slide.image && (
+            <>
+              <img
+                src={slide.image}
+                alt=""
+                aria-hidden
+                className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover opacity-50"
+                style={{ filter: 'saturate(0.95)' }}
+              />
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 z-0"
+                style={{
+                  background:
+                    'linear-gradient(180deg, color-mix(in srgb, var(--bg) 35%, transparent) 0%, color-mix(in srgb, var(--bg) 75%, transparent) 100%)',
+                }}
+              />
+            </>
+          )}
+          <div className="relative z-10">
+            <div
+              className="mb-6 text-sm uppercase tracking-[0.3em]"
+              style={{ color: 'var(--fg-muted)' }}
+            >
+              Cover
+            </div>
+            <h1
+              className="leading-[0.95]"
               style={{
-                fontSize: 'clamp(18px, 2.5cqi, 28px)',
-                color: 'var(--fg-muted)',
-                lineHeight: 1.5,
+                fontFamily: 'var(--display-font)',
+                fontSize: 'clamp(48px, 13cqi, 140px)',
+                fontWeight: 'var(--display-weight)',
+                letterSpacing: 'var(--display-tracking)',
               }}
             >
-              {slide.subtitle}
-            </p>
-          )}
+              {slide.title}
+            </h1>
+            {slide.subtitle && (
+              <p
+                className="mt-8 max-w-[820px] text-balance"
+                style={{
+                  fontSize: 'clamp(18px, 2.5cqi, 28px)',
+                  color: 'var(--fg-muted)',
+                  lineHeight: 1.5,
+                }}
+              >
+                {renderInlineIcons(slide.subtitle)}
+              </p>
+            )}
+          </div>
         </div>
       )
 
@@ -227,7 +291,7 @@ function SlideBody({ slide }: { slide: SlideAST }) {
                 >
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <span className="text-balance">{item}</span>
+                <span className="text-balance">{renderInlineIcons(item)}</span>
               </li>
             ))}
           </ul>
@@ -236,6 +300,44 @@ function SlideBody({ slide }: { slide: SlideAST }) {
     }
 
     case 'section':
+      if (slide.image) {
+        return (
+          <div className="grid h-full w-full grid-cols-[minmax(0,1fr)_minmax(0,1fr)] items-center gap-10">
+            <img
+              src={slide.image}
+              alt=""
+              className="h-full max-h-[80%] w-full self-center rounded-2xl object-cover"
+              style={{ boxShadow: '0 24px 64px -32px rgba(0,0,0,0.4)' }}
+            />
+            <div className="flex flex-col justify-center">
+              {slide.heading && (
+                <h3
+                  className="mb-6 text-balance"
+                  style={{
+                    fontFamily: 'var(--display-font)',
+                    fontSize: 'clamp(28px, 5cqi, 56px)',
+                    fontWeight: 'var(--display-weight)',
+                    letterSpacing: 'var(--display-tracking)',
+                    lineHeight: 1.1,
+                  }}
+                >
+                  {slide.heading}
+                </h3>
+              )}
+              <div
+                className="whitespace-pre-wrap text-balance"
+                style={{
+                  fontSize: 'clamp(16px, 2.2cqi, 24px)',
+                  color: 'var(--fg-muted)',
+                  lineHeight: 1.55,
+                }}
+              >
+                {slide.body}
+              </div>
+            </div>
+          </div>
+        )
+      }
       return (
         <div className="flex h-full flex-col justify-center">
           {slide.heading && (
@@ -262,6 +364,101 @@ function SlideBody({ slide }: { slide: SlideAST }) {
           >
             {slide.body}
           </div>
+        </div>
+      )
+
+    case 'iconRow': {
+      const count = Math.max(slide.items.length, 1)
+      const isWide = count >= 4
+      return (
+        <div className="flex h-full flex-col justify-center">
+          {slide.heading && (
+            <h3
+              className="mb-12 text-balance"
+              style={{
+                fontFamily: 'var(--display-font)',
+                fontSize: 'clamp(32px, 6cqi, 60px)',
+                fontWeight: 'var(--display-weight)',
+                letterSpacing: 'var(--display-tracking)',
+                lineHeight: 1.1,
+              }}
+            >
+              {slide.heading}
+            </h3>
+          )}
+          <ul
+            className="grid gap-8"
+            style={{
+              gridTemplateColumns: `repeat(${Math.min(count, isWide ? 4 : 3)}, minmax(0, 1fr))`,
+            }}
+          >
+            {slide.items.map((item, i) => {
+              const svg = getIconSvg(item.icon)
+              return (
+                <li key={i} className="flex flex-col items-center gap-4 text-center">
+                  <span
+                    className="flex items-center justify-center rounded-2xl"
+                    style={{
+                      width: 'clamp(64px, 10cqi, 120px)',
+                      height: 'clamp(64px, 10cqi, 120px)',
+                      background: 'color-mix(in srgb, var(--accent) 10%, transparent)',
+                      border: '1px solid color-mix(in srgb, var(--accent) 25%, transparent)',
+                      color: 'var(--accent)',
+                    }}
+                  >
+                    {svg ? (
+                      <span
+                        className="block"
+                        style={{ width: '55%', height: '55%' }}
+                        dangerouslySetInnerHTML={{
+                          __html: svg
+                            .replace('width="24"', 'width="100%"')
+                            .replace('height="24"', 'height="100%"'),
+                        }}
+                      />
+                    ) : (
+                      <span style={{ fontSize: '1.5em' }}>•</span>
+                    )}
+                  </span>
+                  <span
+                    className="text-balance"
+                    style={{
+                      fontSize: 'clamp(14px, 2.2cqi, 24px)',
+                      lineHeight: 1.4,
+                      fontWeight: 600,
+                    }}
+                  >
+                    {renderInlineIcons(item.label)}
+                  </span>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      )
+    }
+
+    case 'image':
+      return (
+        <div className="flex h-full w-full flex-col items-center justify-center gap-6">
+          <img
+            src={slide.src}
+            alt={slide.alt ?? ''}
+            className="max-h-[78%] max-w-full rounded-2xl object-contain"
+            style={{ boxShadow: '0 24px 64px -32px rgba(0,0,0,0.45)' }}
+          />
+          {slide.caption && (
+            <div
+              className="max-w-[820px] text-balance text-center"
+              style={{
+                fontSize: 'clamp(14px, 2cqi, 22px)',
+                color: 'var(--fg-muted)',
+                letterSpacing: '0.05em',
+              }}
+            >
+              {slide.caption}
+            </div>
+          )}
         </div>
       )
 
@@ -470,7 +667,27 @@ function SlideBody({ slide }: { slide: SlideAST }) {
 
     case 'posterHero':
       return (
-        <div className="flex h-full flex-col justify-center">
+        <div className="relative flex h-full flex-col justify-center">
+          {slide.image && (
+            <>
+              <img
+                src={slide.image}
+                alt=""
+                aria-hidden
+                className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
+                style={{ filter: 'saturate(1.05)' }}
+              />
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 z-0"
+                style={{
+                  background:
+                    'linear-gradient(180deg, color-mix(in srgb, var(--bg) 10%, transparent) 0%, color-mix(in srgb, var(--bg) 60%, transparent) 70%, color-mix(in srgb, var(--bg) 80%, transparent) 100%)',
+                }}
+              />
+            </>
+          )}
+          <div className="relative z-10 flex flex-col">
           {slide.countdown && (
             <div
               className="mb-6 inline-block self-start rounded-full px-5 py-1.5"
@@ -530,6 +747,7 @@ function SlideBody({ slide }: { slide: SlideAST }) {
               {slide.cta}
             </div>
           )}
+          </div>
         </div>
       )
   }

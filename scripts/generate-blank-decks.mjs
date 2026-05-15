@@ -1,0 +1,351 @@
+/**
+ * Generate src/themes/<id>/blank-deck.html for every theme.
+ *
+ * Each blank-deck.html is a self-contained presentation-mode HTML file with:
+ *  - The theme's CSS variables inlined
+ *  - The render harness CSS (mirrors AGENTS.md)
+ *  - The FX layer CSS (src/styles/fx.css)
+ *  - The full presentation-mode JS runtime (keyboard, auto-scale, touch, chrome)
+ *  - 6 empty slide skeletons with DSL-type comments
+ *
+ * Agents clone this file, fill the skeleton slides with content, and save.
+ * They do NOT need to reconstruct the CSS or JS from scratch.
+ *
+ * Run: pnpm blank-decks
+ */
+
+import fs from 'node:fs'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const repoRoot = path.resolve(__dirname, '..')
+
+/* ---------- load shared assets ---------- */
+const fxCss = fs.readFileSync(path.join(repoRoot, 'src/styles/fx.css'), 'utf8')
+  // Strip the leading block comment
+  .replace(/^\/\*[\s\S]*?\*\/\s*/m, '')
+
+/* Aspect → design dimensions */
+const ASPECT_DIMS = {
+  '16:9':   [1920, 1080],
+  '4:5':    [1080, 1350],
+  '9:16':   [1080, 1920],
+  '2.35:1': [1880, 800],
+  '3:4':    [1080, 1440],
+}
+
+const HARNESS_CSS = `
+  *,*::before,*::after{box-sizing:border-box;}
+  html,body{margin:0;padding:0;height:100%;overflow:hidden;background:var(--bg,#0a0a0a);}
+  body{font-family:var(--body-font,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif);color:var(--fg,#fafafa);-webkit-font-smoothing:antialiased;}
+
+  /* Stacked presentation shell */
+  [data-deck-root]{position:fixed;inset:0;overflow:hidden;}
+  [data-deck-root]>section[data-slide]{
+    position:absolute;inset:0;
+    opacity:0;pointer-events:none;
+    transition:opacity 0.5s cubic-bezier(0.4,0,0.2,1);
+    background:linear-gradient(135deg,var(--bg-grad-from,var(--bg)) 0%,var(--bg-grad-to,var(--bg)) 100%);
+    color:var(--fg);
+    padding:var(--slide-padding,8vw);
+    display:flex;align-items:center;justify-content:center;
+    position:absolute;inset:0;overflow:hidden;
+  }
+  [data-deck-root]>section[data-slide].deck-active{opacity:1;pointer-events:all;}
+  section[data-slide]::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(60% 50% at 80% 20%, var(--accent-glow-1,transparent) 0%, transparent 60%),
+      radial-gradient(50% 40% at 10% 90%, var(--accent-glow-2,transparent) 0%, transparent 55%);
+  }
+
+  /* Slide inner: container for content (container queries for cqi font-sizes) */
+  .slide-inner{
+    container-type:inline-size;
+    position:relative;z-index:1;
+    display:flex;flex-direction:column;
+    width:100%;height:100%;max-width:1200px;margin:0 auto;
+  }
+  .slide-body{position:relative;z-index:1;width:100%;height:100%;display:flex;flex-direction:column;}
+  .slide-footer{position:absolute;bottom:1.5rem;right:2rem;z-index:1;font-size:0.75rem;letter-spacing:0.25em;text-transform:uppercase;font-variant-numeric:tabular-nums;color:var(--fg-muted);}
+
+  /* Element-level animation — triggered by parent .slide-visible */
+  [data-slide-anim] [data-anim]{opacity:0;transition:opacity 650ms cubic-bezier(0.16,1,0.3,1),transform 650ms cubic-bezier(0.16,1,0.3,1);}
+  [data-slide-anim] [data-anim="fade-up"]{transform:translateY(24px);}
+  [data-slide-anim] [data-anim="fade-in"]{transform:none;}
+  [data-slide-anim].slide-visible [data-anim]{opacity:1;transform:none;}
+  [data-delay="0"]{transition-delay:0ms;}[data-delay="1"]{transition-delay:120ms;}
+  [data-delay="2"]{transition-delay:240ms;}[data-delay="3"]{transition-delay:360ms;}
+  [data-delay="4"]{transition-delay:480ms;}[data-delay="5"]{transition-delay:600ms;}[data-delay="6"]{transition-delay:720ms;}
+
+  /* Slide-level entry (legacy, kept for compat) */
+  [data-slide-anim]{opacity:0;transform:translateY(28px);transition:opacity 700ms ease,transform 700ms cubic-bezier(0.2,0.7,0.1,1);}
+  [data-slide-anim].slide-visible{opacity:1;transform:none;}
+
+  /* --- slide type helpers --- */
+  .display{font-family:var(--display-font);font-weight:var(--display-weight,800);letter-spacing:var(--display-tracking,-0.02em);}
+  .eyebrow{font-size:0.875rem;text-transform:uppercase;letter-spacing:0.3em;color:var(--fg-muted);}
+
+  /* Chrome */
+  .deck-chrome{position:fixed;bottom:1.5rem;right:2rem;z-index:9999;display:flex;align-items:center;gap:0.75rem;font-family:monospace;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.35);transition:opacity 0.5s ease;}
+  .deck-chrome.idle{opacity:0;}
+  .deck-chrome button{background:none;border:1px solid currentColor;color:inherit;padding:0.2rem 0.5rem;border-radius:4px;cursor:pointer;font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;}
+
+  @media print{
+    html,body{height:auto;overflow:visible;}
+    [data-deck-root]{position:static;overflow:visible;}
+    [data-deck-root]>section[data-slide]{position:relative;opacity:1!important;pointer-events:all;break-after:page;overflow:hidden;}
+    .deck-chrome{display:none!important;}
+  }
+`
+
+function presentationScript(totalSlides, aspect) {
+  const [W, H] = ASPECT_DIMS[aspect] ?? [1920, 1080]
+  return `(function(){
+var TOTAL=${totalSlides},current=0;
+var FX=['mouse-glow','hover-lift','bg-breathe','accent-rule','bignum-pop','progress'];
+var root=document.querySelector('[data-deck-root]');if(!root)return;
+var slides=Array.from(root.querySelectorAll('section[data-slide]'));
+var cs=getComputedStyle(root);
+FX.forEach(function(n){if((cs.getPropertyValue('--fx-'+n)||'').trim()==='1')root.setAttribute('data-fx-'+n,'1');});
+var W=${W},H=${H};
+function scale(){var s=Math.min(innerWidth/W,innerHeight/H);slides.forEach(function(sl){sl.style.width=W+'px';sl.style.height=H+'px';sl.style.transform='scale('+s+') translate('+Math.round((innerWidth-W*s)/2/s)+'px,'+Math.round((innerHeight-H*s)/2/s)+'px)';sl.style.transformOrigin='top left';});}
+scale();window.addEventListener('resize',scale,{passive:true});
+function goTo(n){if(n<0)n=0;if(n>=TOTAL)n=TOTAL-1;if(n===current)return;slides[current].classList.remove('deck-active');slides[n].classList.add('deck-active');slides[n].querySelectorAll('[data-slide-anim]').forEach(function(el){el.classList.add('slide-visible');});current=n;updateChrome();resetIdle();}
+function next(){goTo(current+1);}function prev(){goTo(current-1);}
+document.addEventListener('keydown',function(e){if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName))return;if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' '||e.key==='PageDown'){e.preventDefault();next();}else if(e.key==='ArrowLeft'||e.key==='ArrowUp'||e.key==='PageUp'){e.preventDefault();prev();}else if(e.key==='Home'){e.preventDefault();goTo(0);}else if(e.key==='End'){e.preventDefault();goTo(TOTAL-1);}else if(e.key==='r'||e.key==='R'){e.preventDefault();goTo(0);}else if(/^[1-9]$/.test(e.key)){e.preventDefault();goTo(parseInt(e.key)-1);}else if(e.key==='0'){e.preventDefault();goTo(9);}});
+if(!matchMedia('(hover:hover)').matches){document.addEventListener('click',function(e){var x=e.clientX/innerWidth;if(x<0.33)prev();else if(x>0.67)next();});}
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches){var raf=0,px=0,py=0;root.addEventListener('mousemove',function(e){var r=root.getBoundingClientRect();px=(e.clientX-r.left)/r.width;py=(e.clientY-r.top)/r.height;if(!raf){raf=requestAnimationFrame(function(){root.style.setProperty('--mx',Math.max(0,Math.min(1,px)));root.style.setProperty('--my',Math.max(0,Math.min(1,py)));raf=0;});}},{passive:true});}
+var chrome=document.createElement('div');chrome.className='deck-chrome';var counter=document.createElement('span');var bp=document.createElement('button');bp.textContent='←';bp.onclick=prev;var bn=document.createElement('button');bn.textContent='→';bn.onclick=next;chrome.append(bp,counter,bn);document.body.appendChild(chrome);
+function updateChrome(){counter.textContent=String(current+1).padStart(2,'0')+' / '+String(TOTAL).padStart(2,'0');}updateChrome();
+var idleTimer;function resetIdle(){chrome.classList.remove('idle');clearTimeout(idleTimer);idleTimer=setTimeout(function(){chrome.classList.add('idle');},1800);}
+document.addEventListener('mousemove',resetIdle,{passive:true});document.addEventListener('keydown',resetIdle,{passive:true});resetIdle();
+})();`
+}
+
+const SLIDE_SKELETONS = `
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 1 — COVER (cover type)
+       Replace: DECK TITLE, SUBTITLE, NN, TT
+       @ratio ASPECT can go above this comment to set the aspect ratio.
+  ═══════════════════════════════════════════════════ -->
+  <section data-slide class="deck-active">
+    <div class="slide-inner" data-slide-anim>
+      <div class="slide-body" style="justify-content:center;align-items:flex-start;">
+        <div class="eyebrow" data-anim="fade-in" data-delay="0">Cover</div>
+        <h1 class="display" data-anim="fade-up" data-delay="1"
+            style="font-size:clamp(48px,13cqi,140px);line-height:0.95;margin:1.5rem 0 0;">
+          DECK TITLE
+        </h1>
+        <p data-anim="fade-up" data-delay="2"
+           style="margin-top:2rem;font-size:clamp(18px,2.5cqi,28px);color:var(--fg-muted);line-height:1.5;max-width:820px;">
+          SUBTITLE
+        </p>
+      </div>
+      <div class="slide-footer">01 / TT</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 2 — CHAPTER (@chapter type)
+       Replace: CHAPTER HEADING, optional SUB-TEXT
+  ═══════════════════════════════════════════════════ -->
+  <section data-slide>
+    <div class="slide-inner" data-slide-anim>
+      <div class="slide-body" style="justify-content:center;align-items:center;text-align:center;background:color-mix(in srgb,var(--accent) 88%,var(--fg));margin:-8vw;padding:8vw;color:var(--bg);">
+        <h2 class="display" data-anim="fade-up" data-delay="0"
+            style="font-size:clamp(40px,10cqi,110px);line-height:1.05;">
+          CHAPTER HEADING
+        </h2>
+        <p data-anim="fade-up" data-delay="1"
+           style="margin-top:2rem;font-size:clamp(16px,2.2cqi,26px);opacity:0.75;line-height:1.45;max-width:720px;">
+          Optional sub-text for this chapter section
+        </p>
+      </div>
+      <div class="slide-footer" style="color:color-mix(in srgb,var(--bg) 60%,transparent)">02 / TT</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 3 — LIST (@list type)
+       Replace: HEADING, items.  Add/remove <li> as needed.
+  ═══════════════════════════════════════════════════ -->
+  <section data-slide>
+    <div class="slide-inner" data-slide-anim>
+      <div class="slide-body" style="justify-content:center;">
+        <h3 class="display" data-anim="fade-up" data-delay="0"
+            style="font-size:clamp(36px,7cqi,72px);line-height:1.1;margin:0 0 3rem;">
+          HEADING
+        </h3>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:24px;">
+          <li data-anim="fade-up" data-delay="1" style="display:flex;align-items:baseline;gap:1.5rem;font-size:clamp(20px,3cqi,36px);line-height:1.4;">
+            <span style="color:var(--accent);font-weight:700;font-size:0.75em;flex-shrink:0;font-variant-numeric:tabular-nums;font-family:var(--display-font);">01</span>
+            <span>List item one</span>
+          </li>
+          <li data-anim="fade-up" data-delay="2" style="display:flex;align-items:baseline;gap:1.5rem;font-size:clamp(20px,3cqi,36px);line-height:1.4;">
+            <span style="color:var(--accent);font-weight:700;font-size:0.75em;flex-shrink:0;font-variant-numeric:tabular-nums;font-family:var(--display-font);">02</span>
+            <span>List item two</span>
+          </li>
+          <li data-anim="fade-up" data-delay="3" style="display:flex;align-items:baseline;gap:1.5rem;font-size:clamp(20px,3cqi,36px);line-height:1.4;">
+            <span style="color:var(--accent);font-weight:700;font-size:0.75em;flex-shrink:0;font-variant-numeric:tabular-nums;font-family:var(--display-font);">03</span>
+            <span>List item three</span>
+          </li>
+        </ul>
+      </div>
+      <div class="slide-footer">03 / TT</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 4 — STATS (@stats type)
+       Replace: HEADING, stat values/labels/notes.
+       Grid auto-fits up to 4 columns.
+  ═══════════════════════════════════════════════════ -->
+  <section data-slide>
+    <div class="slide-inner" data-slide-anim>
+      <div class="slide-body" style="justify-content:center;">
+        <h3 class="display" data-anim="fade-up" data-delay="0"
+            style="font-size:clamp(28px,5cqi,54px);line-height:1.1;margin:0 0 2.5rem;">
+          HEADING
+        </h3>
+        <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.5rem;">
+          <div data-anim="fade-up" data-delay="1" style="display:flex;flex-direction:column;gap:0.75rem;border-radius:1rem;padding:1.5rem;background:color-mix(in srgb,var(--fg) 5%,transparent);border:1px solid color-mix(in srgb,var(--fg) 10%,transparent);">
+            <div style="font-family:var(--display-font);font-size:clamp(32px,6cqi,64px);font-weight:900;letter-spacing:-0.03em;color:var(--accent);line-height:1;">340%</div>
+            <div style="font-size:clamp(13px,1.8cqi,20px);font-weight:600;line-height:1.3;">Label One</div>
+            <div style="font-size:clamp(11px,1.4cqi,16px);color:var(--fg-muted);line-height:1.4;">Optional note</div>
+            <div style="height:3px;border-radius:999px;background:var(--accent);margin-top:auto;"></div>
+          </div>
+          <div data-anim="fade-up" data-delay="2" style="display:flex;flex-direction:column;gap:0.75rem;border-radius:1rem;padding:1.5rem;background:color-mix(in srgb,var(--fg) 5%,transparent);border:1px solid color-mix(in srgb,var(--fg) 10%,transparent);">
+            <div style="font-family:var(--display-font);font-size:clamp(32px,6cqi,64px);font-weight:900;letter-spacing:-0.03em;color:var(--accent-2,var(--accent));line-height:1;">12.4M</div>
+            <div style="font-size:clamp(13px,1.8cqi,20px);font-weight:600;line-height:1.3;">Label Two</div>
+            <div style="font-size:clamp(11px,1.4cqi,16px);color:var(--fg-muted);line-height:1.4;">Optional note</div>
+            <div style="height:3px;border-radius:999px;background:var(--accent-2,var(--accent));margin-top:auto;"></div>
+          </div>
+          <div data-anim="fade-up" data-delay="3" style="display:flex;flex-direction:column;gap:0.75rem;border-radius:1rem;padding:1.5rem;background:color-mix(in srgb,var(--fg) 5%,transparent);border:1px solid color-mix(in srgb,var(--fg) 10%,transparent);">
+            <div style="font-family:var(--display-font);font-size:clamp(32px,6cqi,64px);font-weight:900;letter-spacing:-0.03em;color:var(--accent);line-height:1;">98%</div>
+            <div style="font-size:clamp(13px,1.8cqi,20px);font-weight:600;line-height:1.3;">Label Three</div>
+            <div style="height:3px;border-radius:999px;background:var(--accent);margin-top:auto;"></div>
+          </div>
+          <div data-anim="fade-up" data-delay="4" style="display:flex;flex-direction:column;gap:0.75rem;border-radius:1rem;padding:1.5rem;background:color-mix(in srgb,var(--fg) 5%,transparent);border:1px solid color-mix(in srgb,var(--fg) 10%,transparent);">
+            <div style="font-family:var(--display-font);font-size:clamp(32px,6cqi,64px);font-weight:900;letter-spacing:-0.03em;color:var(--accent-2,var(--accent));line-height:1;">4.9</div>
+            <div style="font-size:clamp(13px,1.8cqi,20px);font-weight:600;line-height:1.3;">Label Four</div>
+            <div style="height:3px;border-radius:999px;background:var(--accent-2,var(--accent));margin-top:auto;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">04 / TT</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 5 — CHART (@chart type, horizontal bars)
+       Replace: HEADING, row label/percentage pairs.
+  ═══════════════════════════════════════════════════ -->
+  <section data-slide>
+    <div class="slide-inner" data-slide-anim>
+      <div class="slide-body" style="justify-content:center;">
+        <h3 class="display" data-anim="fade-up" data-delay="0"
+            style="font-size:clamp(28px,5cqi,54px);line-height:1.1;margin:0 0 2.5rem;">
+          HEADING
+        </h3>
+        <div style="display:flex;flex-direction:column;gap:1.5rem;border-radius:1.5rem;padding:2rem;background:color-mix(in srgb,var(--fg) 5%,transparent);border:1px solid color-mix(in srgb,var(--fg) 8%,transparent);">
+          <div data-anim="fade-up" data-delay="1" style="display:flex;align-items:center;gap:1.5rem;">
+            <div style="width:clamp(100px,18cqi,220px);font-size:clamp(12px,1.6cqi,18px);font-weight:500;color:var(--fg-muted);text-align:right;flex-shrink:0;">Row Label A</div>
+            <div style="flex:1;height:clamp(20px,3.5cqi,36px);border-radius:999px;background:color-mix(in srgb,var(--fg) 8%,transparent);border:1px solid color-mix(in srgb,var(--fg) 12%,transparent);overflow:hidden;">
+              <div style="width:80%;height:100%;border-radius:999px;background:var(--accent);display:flex;align-items:center;justify-content:flex-end;padding-right:0.75rem;"><span style="font-size:0.8em;font-weight:700;color:var(--bg);">80%</span></div>
+            </div>
+          </div>
+          <div data-anim="fade-up" data-delay="2" style="display:flex;align-items:center;gap:1.5rem;">
+            <div style="width:clamp(100px,18cqi,220px);font-size:clamp(12px,1.6cqi,18px);font-weight:500;color:var(--fg-muted);text-align:right;flex-shrink:0;">Row Label B</div>
+            <div style="flex:1;height:clamp(20px,3.5cqi,36px);border-radius:999px;background:color-mix(in srgb,var(--fg) 8%,transparent);border:1px solid color-mix(in srgb,var(--fg) 12%,transparent);overflow:hidden;">
+              <div style="width:55%;height:100%;border-radius:999px;background:color-mix(in srgb,var(--accent) 75%,var(--accent-2,var(--fg)));display:flex;align-items:center;justify-content:flex-end;padding-right:0.75rem;"><span style="font-size:0.8em;font-weight:700;color:var(--bg);">55%</span></div>
+            </div>
+          </div>
+          <div data-anim="fade-up" data-delay="3" style="display:flex;align-items:center;gap:1.5rem;">
+            <div style="width:clamp(100px,18cqi,220px);font-size:clamp(12px,1.6cqi,18px);font-weight:500;color:var(--fg-muted);text-align:right;flex-shrink:0;">Row Label C</div>
+            <div style="flex:1;height:clamp(20px,3.5cqi,36px);border-radius:999px;background:color-mix(in srgb,var(--fg) 8%,transparent);border:1px solid color-mix(in srgb,var(--fg) 12%,transparent);overflow:hidden;">
+              <div style="width:35%;height:100%;border-radius:999px;background:color-mix(in srgb,var(--accent) 55%,var(--accent-2,var(--fg)));display:flex;align-items:center;justify-content:flex-end;padding-right:0.75rem;"><span style="font-size:0.8em;font-weight:700;color:var(--bg);">35%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">05 / TT</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 6 — ADD MORE SLIDES ABOVE THIS LINE
+       After adding slides: update NN / TT in all slide-footer elements.
+  ═══════════════════════════════════════════════════ -->
+`
+
+function buildBlankDeck(themeId, themeCss, aspect) {
+  const [W, H] = ASPECT_DIMS[aspect] ?? [1920, 1080]
+  const totalSlides = 5
+  return `<!doctype html>
+<!-- THEME: ${themeId} | ASPECT: ${aspect} | DESIGN: ${W}x${H}px -->
+<!-- USAGE: Clone this file, replace slide content marked with CAPS PLACEHOLDERS,
+     update all "NN / TT" slide footers with real numbers.
+     Do NOT modify the <style> blocks or the <script> at the bottom.
+     AGENTS.md documents all 17 DSL slide types you can use. -->
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${themeId} — SY PPT 模板</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* Theme: ${themeId} */
+${themeCss.trim()}
+</style>
+<style>
+/* Render harness + presentation mode */
+${HARNESS_CSS.trim()}
+</style>
+<style>
+/* FX layer (cursor glow, entry animations, hover-lift — activated by --fx-* CSS vars) */
+${fxCss.trim()}
+</style>
+</head>
+<body data-theme="${themeId}">
+<div data-deck-root data-theme="${themeId}" data-aspect="${aspect}">
+${SLIDE_SKELETONS.trim()}
+</div>
+<script>${presentationScript(totalSlides, aspect)}</script>
+<noscript><style>
+  [data-deck-root]{position:static!important;height:auto!important;overflow:visible!important;}
+  [data-deck-root] section[data-slide]{position:relative!important;opacity:1!important;height:100vh;}
+</style></noscript>
+</body>
+</html>`
+}
+
+/* ---------- main ---------- */
+
+async function main() {
+  const themesDir = path.join(repoRoot, 'src/themes')
+  const themeIds = fs.readdirSync(themesDir).filter(d =>
+    fs.existsSync(path.join(themesDir, d, 'theme.css'))
+  )
+
+  // Read aspect defaults from index.json
+  const indexJson = JSON.parse(fs.readFileSync(path.join(repoRoot, 'index.json'), 'utf8'))
+  const aspectByTheme = new Map(indexJson.templates.map(t => [t.id, t.default_ratio ?? '16:9']))
+
+  let generated = 0
+  for (const tid of themeIds) {
+    const cssPath = path.join(themesDir, tid, 'theme.css')
+    const outPath = path.join(themesDir, tid, 'blank-deck.html')
+    const themeCss = fs.readFileSync(cssPath, 'utf8')
+    const aspect = aspectByTheme.get(tid) ?? '16:9'
+    const html = buildBlankDeck(tid, themeCss, aspect)
+    fs.writeFileSync(outPath, html, 'utf8')
+    console.log(`✓ src/themes/${tid}/blank-deck.html  [${aspect}]`)
+    generated++
+  }
+  console.log(`\nGenerated ${generated} blank-deck.html files.`)
+}
+
+main().catch(err => { console.error(err); process.exit(1) })

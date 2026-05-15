@@ -1,5 +1,13 @@
 # 十页 PPT 模板
 
+> 🤖 **30 秒上手**（给使用 Claude Code / Cursor / Cline 的人）
+>
+> 复制下面这一句话给你的 AI 编码工具：
+>
+> > 帮我做一份 PPT。克隆 https://github.com/Shiye-10Pages/SY-PPT-templates ，按照里面 AGENTS.md 的步骤，从 index.json 挑一个最合适的模板，根据我的内容生成一个可以双击打开的 HTML 文件。
+>
+> 不需要 clone，不需要装 Node，不需要起服务 —— AI 自己搞定。
+
 把一段 Markdown 变成可分享的滚动长页 + 分享卡片，**20 个精选模板，14 个面向中国本地场景**。
 
 一份输入，两种传播姿势：
@@ -17,7 +25,63 @@ pnpm dev
 
 打开 `http://localhost:5173`，左侧粘贴 Markdown，右侧实时预览。右上角切主题、导出 HTML、导出卡片 ZIP。
 
+## For AI Agents
+
+If you're using **Claude Code, Cursor, Cline**, or any other coding agent, paste this to your agent:
+
+> Clone https://github.com/Shiye-10Pages/SY-PPT-templates and follow the instructions in `AGENTS.md`. Read `index.json`, match the user brief to a template, and generate a single-file HTML deck.
+
+The agent will:
+
+1. Read [`AGENTS.md`](AGENTS.md) — the operating manual (DSL, workflow, render harness)
+2. Read [`index.json`](index.json) — catalog of 20 templates with metadata
+3. Match the user's scenario to the best template
+4. Read that template's `theme.css` and example `.md`
+5. Generate a self-contained `.html` file with everything inlined
+
+Open the file in any browser — done. No `pnpm install`, no dev server, no cloud.
+
 ## 20 个模板
+
+### Featured Templates
+
+A taste of what the library can do. Click any title to open the theme directory.
+
+#### [政务汇报红 · Government Red](src/themes/govt-red)
+
+<img src="screenshots/govt-red-1.png" width="32%" /> <img src="screenshots/govt-red-2.png" width="32%" /> <img src="screenshots/govt-red-3.png" width="32%" />
+
+*Deep red on warm cream paper. Traditional Chinese authority, made for party briefings and public-sector annual reports.*
+
+#### [餐饮促销 · Restaurant Promo](src/themes/restaurant-promo)
+
+<img src="screenshots/restaurant-promo-1.png" width="32%" /> <img src="screenshots/restaurant-promo-2.png" width="32%" /> <img src="screenshots/restaurant-promo-3.png" width="32%" />
+
+*Warm celebratory palette with big price cards. Anniversary sales, festival promos, store openings.*
+
+#### [小红书种草 · Xiaohongshu Pastel](src/themes/xhs-pastel)
+
+<img src="screenshots/xhs-pastel-1.png" width="32%" /> <img src="screenshots/xhs-pastel-2.png" width="32%" /> <img src="screenshots/xhs-pastel-3.png" width="32%" />
+
+*Soft pastel palette tuned for Xiaohongshu feed. Reviews, guides, lifestyle sharing.*
+
+#### [读书金句 · Book Quote](src/themes/book-quote)
+
+<img src="screenshots/book-quote-1.png" width="32%" /> <img src="screenshots/book-quote-2.png" width="32%" /> <img src="screenshots/book-quote-3.png" width="32%" />
+
+*Literary serif on muted kraft paper. Pull quotes, book notes, reading shares.*
+
+#### [一人公司 Pitch · Solo Founder](src/themes/solo-founder)
+
+<img src="screenshots/solo-founder-1.png" width="32%" /> <img src="screenshots/solo-founder-2.png" width="32%" /> <img src="screenshots/solo-founder-3.png" width="32%" />
+
+*Minimal, confident, founder-grade. One-person company decks and investor pitches.*
+
+#### [Keynote · 发布会 · Keynote Launch](src/themes/keynote-dark)
+
+<img src="screenshots/keynote-dark-1.png" width="32%" /> <img src="screenshots/keynote-dark-2.png" width="32%" /> <img src="screenshots/keynote-dark-3.png" width="32%" />
+
+*Apple-keynote DNA. Product launches with cinematic black canvas and oversized type.*
 
 ### Tier A — 中国 B 端实用（8 个）
 | 模板 | 场景 | 默认尺寸 |
@@ -147,6 +211,10 @@ pnpm dev
 - [ ] 二维码自动生成（不再用占位）
 - [ ] 表格 / 图表 slide 类型
 - [ ] LLM 助手：粘贴自由文本 → 标准 markdown + 自动选主题
+
+## Credits
+
+Inspired by [@zarazhangrui](https://github.com/zarazhangrui)'s open-source slide tooling ([beautiful-html-templates](https://github.com/zarazhangrui/beautiful-html-templates), [frontend-slides](https://github.com/zarazhangrui/frontend-slides)) — special thanks for showing what an agent-native template library can look like.
 
 ## License
 

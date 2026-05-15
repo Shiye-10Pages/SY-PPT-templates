@@ -396,6 +396,25 @@ function renderSlideBody(slide) {
   }
 }
 
+/** Load FX layer CSS from disk so theme cursor-glow / bignum-pop show up in screenshots. */
+const FX_CSS = fs.readFileSync(path.join(repoRoot, 'src/styles/fx.css'), 'utf8')
+
+/** Tiny FX bootstrap: promote `--fx-foo: 1` vars to `data-fx-foo` attributes. */
+const FX_BOOTSTRAP = `
+(function(){
+  var FX=['mouse-glow','hover-lift','bg-breathe','accent-rule','bignum-pop','progress'];
+  var nodes=document.querySelectorAll('[data-slide], section[data-slide]');
+  // The screenshot harness has only one section per page; promote vars on it directly.
+  nodes.forEach(function(root){
+    var cs=getComputedStyle(root);
+    FX.forEach(function(n){ if((cs.getPropertyValue('--fx-'+n)||'').trim()==='1') root.setAttribute('data-fx-'+n,'1'); });
+  });
+  // Set a fixed mouse position so radial glow lands at the visible accent.
+  document.documentElement.style.setProperty('--mx','0.7');
+  document.documentElement.style.setProperty('--my','0.3');
+})();
+`
+
 function renderSlideHtml(slide, themeId, themeCss, aspect, indexLabel) {
   return `<!doctype html>
 <html lang="zh">
@@ -406,14 +425,16 @@ function renderSlideHtml(slide, themeId, themeCss, aspect, indexLabel) {
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>${themeCss}</style>
 <style>${HARNESS_CSS}</style>
+<style>${FX_CSS}</style>
 </head>
 <body data-theme="${themeId}">
-<section data-slide aspect="${aspect}">
+<section data-slide aspect="${aspect}" data-slide-anim class="slide-visible">
   <div class="slide-inner">
     ${renderSlideBody(slide)}
     <div class="slide-footer">${indexLabel}</div>
   </div>
 </section>
+<script>${FX_BOOTSTRAP}</script>
 </body>
 </html>`
 }

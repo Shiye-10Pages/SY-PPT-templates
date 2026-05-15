@@ -31,8 +31,9 @@ Reach for this library when the user wants any of:
 Do **not** use this library when:
 
 - The user needs `.pptx` output — this is HTML-only.
-- The user needs animations, transitions, or embedded video.
 - The user wants a fully WYSIWYG editor experience.
+
+Note: animations are supported via a CSS-only FX layer opt-in by 4 themes (`keynote-dark`, `data-dashboard`, `xhs-pastel`, `swiss-paper`) — cursor-follow glow, entry stagger, hover-lift, etc. See [Interactive FX Layer](#interactive-fx-layer).
 
 ---
 
@@ -54,7 +55,20 @@ Do not deviate. In particular: do not start a dev server, do not modify `src/`, 
 
 ## The DSL: Markdown Syntax Reference
 
-The parser is `src/parser/parseMarkdown.ts`. The rules below match it exactly. Every slide compiles to one of nine `SlideAST` types.
+The parser is `src/parser/parseMarkdown.ts`. The rules below match it exactly. Every slide compiles to one of eleven `SlideAST` types.
+
+### Deck-level frontmatter (optional)
+
+A single `@ratio` line at the very top of the markdown (before any `# Cover`) overrides the theme's default aspect ratio for the whole deck:
+
+```
+@ratio 9:16
+
+# Cover title
+...
+```
+
+Accepted values: `16:9` / `4:5` / `3:4` / `9:16` / `2.35:1`. If absent, the theme's `defaultAspect` (from its `meta.ts`) is used. The directive is stripped before slide parsing so it never renders.
 
 ### Slide separator
 
@@ -228,9 +242,76 @@ Rule: chunk starts with literal `@poster` directive (case-insensitive). Format:
 
 Renders as `posterHero` — eyebrow, optional pill-shaped countdown badge, giant title, subtitle, pill-shaped CTA. Best for 9:16 vertical posters.
 
-### 10. Section (fallback)
+### 10. Image slide (`@image` directive)
 
-Anything that doesn't match the above falls back to `section`: the first heading becomes the section heading, everything else becomes body text.
+```
+@image
+![alt](https://example.com/image.jpg)
+Optional caption text below
+```
+
+Or just a URL on its own line:
+
+```
+@image
+https://example.com/cover.jpg
+Optional caption
+```
+
+Renders as `image` — single image centred on the slide with optional caption. For URL-served images the file is fetched at render time; for data URIs (e.g. images dragged into the editor) the bytes are inlined into the HTML.
+
+### 11. Icon row (`@icons` directive)
+
+```
+@icons
+## 三大优势
+
+- :rocket: 极速生成
+- :shield-check: 隐私保护
+- :sparkles: 视觉惊艳
+```
+
+Body items can be bullet-prefixed (`- :icon: label`) or bare (`:icon: label`). Heading via `## ...` is optional. Renders as 3–6 accent-tinted tiles with an inline Lucide SVG icon and a label underneath.
+
+**Available icons (50, all from Lucide MIT):**
+
+`check`, `x`, `star`, `heart`, `sparkles`, `zap`, `flame`, `award`, `trophy`, `trending-up`, `trending-down`, `bar-chart`, `pie-chart`, `activity`, `target`, `rocket`, `gauge`, `user`, `users`, `phone`, `mail`, `message-circle`, `map-pin`, `globe`, `home`, `briefcase`, `package`, `layers`, `cpu`, `database`, `code`, `smartphone`, `monitor`, `dollar-sign`, `shopping-cart`, `gift`, `tag`, `credit-card`, `arrow-right`, `arrow-up-right`, `lightbulb`, `shield`, `shield-check`, `lock`, `clock`, `calendar`, `search`, `settings`, `bookmark`, `book`, `camera`, `image`, `film`, `leaf`, `moon`, `sun`.
+
+Unknown names are kept verbatim (the slide renders with a bullet placeholder).
+
+### Inline icons (any text)
+
+You can put `:icon-name:` tokens inside cover subtitles, list items, section bodies, quote text, etc. They become inline SVGs at render time (sized to the surrounding text):
+
+```
+- :star: 高品质 — 我们用得心服口服
+- :trending-up: 数据 — 用户留存率提升 40%
+```
+
+Same name pool as `@icons`. Unknown tokens are passed through unchanged.
+
+### Images inside other slides
+
+Drop a Markdown image line `![alt](url)` into a **cover**, **section**, or **`@poster`** chunk and the renderer pulls it out as a layered image:
+
+- **Cover**: full-bleed background image with a dark vignette over the title/subtitle
+- **Section**: two-column layout (image on the left at 4:5 narrow widths, on a side at 16:9)
+- **`@poster`**: image becomes the hero background
+
+Example:
+
+```
+# 朋友圈直发
+副标题 :star: 你也能做出来
+
+![cover](https://images.unsplash.com/photo-...)
+```
+
+**For agents**: prefer hosted URLs (`https://...`). Don't generate data URIs unless the user explicitly hands you one; data URIs balloon the HTML size by ~33% and can't be cached. The editor's drag-paste UX produces data URIs for end users — that's the only place they're expected.
+
+### 12. Section (fallback)
+
+Anything that doesn't match the above falls back to `section`: the first heading becomes the section heading, everything else becomes body text. If the body contains a `![alt](url)` line, the image is rendered side-by-side with the text.
 
 ```
 ## Section heading
@@ -250,6 +331,8 @@ Plain body text. Multiple lines preserved.
 | Lines all leading with 📞💬📍🌐📧 or label:                  | `contact`      |
 | Starts with `@qr`                                           | `qrCode`       |
 | Starts with `@poster`                                       | `posterHero`   |
+| Starts with `@image`                                        | `image`        |
+| Starts with `@icons`                                        | `iconRow`      |
 | Anything else                                               | `section`      |
 
 ---
@@ -282,6 +365,23 @@ When the user is vague, prefer:
 Never mix two themes in one deck. If you genuinely can't choose, ask the user one question.
 
 ---
+
+## Interactive FX Layer
+
+4 themes opt in to a CSS-only "FX layer" (plus a tiny mouse-tracker JS) for richer interactivity. The rest of the 16 themes are untouched.
+
+| Theme | FX |
+|---|---|
+| `keynote-dark` | Cursor-follow indigo halo + big-number pop entry |
+| `data-dashboard` | Cursor-follow cyan halo + big-number pop + list-item progress bars |
+| `xhs-pastel` | Hover-lift on items + slow background gradient drift |
+| `swiss-paper` | Animated red rule that draws in on each slide (no cursor follow — keeps minimalism) |
+
+Implementation: each theme's `theme.css` sets per-FX flags like `--fx-mouse-glow: 1`. A 1.2KB runtime (`exportedDeckScript` in `src/export/exportHtml.ts`) promotes those CSS vars to `data-fx-*` attributes on the deck root; `src/styles/fx.css` selectors light up the matching effect. The same script also writes mouse position to `--mx`/`--my` so cursor halos follow the pointer.
+
+**For agent-generated decks**: include the FX layer CSS (`fx.css`) and the runtime script in your rendered HTML. The runtime is reproduced in the "Putting it all together" section below. If you skip these, the 4 themes still look fine — just without the interactive polish.
+
+All FX respect `prefers-reduced-motion: reduce` and gracefully degrade if JS is disabled.
 
 ## Rendering: From Markdown to Single-File HTML
 
@@ -456,7 +556,93 @@ Paste this **after** the theme.css block, inside a single `<style>` tag. It is p
   .s-posterHero h2 { font-family: var(--display-font); font-size: clamp(56px,16cqi,180px); font-weight: var(--display-weight,800); letter-spacing: var(--display-tracking,-0.02em); line-height: 0.95; margin: 0; }
   .s-posterHero .subtitle { margin-top: 1.5rem; max-width: 820px; color: var(--fg-muted); font-size: clamp(20px,3cqi,36px); line-height: 1.35; }
   .s-posterHero .cta { display: inline-block; margin-top: 2.5rem; padding: 0.75rem 2rem; border-radius: 999px; background: var(--accent); color: var(--bg); font-size: clamp(18px,2.5cqi,28px); font-weight: 700; }
+
+  /* image slide */
+  .s-image { justify-content: center; align-items: center; gap: 1.5rem; }
+  .s-image img { max-height: 78%; max-width: 100%; border-radius: 24px; object-fit: contain; box-shadow: 0 24px 64px -32px rgba(0,0,0,0.45); }
+  .s-image .caption { max-width: 820px; text-align: center; color: var(--fg-muted); font-size: clamp(14px, 2cqi, 22px); letter-spacing: 0.05em; }
+
+  /* iconRow slide */
+  .s-iconRow { justify-content: center; }
+  .s-iconRow h3 { font-family: var(--display-font); font-size: clamp(32px, 6cqi, 60px); font-weight: var(--display-weight,800); letter-spacing: var(--display-tracking,-0.02em); line-height: 1.1; margin: 0 0 3rem; }
+  .s-iconRow ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 2rem; grid-template-columns: repeat(var(--icon-cols, 3), minmax(0, 1fr)); }
+  .s-iconRow li { display: flex; flex-direction: column; align-items: center; gap: 1rem; text-align: center; }
+  .s-iconRow .icon-tile { width: clamp(64px, 10cqi, 120px); height: clamp(64px, 10cqi, 120px); display: flex; align-items: center; justify-content: center; border-radius: 1rem; background: color-mix(in srgb, var(--accent) 10%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent); color: var(--accent); }
+  .s-iconRow .icon-tile svg { width: 55%; height: 55%; }
+  .s-iconRow .label { font-size: clamp(14px, 2.2cqi, 24px); line-height: 1.4; font-weight: 600; }
+
+  /* inline icon (`:icon-name:` in any text) */
+  .icon-inline { display: inline-flex; align-items: center; width: 1em; height: 1em; margin-inline: 0.12em; color: var(--accent); vertical-align: -0.15em; }
+  .icon-inline svg { width: 100%; height: 100%; }
 </style>
+```
+
+### Interactive FX layer (optional, opt-in by 4 themes)
+
+Append this `<style>` block after the harness CSS for FX-enabled themes. Themes opt in via `--fx-*: 1` flags in their `theme.css`; this stylesheet contains the actual visual rules.
+
+```html
+<style>
+[data-deck-root] { --mx: 0.5; --my: 0.5; }
+[data-theme] [data-slide]::after {
+  content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
+  opacity: calc(var(--fx-mouse-glow, 0) * 1);
+  background: radial-gradient(36% 28% at calc(var(--mx)*100%) calc(var(--my)*100%),
+    color-mix(in srgb, var(--accent) 28%, transparent) 0%, transparent 70%);
+  transition: background 80ms linear;
+}
+[data-fx-hover-lift="1"] [data-slide] li { transition: transform 240ms cubic-bezier(0.2,0.7,0.1,1); }
+[data-fx-hover-lift="1"] [data-slide] li:hover { transform: translateY(-3px); }
+[data-fx-bg-breathe="1"] [data-slide] { animation: fx-breathe 16s ease-in-out infinite alternate; background-size: 200% 200%; }
+@keyframes fx-breathe { 0%{background-position:0% 0%} 100%{background-position:100% 50%} }
+[data-fx-accent-rule="1"] [data-slide] .slide-body::before {
+  content:""; position:absolute; top:0; left:0; height:4px; width:0; background:var(--accent);
+  animation: fx-rule-draw 900ms cubic-bezier(0.2,0.7,0.1,1) 200ms forwards;
+}
+@keyframes fx-rule-draw { to { width: 30%; } }
+[data-fx-bignum-pop="1"] [data-slide-anim].slide-visible .num,
+[data-fx-bignum-pop="1"] [data-slide-anim].slide-visible blockquote {
+  animation: fx-bignum-pop 1000ms cubic-bezier(0.2,0.7,0.1,1) both;
+}
+@keyframes fx-bignum-pop { from { opacity:0; transform:translateY(28px) scale(.92); letter-spacing:-.12em } to { opacity:1; transform:none } }
+@media (prefers-reduced-motion: reduce) {
+  [data-theme] [data-slide]::after { background: none !important; }
+  [data-fx-bg-breathe="1"] [data-slide],
+  [data-fx-bignum-pop="1"] [data-slide-anim].slide-visible .num,
+  [data-fx-bignum-pop="1"] [data-slide-anim].slide-visible blockquote { animation: none !important; }
+  [data-fx-accent-rule="1"] [data-slide] .slide-body::before { animation: none !important; width: 30%; }
+}
+</style>
+```
+
+### FX runtime (optional, opt-in by 4 themes)
+
+A tiny inline `<script>` at the very end of `<body>` activates the FX flags and tracks mouse position. Skip this for non-interactive themes — but you can include it always (the script no-ops if no FX flags are set).
+
+```html
+<script>
+(function(){
+  var FX=['mouse-glow','hover-lift','bg-breathe','accent-rule','bignum-pop','progress'];
+  var root=document.querySelector('[data-deck-root]'); if(!root)return;
+  var cs=getComputedStyle(root);
+  FX.forEach(function(n){ if((cs.getPropertyValue('--fx-'+n)||'').trim()==='1') root.setAttribute('data-fx-'+n,'1'); });
+  if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    var raf=0,px=0,py=0;
+    root.addEventListener('mousemove',function(e){
+      var r=root.getBoundingClientRect();
+      px=(e.clientX-r.left)/r.width; py=(e.clientY-r.top)/r.height;
+      if(!raf){raf=requestAnimationFrame(function(){
+        root.style.setProperty('--mx',Math.max(0,Math.min(1,px)));
+        root.style.setProperty('--my',Math.max(0,Math.min(1,py))); raf=0;
+      });}
+    },{passive:true});
+  }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('slide-visible')})},{root:root,threshold:0.25});
+    root.querySelectorAll('[data-slide-anim]').forEach(function(el){io.observe(el)});
+  } else { root.querySelectorAll('[data-slide-anim]').forEach(function(el){el.classList.add('slide-visible')}); }
+})();
+</script>
 ```
 
 ### Aspect ratio note
@@ -661,6 +847,43 @@ For each channel, set `{ICON}` to one of 📞 💬 📍 🌐 📧 and `{LABEL}` 
 </section>
 ```
 
+#### image
+
+```html
+<section data-slide aspect="16:9">
+  <div class="slide-inner">
+    <div class="slide-body s-image">
+      <img src="{SRC}" alt="{ALT}">
+      <!-- omit if no caption -->
+      <div class="caption">{CAPTION}</div>
+    </div>
+    <div class="slide-footer">07 / 08</div>
+  </div>
+</section>
+```
+
+#### iconRow
+
+For 3 items use `--icon-cols:3`; for 4+ items use `--icon-cols:4`. `{ICON_SVG}` is the raw SVG markup for the chosen Lucide icon (looked up by name from the catalog above).
+
+```html
+<section data-slide aspect="16:9">
+  <div class="slide-inner">
+    <div class="slide-body s-iconRow" style="--icon-cols:3">
+      <h3>{HEADING}</h3>
+      <ul>
+        <li>
+          <span class="icon-tile">{ICON_SVG}</span>
+          <span class="label">{LABEL 1}</span>
+        </li>
+        <!-- repeat for each item -->
+      </ul>
+    </div>
+    <div class="slide-footer">05 / 08</div>
+  </div>
+</section>
+```
+
 ### Putting it all together
 
 The final file you write looks like this skeleton:
@@ -680,11 +903,16 @@ The final file you write looks like this skeleton:
   <style>
     /* PASTE THE FULL "Render harness CSS" FROM ABOVE HERE (without the surrounding <style> tag) */
   </style>
+  <style>
+    /* OPTIONAL: paste the "Interactive FX layer" stylesheet here.
+       Skip for cost-sensitive output; the 4 FX themes still look fine without it. */
+  </style>
 </head>
 <body data-theme="{TEMPLATE_ID}">
   <div data-deck-root data-theme="{TEMPLATE_ID}">
     <!-- one <section data-slide aspect="..."> per slide -->
   </div>
+  <!-- OPTIONAL: paste the "FX runtime" script here. Required for cursor-follow halo + slide-visible entry animations. -->
 </body>
 </html>
 ```
@@ -709,6 +937,10 @@ Before declaring done, verify:
 - [ ] The file is fully self-contained except for the Google Fonts `<link>` (which gracefully degrades to system fonts if offline).
 - [ ] Chinese template names are preserved as-is in commentary to the user (don't translate "政务汇报红" away).
 - [ ] One deck = one theme. Do not mix themes.
+- [ ] If you used `@ratio`, it sits on the very first line (before any `# Cover`).
+- [ ] All `:icon-name:` tokens reference one of the 50 supported names; otherwise the token is left literal.
+- [ ] Image URLs are reachable hosted URLs, not data URIs (unless the user explicitly handed you one).
+- [ ] For FX themes (keynote-dark / data-dashboard / xhs-pastel / swiss-paper), you included the FX layer CSS and runtime script.
 
 ---
 
@@ -721,6 +953,8 @@ Before declaring done, verify:
 - ❌ **Don't forget the `data-theme` attribute** on `<body>` — without it, theme.css variables never apply and the deck renders in the bare default.
 - ❌ **Don't use HTML entities in number slides** — `>` `&` etc. should be literal Markdown source; if you must escape inside the rendered HTML, escape only `<`, `>`, `&`, `"`, `'`.
 - ❌ **Don't include `src/` source files in the output** — the deliverable is one HTML, not a project zip.
+- ❌ **Don't generate gigantic data URIs for images** — they bloat the HTML. Use hosted URLs (`https://...`) whenever possible. Data URIs are for the editor's drag-paste UX, not for agent-authored decks.
+- ❌ **Don't invent new `:icon:` names** — stick to the 50 listed. Unknown names render as literal text.
 
 ---
 

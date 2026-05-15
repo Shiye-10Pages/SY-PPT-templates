@@ -1,7 +1,9 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "name": "SY-PPT-templates",
-  "description": "20 templates for Markdown-driven PPT generation, 14 designed for Chinese local scenarios. Agent-native: clone the repo, read AGENTS.md, generate a single-file HTML deck.",
+  "description": "20 templates for Markdown-driven PPT generation, 14 designed for Chinese local scenarios. Agent-native: clone the repo, read AGENTS.md, generate a single-file HTML deck. v1.1 adds custom aspect override, image embedding, a Lucide icon system, and an opt-in FX layer on 4 themes.",
+  "supported_ratios": ["16:9", "4:5", "9:16", "2.35:1", "3:4"],
+  "fx_themes": ["keynote-dark", "data-dashboard", "xhs-pastel", "swiss-paper"],
   "repo": "https://github.com/Shiye-10Pages/SY-PPT-templates",
   "tier_labels": {
     "A": "Chinese B2B / enterprise scenarios",

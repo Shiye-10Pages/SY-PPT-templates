@@ -42,14 +42,25 @@ Note: animations are supported via a CSS-only FX layer opt-in by 4 themes (`keyn
 The standard workflow:
 
 1. **Read `index.json`** at the repo root to see all 20 templates with metadata (id, tier, scenarios, vibe, aspect ratio, palette, paths).
-2. **Ask the user 1–3 brief questions** to narrow scenario: purpose, audience, desired aspect ratio (only if not obvious from the brief).
-3. **Match the user's brief to the best template** using `scenarios_zh` / `scenarios_en` / `best_for` / `vibe` fields. See [How to Choose a Template](#how-to-choose-a-template) below.
-4. **Read** that template's `theme.css` (palette + fonts) and the matching `src/examples/<id>.md` (concrete DSL example).
-5. **Write the user's content as Markdown** following the [DSL](#the-dsl-markdown-syntax-reference) below. Aim for 6–10 slides.
-6. **Render the final single-file HTML** by inlining theme CSS + a tiny render harness into the template (see [Rendering](#rendering-from-markdown-to-single-file-html) below).
-7. **Save** to the user's chosen path (or `./output.html` by default); tell them to double-click to open.
+2. **Ask the user 1–2 questions** about occasion and mood/tone *before* reading any template files. Even when the brief seems obvious, the user's taste surprises — ask anyway. Example: "What's the occasion, and how should it feel: confident & bold, warm & playful, quiet & literary, or dark & cinematic?"
+3. **Pick 3 candidates, not 1.** Match mood + occasion against `best_for`, `vibe`, `tone`. The three must be *genuinely different* — don't pick three editorial decks when the brief calls for editorial. One should be the obvious best fit, one a warmer alternative, one a wildcard that re-interprets the brief. Read `index.json` fields `palette` and `typography` to understand visual language without opening CSS files.
 
-Do not deviate. In particular: do not start a dev server, do not modify `src/`, do not invent new DSL syntax.
+4. **Build a title-slide preview of each candidate.**
+   For each of the 3 candidates:
+   a. Read that template's `src/themes/<id>/blank-deck.html` (if it exists) — it has theme CSS + harness pre-loaded. If not, read `src/themes/<id>/theme.css`.
+   b. Render **cover slide only**, filled with the user's **real** title / subtitle / date — no placeholder text.
+   c. Save as `preview-<slug>.html` in a temp folder (e.g. `/tmp/previews/`).
+   d. Open all 3 files in the browser. Tell the user their paths. Wait for them to pick.
+   > "Three options to compare — [A] tone desc, [B] tone desc, [C] tone desc. Which one feels right?"
+
+   **If the user explicitly names a template** ("just use keynote-dark"), skip this step and go straight to Step 5.
+
+5. **Read** the chosen template's `theme.css` (palette + fonts) and the matching `src/examples/<id>.md` (concrete DSL example).
+6. **Write the user's content as Markdown** following the [DSL](#the-dsl-markdown-syntax-reference) below. Aim for 6–10 slides.
+7. **Render the final single-file HTML** using `src/themes/<id>/blank-deck.html` as the starting point (clone it, replace slide content). If blank-deck.html does not exist, use the render harness from the [Rendering](#rendering-from-markdown-to-single-file-html) section.
+8. **Open the final file in the browser and send the path** to the user. Tell them to double-click to open if not already open.
+
+Do not deviate. In particular: do not start a dev server, do not modify `src/`, do not invent new DSL syntax outside the documented types.
 
 ---
 
@@ -946,6 +957,12 @@ Before declaring done, verify:
 
 ## Common Mistakes to Avoid
 
+- ❌ **Don't skip Step 2** — ask about occasion and mood before reading any template files. Even a detailed brief doesn't reveal the user's *taste*.
+- ❌ **Don't skip Step 4 (the 3 previews)** — picking a template in prose is far less reliable than showing three rendered cover slides. The user should see before committing.
+- ❌ **Don't pick only 1 candidate** — three candidates must be genuinely different in mood/tone/palette. Showing three variations of "dark editorial" when the user wanted warmth is not a real choice.
+- ❌ **Don't auto-pick a template for the user without showing previews first** — unless they have explicitly named one.
+- ❌ **Don't declare the deck done without opening it in the browser** — open the file, confirm it renders, then send the path.
+- ❌ **Don't introduce a CSS color not in the theme's variables** — not even as an inline style. The palette is locked.
 - ❌ **Don't run `pnpm dev`** — agents render statically. Starting a server is a sign you're heading the wrong way.
 - ❌ **Don't invent new Markdown syntax** outside the DSL. If the user asks for something the DSL can't express, fall back to `section` slides or ask whether to skip.
 - ❌ **Don't auto-translate Chinese template names** — preserve `政务汇报红`, `小红书种草`, etc. The user picked this library because they want Chinese context.
@@ -960,21 +977,39 @@ Before declaring done, verify:
 
 ## Worked Example: Restaurant Anniversary Deck
 
-User brief: "帮我做一份奶茶店 3 周年的 PPT，买一送一，适合发朋友圈"
+User brief: "帮我做一份奶茶店 3 周年庆的 PPT，买一送一，适合发朋友圈"
 
-### Step 1 — Read `index.json`, narrow candidates
+### Step 0 — Ask occasion + mood
 
-- `restaurant-promo` (Tier A, 4:5, restaurant/promo scenarios) — best match
-- `xhs-pastel` (Tier B, 3:4) — also possible but more "lifestyle seeding" tone
+> "Two quick questions: (1) What's the occasion? (2) How should it feel — warm & celebratory, playful & bright, or elegant & restrained?"
 
-Pick `restaurant-promo`.
+User: "周年庆促销，要热闹有喜感"
 
-### Step 2 — Read theme + example
+### Step 1 — Pick 3 candidates from `index.json`
 
-- Read `src/themes/restaurant-promo/theme.css`
+Match "warm + celebratory + 4:5 portrait" against `best_for` and `vibe`:
+
+- **`restaurant-promo`** (Tier A, 4:5) — best match: "烟火红 + 蛋黄，老板都能看懂"
+- **`xhs-pastel`** (Tier B, 3:4) — warmer alternative: softer pastel palette, more lifestyle tone
+- **`wechat-share`** (Tier B, 4:5) — wildcard: clean WeChat-green, system feel, understated
+
+### Step 2 — Build 3 cover previews
+
+For each candidate, read its `theme.css`, render cover slide with real content ("3 周年庆 · 买一送一"), save:
+- `/tmp/previews/preview-restaurant-promo.html`
+- `/tmp/previews/preview-xhs-pastel.html`
+- `/tmp/previews/preview-wechat-share.html`
+
+Open all three in browser. Tell the user the paths. Wait for pick.
+
+User: "第一个，餐饮促销那个"
+
+### Step 3 — Read theme + example
+
+- Read `src/themes/restaurant-promo/blank-deck.html` (has CSS + JS ready)
 - Read `src/examples/restaurant-promo.md` to confirm the DSL idioms used by this theme.
 
-### Step 3 — Author the Markdown (DSL)
+### Step 4 — Author the Markdown (DSL)
 
 ```markdown
 # 3 周年庆
@@ -1021,9 +1056,9 @@ Pick `restaurant-promo`.
 [奶茶店名] · 3 周年特别企划
 ```
 
-### Step 4 — Render
+### Step 5 — Render
 
-Write `output.html`. The skeleton (truncated):
+Clone `src/themes/restaurant-promo/blank-deck.html` → replace slide sections with generated content. Save as `output.html`. The skeleton (truncated):
 
 ```html
 <!doctype html>
@@ -1070,9 +1105,10 @@ Write `output.html`. The skeleton (truncated):
 </html>
 ```
 
-### Step 5 — Deliver
+### Step 6 — Open + Deliver
 
-Save to the user's path (default `./output.html`) and tell them: "已生成 output.html，双击打开就能看。每屏可以单独截图发朋友圈。"
+Open the file in the browser (`open ./output.html`). Send the path to the user:
+"已生成 output.html，已在浏览器打开。每屏截图可以直接发朋友圈。"
 
 ---
 
@@ -1095,17 +1131,24 @@ Save to the user's path (default `./output.html`) and tell them: "已生成 outp
 
 ## Versioning
 
-This manual is at `version: 1.0.0` of `SY-PPT-templates` (matching `index.json`). If you see a newer version in `index.json`, re-read this file — the DSL or render harness may have changed.
+This manual is at `version: 1.2.0` of `SY-PPT-templates` (matching `index.json`). If you see a newer version in `index.json`, re-read this file — the DSL, slide types, or render harness may have changed.
+
+**Changelog:**
+- v1.1.0 — Added `@ratio` frontmatter, `@image`, `@icons`, inline `:icon:`, FX layer for 4 themes.
+- v1.2.0 — Added 3-preview workflow (Steps 2–4), `blank-deck.html` per theme, 5 new slide types (`chapter`, `split`, `stats`, `compare`, `chart`), element-level animations, stacked-slide presentation runtime.
 
 ---
 
 ## TL;DR for Speed
 
-1. `cat index.json` → pick a template by `best_for` + aspect.
-2. `cat src/themes/<id>/theme.css` → grab CSS variables.
-3. `cat src/examples/<id>.md` → see how the DSL is used.
-4. Write the user's content as Markdown using the 10 DSL slide types.
-5. Emit `<!doctype html>…</html>` with theme.css + render harness CSS inlined, and one `<section data-slide aspect="...">…</section>` per slide.
-6. Save to `./output.html`. Tell the user to double-click.
+0. Ask the user: **occasion** + **mood/tone** (2 words each, not the content).
+1. `cat index.json` → pick **3 candidates** by `best_for` + `vibe` + aspect.
+2. Build a **cover-slide preview** for each (real title, real subtitle), save 3 HTML files, open in browser.
+3. Wait for user to pick one.
+4. `cat src/themes/<id>/blank-deck.html` → your starting file (has CSS + JS pre-loaded). If absent, use render harness from the Rendering section.
+5. `cat src/examples/<id>.md` → see DSL idioms for this theme.
+6. Write all slide content following the DSL (17 slide types available).
+7. Clone blank-deck.html, replace slide content, save to `./output.html`.
+8. Open in browser. Send the path. Done.
 
 That's it.

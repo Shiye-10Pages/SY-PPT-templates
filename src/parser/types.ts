@@ -32,3 +32,13 @@ export type SlideAST =
     }
   | { type: 'image'; src: string; alt?: string; caption?: string }
   | { type: 'iconRow'; heading?: string; items: { icon: string; label: string }[] }
+  | { type: 'chapter'; heading: string; sub?: string; number?: string }
+  | {
+      type: 'split'
+      left: { heading?: string; body: string; image?: string }
+      right: { heading?: string; body: string; image?: string }
+      reversed?: boolean
+    }
+  | { type: 'stats'; heading?: string; items: { value: string; label: string; note?: string }[] }
+  | { type: 'compare'; heading?: string; a: { label: string; items: string[] }; b: { label: string; items: string[] } }
+  | { type: 'chart'; heading?: string; items: { label: string; value: number; displayValue: string }[] }

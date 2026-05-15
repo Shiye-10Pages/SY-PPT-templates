@@ -111,12 +111,16 @@ function SlideBody({ slide }: { slide: SlideAST }) {
           )}
           <div className="relative z-10">
             <div
+              data-anim="fade-in"
+              data-delay="0"
               className="mb-6 text-sm uppercase tracking-[0.3em]"
               style={{ color: 'var(--fg-muted)' }}
             >
               Cover
             </div>
             <h1
+              data-anim="fade-up"
+              data-delay="1"
               className="leading-[0.95]"
               style={{
                 fontFamily: 'var(--display-font)',
@@ -129,6 +133,8 @@ function SlideBody({ slide }: { slide: SlideAST }) {
             </h1>
             {slide.subtitle && (
               <p
+                data-anim="fade-up"
+                data-delay="2"
                 className="mt-8 max-w-[820px] text-balance"
                 style={{
                   fontSize: 'clamp(18px, 2.5cqi, 28px)',
@@ -148,6 +154,8 @@ function SlideBody({ slide }: { slide: SlideAST }) {
         <div className="flex h-full flex-col justify-center">
           {slide.eyebrow && (
             <div
+              data-anim="fade-in"
+              data-delay="0"
               className="mb-8 text-sm uppercase tracking-[0.3em]"
               style={{ color: 'var(--fg-muted)' }}
             >
@@ -155,6 +163,8 @@ function SlideBody({ slide }: { slide: SlideAST }) {
             </div>
           )}
           <h2
+            data-anim="fade-up"
+            data-delay={slide.eyebrow ? '1' : '0'}
             className="text-balance"
             style={{
               fontFamily: 'var(--display-font)',
@@ -173,6 +183,8 @@ function SlideBody({ slide }: { slide: SlideAST }) {
       return (
         <div className="flex h-full flex-col items-center justify-center text-center">
           <div
+            data-anim="fade-up"
+            data-delay="0"
             className="leading-none tabular-nums"
             style={{
               fontFamily: 'var(--display-font)',
@@ -186,6 +198,8 @@ function SlideBody({ slide }: { slide: SlideAST }) {
           </div>
           {slide.caption && (
             <div
+              data-anim="fade-up"
+              data-delay="1"
               className="mt-12 max-w-[820px] text-balance"
               style={{
                 fontSize: 'clamp(18px, 3cqi, 32px)',
@@ -203,6 +217,8 @@ function SlideBody({ slide }: { slide: SlideAST }) {
       return (
         <div className="flex h-full flex-col justify-center">
           <div
+            data-anim="fade-in"
+            data-delay="0"
             className="mb-8 leading-none"
             style={{
               fontSize: 'clamp(80px, 17.5cqi, 180px)',
@@ -211,9 +227,11 @@ function SlideBody({ slide }: { slide: SlideAST }) {
               fontWeight: 700,
             }}
           >
-            “
+            "
           </div>
           <blockquote
+            data-anim="fade-up"
+            data-delay="1"
             className="text-balance"
             style={{
               fontFamily: 'var(--display-font)',
@@ -227,6 +245,8 @@ function SlideBody({ slide }: { slide: SlideAST }) {
           </blockquote>
           {slide.cite && (
             <div
+              data-anim="fade-in"
+              data-delay="2"
               className="mt-10 text-sm uppercase tracking-[0.25em]"
               style={{ color: 'var(--fg-muted)' }}
             >
@@ -257,6 +277,8 @@ function SlideBody({ slide }: { slide: SlideAST }) {
         >
           {slide.heading && (
             <h3
+              data-anim="fade-up"
+              data-delay="0"
               className="text-balance"
               style={{
                 fontFamily: 'var(--display-font)',
@@ -274,6 +296,8 @@ function SlideBody({ slide }: { slide: SlideAST }) {
             {slide.items.map((item, i) => (
               <li
                 key={i}
+                data-anim="fade-up"
+                data-delay={String(Math.min(i + (slide.heading ? 1 : 0), 6))}
                 className="flex items-baseline gap-6"
                 style={{
                   fontSize: itemFs,
@@ -750,5 +774,308 @@ function SlideBody({ slide }: { slide: SlideAST }) {
           </div>
         </div>
       )
+
+    case 'chapter':
+      return (
+        <div
+          className="flex h-full flex-col items-center justify-center text-center"
+          style={{
+            background: `color-mix(in srgb, var(--accent) 88%, var(--fg))`,
+            color: 'var(--bg)',
+            padding: 'var(--slide-padding, 8vw)',
+          }}
+        >
+          {slide.number && (
+            <div
+              className="mb-6 text-sm uppercase tracking-[0.35em]"
+              style={{ opacity: 0.65 }}
+            >
+              Chapter {slide.number}
+            </div>
+          )}
+          <h2
+            className="text-balance"
+            style={{
+              fontFamily: 'var(--display-font)',
+              fontSize: 'clamp(40px, 10cqi, 110px)',
+              fontWeight: 'var(--display-weight)',
+              letterSpacing: 'var(--display-tracking)',
+              lineHeight: 1.05,
+            }}
+          >
+            {slide.heading}
+          </h2>
+          {slide.sub && (
+            <p
+              className="mt-8 max-w-[820px] text-balance"
+              style={{ fontSize: 'clamp(16px, 2.2cqi, 26px)', opacity: 0.75, lineHeight: 1.45 }}
+            >
+              {slide.sub}
+            </p>
+          )}
+        </div>
+      )
+
+    case 'split': {
+      const renderSide = (side: typeof slide.left) => (
+        <div className="flex flex-col justify-center gap-6">
+          {side.image && (
+            <img
+              src={side.image}
+              alt=""
+              className="w-full rounded-2xl object-cover"
+              style={{ maxHeight: '55%', boxShadow: '0 20px 50px -24px rgba(0,0,0,0.35)' }}
+            />
+          )}
+          {side.heading && (
+            <h3
+              className="text-balance"
+              style={{
+                fontFamily: 'var(--display-font)',
+                fontSize: 'clamp(26px, 5cqi, 52px)',
+                fontWeight: 'var(--display-weight)',
+                letterSpacing: 'var(--display-tracking)',
+                lineHeight: 1.1,
+              }}
+            >
+              {renderInlineIcons(side.heading)}
+            </h3>
+          )}
+          {side.body && (
+            <div
+              className="whitespace-pre-wrap text-balance"
+              style={{
+                fontSize: 'clamp(16px, 2cqi, 24px)',
+                color: 'var(--fg-muted)',
+                lineHeight: 1.55,
+              }}
+            >
+              {renderInlineIcons(side.body)}
+            </div>
+          )}
+        </div>
+      )
+      const [colA, colB] = slide.reversed ? [slide.right, slide.left] : [slide.left, slide.right]
+      return (
+        <div
+          className="grid h-full w-full items-center gap-10"
+          style={{ gridTemplateColumns: '1fr 1px 1fr', padding: 'var(--slide-padding, 8vw)' }}
+        >
+          {renderSide(colA)}
+          <div style={{ background: 'color-mix(in srgb, var(--fg) 15%, transparent)', height: '60%', width: '1px' }} />
+          {renderSide(colB)}
+        </div>
+      )
+    }
+
+    case 'stats': {
+      const ACCENT_COLORS = [
+        'var(--accent)',
+        'var(--accent-2)',
+        'color-mix(in srgb, var(--accent) 60%, var(--accent-2))',
+        'color-mix(in srgb, var(--accent-2) 70%, var(--fg))',
+      ]
+      return (
+        <div className="flex h-full flex-col justify-center">
+          {slide.heading && (
+            <h3
+              className="mb-10 text-balance"
+              style={{
+                fontFamily: 'var(--display-font)',
+                fontSize: 'clamp(28px, 5cqi, 54px)',
+                fontWeight: 'var(--display-weight)',
+                letterSpacing: 'var(--display-tracking)',
+                lineHeight: 1.1,
+              }}
+            >
+              {slide.heading}
+            </h3>
+          )}
+          <div
+            className="grid gap-6"
+            style={{ gridTemplateColumns: `repeat(${Math.min(slide.items.length, 4)}, minmax(0, 1fr))` }}
+          >
+            {slide.items.map((item, i) => (
+              <div
+                key={i}
+                className="flex flex-col gap-3 rounded-2xl p-6"
+                style={{
+                  background: 'color-mix(in srgb, var(--fg) 5%, transparent)',
+                  border: '1px solid color-mix(in srgb, var(--fg) 10%, transparent)',
+                }}
+              >
+                <div
+                  className="leading-none tabular-nums"
+                  style={{
+                    fontFamily: 'var(--display-font)',
+                    fontSize: 'clamp(32px, 6cqi, 64px)',
+                    fontWeight: 900,
+                    letterSpacing: '-0.03em',
+                    color: ACCENT_COLORS[i % ACCENT_COLORS.length],
+                  }}
+                >
+                  {item.value}
+                </div>
+                <div
+                  style={{
+                    fontSize: 'clamp(13px, 1.8cqi, 20px)',
+                    fontWeight: 600,
+                    lineHeight: 1.3,
+                  }}
+                >
+                  {item.label}
+                </div>
+                {item.note && (
+                  <div
+                    style={{
+                      fontSize: 'clamp(11px, 1.4cqi, 16px)',
+                      color: 'var(--fg-muted)',
+                      lineHeight: 1.4,
+                    }}
+                  >
+                    {item.note}
+                  </div>
+                )}
+                <div
+                  style={{
+                    height: '3px',
+                    borderRadius: '999px',
+                    background: ACCENT_COLORS[i % ACCENT_COLORS.length],
+                    marginTop: 'auto',
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )
+    }
+
+    case 'compare': {
+      const renderColumn = (col: typeof slide.a, accent: string) => (
+        <div className="flex flex-col gap-5">
+          <div
+            className="self-start rounded-full px-5 py-2 text-sm font-semibold uppercase tracking-wider"
+            style={{
+              background: `color-mix(in srgb, ${accent} 12%, transparent)`,
+              border: `1px solid color-mix(in srgb, ${accent} 30%, transparent)`,
+              color: accent,
+              fontSize: 'clamp(11px, 1.4cqi, 15px)',
+            }}
+          >
+            {col.label}
+          </div>
+          <ul className="flex flex-col gap-4">
+            {col.items.map((item, i) => (
+              <li
+                key={i}
+                className="flex items-start gap-3"
+                style={{ fontSize: 'clamp(14px, 2cqi, 22px)', lineHeight: 1.4 }}
+              >
+                <span style={{ color: accent, fontWeight: 700, flexShrink: 0 }}>·</span>
+                <span>{renderInlineIcons(item)}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+      return (
+        <div className="flex h-full flex-col justify-center">
+          {slide.heading && (
+            <h3
+              className="mb-10 text-balance"
+              style={{
+                fontFamily: 'var(--display-font)',
+                fontSize: 'clamp(28px, 5cqi, 54px)',
+                fontWeight: 'var(--display-weight)',
+                letterSpacing: 'var(--display-tracking)',
+                lineHeight: 1.1,
+              }}
+            >
+              {slide.heading}
+            </h3>
+          )}
+          <div className="grid gap-8" style={{ gridTemplateColumns: '1fr 1fr' }}>
+            {renderColumn(slide.a, 'var(--accent)')}
+            {renderColumn(slide.b, 'var(--accent-2, var(--fg-muted))')}
+          </div>
+        </div>
+      )
+    }
+
+    case 'chart': {
+      const MAX_BAR = 100
+      return (
+        <div className="flex h-full flex-col justify-center">
+          {slide.heading && (
+            <h3
+              className="mb-10 text-balance"
+              style={{
+                fontFamily: 'var(--display-font)',
+                fontSize: 'clamp(28px, 5cqi, 54px)',
+                fontWeight: 'var(--display-weight)',
+                letterSpacing: 'var(--display-tracking)',
+                lineHeight: 1.1,
+              }}
+            >
+              {slide.heading}
+            </h3>
+          )}
+          <div
+            className="flex flex-col gap-5 rounded-2xl p-8"
+            style={{
+              background: 'color-mix(in srgb, var(--fg) 5%, transparent)',
+              border: '1px solid color-mix(in srgb, var(--fg) 8%, transparent)',
+            }}
+          >
+            {slide.items.map((item, i) => (
+              <div key={i} className="flex items-center gap-5">
+                <div
+                  className="shrink-0 text-right tabular-nums"
+                  style={{
+                    width: 'clamp(100px, 18cqi, 220px)',
+                    fontSize: 'clamp(12px, 1.6cqi, 18px)',
+                    fontWeight: 500,
+                    color: 'var(--fg-muted)',
+                  }}
+                >
+                  {item.label}
+                </div>
+                <div
+                  className="relative flex-1 overflow-hidden rounded-full"
+                  style={{
+                    height: 'clamp(20px, 3.5cqi, 36px)',
+                    background: 'color-mix(in srgb, var(--fg) 8%, transparent)',
+                    border: '1px solid color-mix(in srgb, var(--fg) 12%, transparent)',
+                  }}
+                >
+                  <div
+                    className="h-full rounded-full"
+                    style={{
+                      width: `${Math.max(5, (item.value / MAX_BAR) * 100)}%`,
+                      background: `color-mix(in srgb, var(--accent) ${85 - i * 10}%, var(--accent-2, var(--fg-muted)))`,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'flex-end',
+                      paddingRight: '0.75rem',
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontSize: 'clamp(10px, 1.3cqi, 14px)',
+                        fontWeight: 700,
+                        color: 'var(--bg)',
+                      }}
+                    >
+                      {item.displayValue}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )
+    }
   }
 }

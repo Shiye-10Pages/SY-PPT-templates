@@ -274,6 +274,129 @@ function parseImageChunk(lines: string[]): SlideAST {
   return { type: 'image', src: src ?? '', alt, caption }
 }
 
+/** `@chapter` directive: dark-invert section divider with optional sub-text. */
+function parseChapterChunk(lines: string[]): SlideAST {
+  const body = lines.slice(1)
+  let heading = ''
+  let sub: string | undefined
+  let number: string | undefined
+  for (const line of body) {
+    if (!line.trim()) continue
+    const h = line.match(/^##\s+(.+)$/)
+    if (h && !heading) { heading = h[1].trim(); continue }
+    const n = line.match(/^#\s+(.+)$/)
+    if (n && !heading) { heading = n[1].trim(); continue }
+    if (!heading) { heading = line.trim(); continue }
+    if (!sub) sub = line.trim()
+  }
+  // If heading looks like a number prefix (e.g. "01 章节名"), split it.
+  const numMatch = heading.match(/^(\d{1,2})\s+(.+)$/)
+  if (numMatch) { number = numMatch[1]; heading = numMatch[2] }
+  return { type: 'chapter', heading, sub, number }
+}
+
+/** `@split` directive: two equal columns separated by `|||` on its own line. */
+function parseSplitChunk(lines: string[]): SlideAST {
+  const reversed = lines[1]?.trim().toLowerCase() === 'reversed'
+  const body = reversed ? lines.slice(2) : lines.slice(1)
+  const dividerIdx = body.findIndex(l => l.trim() === '|||')
+  const leftLines = dividerIdx >= 0 ? body.slice(0, dividerIdx) : body
+  const rightLines = dividerIdx >= 0 ? body.slice(dividerIdx + 1) : []
+
+  function parseSide(sideLines: string[]) {
+    let heading: string | undefined
+    const { image, rest } = extractImage(sideLines)
+    for (const l of rest) {
+      const h = l.match(/^##\s+(.+)$/)
+      if (h && !heading) { heading = h[1].trim() }
+    }
+    const bodyLines = rest.filter(l => l.trim() && !/^##\s+/.test(l))
+    return { heading, body: bodyLines.join('\n').trim(), image: image?.src }
+  }
+
+  return { type: 'split', left: parseSide(leftLines), right: parseSide(rightLines), reversed }
+}
+
+/** `@stats` directive: KPI grid with `- value / label / note` rows. */
+function parseStatsChunk(lines: string[]): SlideAST {
+  const body = lines.slice(1)
+  let heading: string | undefined
+  const items: { value: string; label: string; note?: string }[] = []
+  for (const line of body) {
+    if (!line.trim()) continue
+    const h = line.match(/^##\s+(.+)$/)
+    if (h && !heading && items.length === 0) { heading = h[1].trim(); continue }
+    const raw = line.replace(/^[-*+]\s+/, '').trim()
+    const parts = raw.split('/').map(p => p.trim())
+    if (parts.length >= 2) {
+      items.push({ value: parts[0], label: parts[1], note: parts[2] || undefined })
+    }
+  }
+  return { type: 'stats', heading, items }
+}
+
+/** `@compare` directive: two columns separated by `||| Label` markers. */
+function parseCompareChunk(lines: string[]): SlideAST {
+  const body = lines.slice(1)
+  let heading: string | undefined
+  let aLabel = 'A'
+  let bLabel = 'B'
+  const aItems: string[] = []
+  const bItems: string[] = []
+  let current: 'a' | 'b' | null = null
+
+  for (const line of body) {
+    if (!line.trim()) continue
+    const h = line.match(/^##\s+(.+)$/)
+    if (h && !heading && current === null) { heading = h[1].trim(); continue }
+    const colMatch = line.match(/^\|\|\|\s*(.*)$/)
+    if (colMatch) {
+      if (current === null) { current = 'a'; aLabel = colMatch[1].trim() || 'A' }
+      else if (current === 'a') { current = 'b'; bLabel = colMatch[1].trim() || 'B' }
+      continue
+    }
+    const item = line.match(/^[-*+]\s+(.+)$/)
+    if (item) {
+      if (current === 'a') aItems.push(item[1].trim())
+      else if (current === 'b') bItems.push(item[1].trim())
+    }
+  }
+  return { type: 'compare', heading, a: { label: aLabel, items: aItems }, b: { label: bLabel, items: bItems } }
+}
+
+/** `@chart` directive: horizontal bar chart with `- label / value` rows. */
+function parseChartChunk(lines: string[]): SlideAST {
+  const body = lines.slice(1)
+  let heading: string | undefined
+  const raw: { label: string; displayValue: string; numericValue: number }[] = []
+
+  for (const line of body) {
+    if (!line.trim()) continue
+    const h = line.match(/^##\s+(.+)$/)
+    if (h && !heading && raw.length === 0) { heading = h[1].trim(); continue }
+    const rowRaw = line.replace(/^[-*+]\s+/, '').trim()
+    const parts = rowRaw.split('/').map(p => p.trim())
+    if (parts.length >= 2) {
+      const label = parts[0]
+      const valStr = parts[1]
+      const numericValue = parseFloat(valStr.replace(/[^0-9.]/g, '')) || 0
+      raw.push({ label, displayValue: valStr, numericValue })
+    }
+  }
+
+  // Normalise: if all values look like percentages (≤ 100), use them as-is.
+  // Otherwise normalise to the max value = 100%.
+  const allPercent = raw.every(r => r.numericValue <= 100)
+  const maxVal = Math.max(...raw.map(r => r.numericValue), 1)
+  const items = raw.map(r => ({
+    label: r.label,
+    displayValue: r.displayValue,
+    value: allPercent ? r.numericValue : (r.numericValue / maxVal) * 100,
+  }))
+
+  return { type: 'chart', heading, items }
+}
+
 function parseChunk(chunk: string, index: number): SlideAST {
   const lines = chunk.split('\n').map(l => l.trimEnd())
 
@@ -294,6 +417,21 @@ function parseChunk(chunk: string, index: number): SlideAST {
   }
   if (lines[0].trim().toLowerCase() === '@icons') {
     return parseIconsChunk(lines)
+  }
+  if (lines[0].trim().toLowerCase() === '@chapter') {
+    return parseChapterChunk(lines)
+  }
+  if (lines[0].trim().toLowerCase() === '@split') {
+    return parseSplitChunk(lines)
+  }
+  if (lines[0].trim().toLowerCase() === '@stats') {
+    return parseStatsChunk(lines)
+  }
+  if (lines[0].trim().toLowerCase() === '@compare') {
+    return parseCompareChunk(lines)
+  }
+  if (lines[0].trim().toLowerCase() === '@chart') {
+    return parseChartChunk(lines)
   }
 
   // ---- Cover detection: first slide with H1 ----

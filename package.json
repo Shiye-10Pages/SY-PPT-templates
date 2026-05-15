@@ -8,7 +8,9 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "screenshots": "node scripts/generate-screenshots.mjs"
+    "screenshots": "node scripts/generate-screenshots.mjs",
+    "blank-decks": "node scripts/generate-blank-decks.mjs",
+    "build-index": "node scripts/build-index.mjs"
   },
   "dependencies": {
     "html-to-image": "^1.11.13",

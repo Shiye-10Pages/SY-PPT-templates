@@ -1,9 +1,20 @@
 {
-  "version": "1.1.0",
+  "version": "1.2.0",
   "name": "SY-PPT-templates",
   "description": "20 templates for Markdown-driven PPT generation, 14 designed for Chinese local scenarios. Agent-native: clone the repo, read AGENTS.md, generate a single-file HTML deck. v1.1 adds custom aspect override, image embedding, a Lucide icon system, and an opt-in FX layer on 4 themes.",
-  "supported_ratios": ["16:9", "4:5", "9:16", "2.35:1", "3:4"],
-  "fx_themes": ["keynote-dark", "data-dashboard", "xhs-pastel", "swiss-paper"],
+  "supported_ratios": [
+    "16:9",
+    "4:5",
+    "9:16",
+    "2.35:1",
+    "3:4"
+  ],
+  "fx_themes": [
+    "keynote-dark",
+    "data-dashboard",
+    "xhs-pastel",
+    "swiss-paper"
+  ],
   "repo": "https://github.com/Shiye-10Pages/SY-PPT-templates",
   "tier_labels": {
     "A": "Chinese B2B / enterprise scenarios",
@@ -12,20 +23,106 @@
     "D": "International / classic"
   },
   "aspect_dimensions": {
-    "16:9": { "width": 1920, "height": 1080 },
-    "4:5": { "width": 1080, "height": 1350 },
-    "9:16": { "width": 1080, "height": 1920 },
-    "2.35:1": { "width": 1880, "height": 800 },
-    "3:4": { "width": 1080, "height": 1440 }
+    "16:9": {
+      "width": 1920,
+      "height": 1080
+    },
+    "4:5": {
+      "width": 1080,
+      "height": 1350
+    },
+    "9:16": {
+      "width": 1080,
+      "height": 1920
+    },
+    "2.35:1": {
+      "width": 1880,
+      "height": 800
+    },
+    "3:4": {
+      "width": 1080,
+      "height": 1440
+    }
   },
   "templates": [
+    {
+      "id": "edu-orange",
+      "name_zh": "教培招生",
+      "name_en": "Education / Tutoring",
+      "tier": "A",
+      "scenarios_zh": [
+        "K12",
+        "培训机构",
+        "成人课程",
+        "招生"
+      ],
+      "scenarios_en": [
+        "education",
+        "tutoring",
+        "enrollment",
+        "k12"
+      ],
+      "audience": "Education institutions, tutoring centers, parents",
+      "default_ratio": "4:5",
+      "vibe": "Warm, trustworthy, parent-friendly",
+      "best_for": "Pick this when the user mentions K12 / 培训班 / 招生 / 课程介绍 / 家长会",
+      "color_palette": "Warm orange (#F2762D) with trust blue (#1C4DFF) on cream",
+      "theme_path": "src/themes/edu-orange/theme.css",
+      "meta_path": "src/themes/edu-orange/meta.ts",
+      "example_path": "src/examples/edu-orange.md",
+      "screenshots": [],
+      "palette": {
+        "bg": "#FFF9F2",
+        "bg_alt": "#FFF9F2",
+        "fg": "#1A2540",
+        "fg_muted": "rgba(26, 37, 64, 0.6)",
+        "accent": "#F2762D",
+        "accent_2": "#1C4DFF"
+      },
+      "typography": {
+        "display": "PingFang SC",
+        "body": "PingFang SC",
+        "display_weight": 800,
+        "tracking": "-0.02em"
+      },
+      "slide_types": [
+        "cover",
+        "bigText",
+        "bigNumber",
+        "list",
+        "quote",
+        "section",
+        "priceCard",
+        "contact",
+        "qrCode",
+        "posterHero",
+        "image",
+        "iconRow",
+        "chapter",
+        "split",
+        "stats",
+        "compare",
+        "chart"
+      ]
+    },
     {
       "id": "govt-red",
       "name_zh": "政务汇报红",
       "name_en": "Government Red",
       "tier": "A",
-      "scenarios_zh": ["党建", "政府机关", "事业单位", "主题教育", "三会一课"],
-      "scenarios_en": ["government", "party-affairs", "public-sector", "annual-report"],
+      "scenarios_zh": [
+        "党建",
+        "政府机关",
+        "事业单位",
+        "主题教育",
+        "三会一课"
+      ],
+      "scenarios_en": [
+        "government",
+        "party-affairs",
+        "public-sector",
+        "annual-report"
+      ],
       "audience": "Government officials, party briefings, public-sector annual reports",
       "default_ratio": "16:9",
       "vibe": "Authoritative, traditional, ceremonious",
@@ -38,32 +135,291 @@
         "screenshots/govt-red-1.png",
         "screenshots/govt-red-2.png",
         "screenshots/govt-red-3.png"
+      ],
+      "palette": {
+        "bg": "#FFFFFF",
+        "bg_alt": "#FFFAF5",
+        "fg": "#1A1A1A",
+        "fg_muted": "rgba(26, 26, 26, 0.6)",
+        "accent": "#C8161D",
+        "accent_2": "#E6B800"
+      },
+      "typography": {
+        "display": "Songti SC / STSong (Serif)",
+        "body": "PingFang SC",
+        "display_weight": 700,
+        "tracking": "0"
+      },
+      "slide_types": [
+        "cover",
+        "bigText",
+        "bigNumber",
+        "list",
+        "quote",
+        "section",
+        "priceCard",
+        "contact",
+        "qrCode",
+        "posterHero",
+        "image",
+        "iconRow",
+        "chapter",
+        "split",
+        "stats",
+        "compare",
+        "chart"
       ]
     },
     {
-      "id": "soe-blue",
-      "name_zh": "国企蓝白",
-      "name_en": "SOE Navy Blue",
+      "id": "industry-graphite",
+      "name_zh": "制造业生产汇报",
+      "name_en": "Industrial / Manufacturing",
       "tier": "A",
-      "scenarios_zh": ["央企国企", "上市公司", "年度运营汇报"],
-      "scenarios_en": ["state-owned-enterprise", "listed-company", "annual-operating-report"],
-      "audience": "State-owned and listed company executives, annual reviews, investor relations",
+      "scenarios_zh": [
+        "工厂月报",
+        "工艺数据",
+        "安全生产"
+      ],
+      "scenarios_en": [
+        "manufacturing",
+        "factory-report",
+        "operations"
+      ],
+      "audience": "Plant managers, manufacturing operations, safety briefings",
       "default_ratio": "16:9",
-      "vibe": "Trustworthy, formal, annual-report feel",
-      "best_for": "Pick this when the user mentions 央企 / 国企 / 上市公司 / 年度报告 / 运营汇报",
-      "color_palette": "Deep navy blue (#003366) on white, dark gold accent (#B8985A)",
-      "theme_path": "src/themes/soe-blue/theme.css",
-      "meta_path": "src/themes/soe-blue/meta.ts",
-      "example_path": "src/examples/soe-blue.md",
-      "screenshots": []
+      "vibe": "Industrial, data-driven, engineering-grade",
+      "best_for": "Pick this when the user mentions 工厂 / 车间 / 生产 / 工艺 / 安全生产 / 月报",
+      "color_palette": "Graphite (#1A1A1A) on light gray with engineering orange (#FF6B00)",
+      "theme_path": "src/themes/industry-graphite/theme.css",
+      "meta_path": "src/themes/industry-graphite/meta.ts",
+      "example_path": "src/examples/industry-graphite.md",
+      "screenshots": [],
+      "palette": {
+        "bg": "#F5F5F5",
+        "bg_alt": "#E8E8E8",
+        "fg": "#1A1A1A",
+        "fg_muted": "rgba(26, 26, 26, 0.6)",
+        "accent": "#FF6B00",
+        "accent_2": "#1A1A1A"
+      },
+      "typography": {
+        "display": "PingFang SC",
+        "body": "JetBrains Mono",
+        "display_weight": 800,
+        "tracking": "-0.01em"
+      },
+      "slide_types": [
+        "cover",
+        "bigText",
+        "bigNumber",
+        "list",
+        "quote",
+        "section",
+        "priceCard",
+        "contact",
+        "qrCode",
+        "posterHero",
+        "image",
+        "iconRow",
+        "chapter",
+        "split",
+        "stats",
+        "compare",
+        "chart"
+      ]
+    },
+    {
+      "id": "insurance-teal",
+      "name_zh": "保险 / 理财",
+      "name_en": "Insurance / Wealth",
+      "tier": "A",
+      "scenarios_zh": [
+        "保险代理",
+        "理财顾问",
+        "客户陈述"
+      ],
+      "scenarios_en": [
+        "insurance",
+        "wealth-management",
+        "financial-advisor"
+      ],
+      "audience": "Insurance agents, financial advisors, client-facing wealth pitches",
+      "default_ratio": "4:5",
+      "vibe": "Trustworthy, calm, premium",
+      "best_for": "Pick this when the user mentions 保险 / 理财 / 财富 / 客户陈述 / 增额终身寿",
+      "color_palette": "Deep teal (#005670) with champagne gold (#C9A66B)",
+      "theme_path": "src/themes/insurance-teal/theme.css",
+      "meta_path": "src/themes/insurance-teal/meta.ts",
+      "example_path": "src/examples/insurance-teal.md",
+      "screenshots": [],
+      "palette": {
+        "bg": "#FAFBFC",
+        "bg_alt": "#EEF4F5",
+        "fg": "#0E2A33",
+        "fg_muted": "rgba(14, 42, 51, 0.6)",
+        "accent": "#005670",
+        "accent_2": "#C9A66B"
+      },
+      "typography": {
+        "display": "PingFang SC",
+        "body": "PingFang SC",
+        "display_weight": 700,
+        "tracking": "-0.01em"
+      },
+      "slide_types": [
+        "cover",
+        "bigText",
+        "bigNumber",
+        "list",
+        "quote",
+        "section",
+        "priceCard",
+        "contact",
+        "qrCode",
+        "posterHero",
+        "image",
+        "iconRow",
+        "chapter",
+        "split",
+        "stats",
+        "compare",
+        "chart"
+      ]
+    },
+    {
+      "id": "party-class",
+      "name_zh": "党建党课",
+      "name_en": "Party Class",
+      "tier": "A",
+      "scenarios_zh": [
+        "党课",
+        "主题教育",
+        "三会一课"
+      ],
+      "scenarios_en": [
+        "party-class",
+        "party-affairs",
+        "ideological-education"
+      ],
+      "audience": "Party branch secretaries, ideological educators",
+      "default_ratio": "16:9",
+      "vibe": "Solemn, ceremonial, ideological",
+      "best_for": "Pick this when the user mentions 党课 / 主题教育 / 三会一课 / 党员学习 / 支部",
+      "color_palette": "Party emblem red (#9B0E0E) with gold (#FFD700) on warm cream",
+      "theme_path": "src/themes/party-class/theme.css",
+      "meta_path": "src/themes/party-class/meta.ts",
+      "example_path": "src/examples/party-class.md",
+      "screenshots": [],
+      "palette": {
+        "bg": "#FFF8F2",
+        "bg_alt": "#FFFAF0",
+        "fg": "#2A0E0E",
+        "fg_muted": "rgba(42, 14, 14, 0.6)",
+        "accent": "#9B0E0E",
+        "accent_2": "#FFD700"
+      },
+      "typography": {
+        "display": "Songti SC / STSong (Serif)",
+        "body": "PingFang SC",
+        "display_weight": 700,
+        "tracking": "0"
+      },
+      "slide_types": [
+        "cover",
+        "bigText",
+        "bigNumber",
+        "list",
+        "quote",
+        "section",
+        "priceCard",
+        "contact",
+        "qrCode",
+        "posterHero",
+        "image",
+        "iconRow",
+        "chapter",
+        "split",
+        "stats",
+        "compare",
+        "chart"
+      ]
+    },
+    {
+      "id": "realestate-deepgray",
+      "name_zh": "房产销售",
+      "name_en": "Real Estate",
+      "tier": "A",
+      "scenarios_zh": [
+        "楼盘开盘",
+        "户型介绍",
+        "二手房急售"
+      ],
+      "scenarios_en": [
+        "real-estate",
+        "property-sales",
+        "house-listing"
+      ],
+      "audience": "Property sales, real-estate agents, developers",
+      "default_ratio": "4:5",
+      "vibe": "Premium, restrained, dark and gold",
+      "best_for": "Pick this when the user mentions 楼盘 / 户型 / 房产 / 急售 / 看房",
+      "color_palette": "Deep grayish-blue (#1F2A3C) with dark gold (#A48155) on warm off-white",
+      "theme_path": "src/themes/realestate-deepgray/theme.css",
+      "meta_path": "src/themes/realestate-deepgray/meta.ts",
+      "example_path": "src/examples/realestate-deepgray.md",
+      "screenshots": [],
+      "palette": {
+        "bg": "#F4F2EE",
+        "bg_alt": "#F4F2EE",
+        "fg": "#1F2A3C",
+        "fg_muted": "rgba(31, 42, 60, 0.55)",
+        "accent": "#A48155",
+        "accent_2": "#1F2A3C"
+      },
+      "typography": {
+        "display": "Songti SC / STSong (Serif)",
+        "body": "PingFang SC",
+        "display_weight": 600,
+        "tracking": "-0.01em"
+      },
+      "slide_types": [
+        "cover",
+        "bigText",
+        "bigNumber",
+        "list",
+        "quote",
+        "section",
+        "priceCard",
+        "contact",
+        "qrCode",
+        "posterHero",
+        "image",
+        "iconRow",
+        "chapter",
+        "split",
+        "stats",
+        "compare",
+        "chart"
+      ]
     },
     {
       "id": "restaurant-promo",
       "name_zh": "餐饮促销",
       "name_en": "Restaurant Promo",
       "tier": "A",
-      "scenarios_zh": ["门店周年庆", "节日活动", "朋友圈直发", "促销", "买一送一"],
-      "scenarios_en": ["restaurant", "store-anniversary", "festival-promo", "wechat-moments"],
+      "scenarios_zh": [
+        "门店周年庆",
+        "节日活动",
+        "朋友圈直发",
+        "促销",
+        "买一送一"
+      ],
+      "scenarios_en": [
+        "restaurant",
+        "store-anniversary",
+        "festival-promo",
+        "wechat-moments"
+      ],
       "audience": "Restaurant owners, store managers, F&B operators",
       "default_ratio": "4:5",
       "vibe": "Warm, celebratory, big bold prices",
@@ -76,172 +432,114 @@
         "screenshots/restaurant-promo-1.png",
         "screenshots/restaurant-promo-2.png",
         "screenshots/restaurant-promo-3.png"
+      ],
+      "palette": {
+        "bg": "#FFF8E7",
+        "bg_alt": "#FFEDC2",
+        "fg": "#2A1810",
+        "fg_muted": "rgba(42, 24, 16, 0.55)",
+        "accent": "#E63946",
+        "accent_2": "#FFB400"
+      },
+      "typography": {
+        "display": "PingFang SC",
+        "body": "PingFang SC",
+        "display_weight": 900,
+        "tracking": "-0.02em"
+      },
+      "slide_types": [
+        "cover",
+        "bigText",
+        "bigNumber",
+        "list",
+        "quote",
+        "section",
+        "priceCard",
+        "contact",
+        "qrCode",
+        "posterHero",
+        "image",
+        "iconRow",
+        "chapter",
+        "split",
+        "stats",
+        "compare",
+        "chart"
       ]
     },
     {
-      "id": "edu-orange",
-      "name_zh": "教培招生",
-      "name_en": "Education / Tutoring",
+      "id": "soe-blue",
+      "name_zh": "国企蓝白",
+      "name_en": "SOE Navy Blue",
       "tier": "A",
-      "scenarios_zh": ["K12", "培训机构", "成人课程", "招生"],
-      "scenarios_en": ["education", "tutoring", "enrollment", "k12"],
-      "audience": "Education institutions, tutoring centers, parents",
-      "default_ratio": "4:5",
-      "vibe": "Warm, trustworthy, parent-friendly",
-      "best_for": "Pick this when the user mentions K12 / 培训班 / 招生 / 课程介绍 / 家长会",
-      "color_palette": "Warm orange (#F2762D) with trust blue (#1C4DFF) on cream",
-      "theme_path": "src/themes/edu-orange/theme.css",
-      "meta_path": "src/themes/edu-orange/meta.ts",
-      "example_path": "src/examples/edu-orange.md",
-      "screenshots": []
-    },
-    {
-      "id": "realestate-deepgray",
-      "name_zh": "房产销售",
-      "name_en": "Real Estate",
-      "tier": "A",
-      "scenarios_zh": ["楼盘开盘", "户型介绍", "二手房急售"],
-      "scenarios_en": ["real-estate", "property-sales", "house-listing"],
-      "audience": "Property sales, real-estate agents, developers",
-      "default_ratio": "4:5",
-      "vibe": "Premium, restrained, dark and gold",
-      "best_for": "Pick this when the user mentions 楼盘 / 户型 / 房产 / 急售 / 看房",
-      "color_palette": "Deep grayish-blue (#1F2A3C) with dark gold (#A48155) on warm off-white",
-      "theme_path": "src/themes/realestate-deepgray/theme.css",
-      "meta_path": "src/themes/realestate-deepgray/meta.ts",
-      "example_path": "src/examples/realestate-deepgray.md",
-      "screenshots": []
-    },
-    {
-      "id": "insurance-teal",
-      "name_zh": "保险 / 理财",
-      "name_en": "Insurance / Wealth",
-      "tier": "A",
-      "scenarios_zh": ["保险代理", "理财顾问", "客户陈述"],
-      "scenarios_en": ["insurance", "wealth-management", "financial-advisor"],
-      "audience": "Insurance agents, financial advisors, client-facing wealth pitches",
-      "default_ratio": "4:5",
-      "vibe": "Trustworthy, calm, premium",
-      "best_for": "Pick this when the user mentions 保险 / 理财 / 财富 / 客户陈述 / 增额终身寿",
-      "color_palette": "Deep teal (#005670) with champagne gold (#C9A66B)",
-      "theme_path": "src/themes/insurance-teal/theme.css",
-      "meta_path": "src/themes/insurance-teal/meta.ts",
-      "example_path": "src/examples/insurance-teal.md",
-      "screenshots": []
-    },
-    {
-      "id": "industry-graphite",
-      "name_zh": "制造业生产汇报",
-      "name_en": "Industrial / Manufacturing",
-      "tier": "A",
-      "scenarios_zh": ["工厂月报", "工艺数据", "安全生产"],
-      "scenarios_en": ["manufacturing", "factory-report", "operations"],
-      "audience": "Plant managers, manufacturing operations, safety briefings",
+      "scenarios_zh": [
+        "央企国企",
+        "上市公司",
+        "年度运营汇报"
+      ],
+      "scenarios_en": [
+        "state-owned-enterprise",
+        "listed-company",
+        "annual-operating-report"
+      ],
+      "audience": "State-owned and listed company executives, annual reviews, investor relations",
       "default_ratio": "16:9",
-      "vibe": "Industrial, data-driven, engineering-grade",
-      "best_for": "Pick this when the user mentions 工厂 / 车间 / 生产 / 工艺 / 安全生产 / 月报",
-      "color_palette": "Graphite (#1A1A1A) on light gray with engineering orange (#FF6B00)",
-      "theme_path": "src/themes/industry-graphite/theme.css",
-      "meta_path": "src/themes/industry-graphite/meta.ts",
-      "example_path": "src/examples/industry-graphite.md",
-      "screenshots": []
-    },
-    {
-      "id": "party-class",
-      "name_zh": "党建党课",
-      "name_en": "Party Class",
-      "tier": "A",
-      "scenarios_zh": ["党课", "主题教育", "三会一课"],
-      "scenarios_en": ["party-class", "party-affairs", "ideological-education"],
-      "audience": "Party branch secretaries, ideological educators",
-      "default_ratio": "16:9",
-      "vibe": "Solemn, ceremonial, ideological",
-      "best_for": "Pick this when the user mentions 党课 / 主题教育 / 三会一课 / 党员学习 / 支部",
-      "color_palette": "Party emblem red (#9B0E0E) with gold (#FFD700) on warm cream",
-      "theme_path": "src/themes/party-class/theme.css",
-      "meta_path": "src/themes/party-class/meta.ts",
-      "example_path": "src/examples/party-class.md",
-      "screenshots": []
-    },
-    {
-      "id": "xhs-pastel",
-      "name_zh": "小红书种草",
-      "name_en": "Xiaohongshu Pastel",
-      "tier": "B",
-      "scenarios_zh": ["测评", "攻略", "个人分享", "种草"],
-      "scenarios_en": ["xiaohongshu", "lifestyle", "product-review", "guide"],
-      "audience": "Xiaohongshu (RED) creators, lifestyle influencers",
-      "default_ratio": "3:4",
-      "vibe": "Soft, girly, scroll-stopping pastel",
-      "best_for": "Pick this when the user mentions 小红书 / 种草 / 测评 / 攻略 / 好物推荐",
-      "color_palette": "Cherry-blossom pink (#FFF5F7) with hot pink (#FF4D6D) and grape purple (#A06CD5)",
-      "theme_path": "src/themes/xhs-pastel/theme.css",
-      "meta_path": "src/themes/xhs-pastel/meta.ts",
-      "example_path": "src/examples/xhs-pastel.md",
-      "screenshots": [
-        "screenshots/xhs-pastel-1.png",
-        "screenshots/xhs-pastel-2.png",
-        "screenshots/xhs-pastel-3.png"
+      "vibe": "Trustworthy, formal, annual-report feel",
+      "best_for": "Pick this when the user mentions 央企 / 国企 / 上市公司 / 年度报告 / 运营汇报",
+      "color_palette": "Deep navy blue (#003366) on white, dark gold accent (#B8985A)",
+      "theme_path": "src/themes/soe-blue/theme.css",
+      "meta_path": "src/themes/soe-blue/meta.ts",
+      "example_path": "src/examples/soe-blue.md",
+      "screenshots": [],
+      "palette": {
+        "bg": "#FFFFFF",
+        "bg_alt": "#F4F7FB",
+        "fg": "#0B1F3A",
+        "fg_muted": "rgba(11, 31, 58, 0.6)",
+        "accent": "#003366",
+        "accent_2": "#B8985A"
+      },
+      "typography": {
+        "display": "PingFang SC",
+        "body": "PingFang SC",
+        "display_weight": 800,
+        "tracking": "-0.01em"
+      },
+      "slide_types": [
+        "cover",
+        "bigText",
+        "bigNumber",
+        "list",
+        "quote",
+        "section",
+        "priceCard",
+        "contact",
+        "qrCode",
+        "posterHero",
+        "image",
+        "iconRow",
+        "chapter",
+        "split",
+        "stats",
+        "compare",
+        "chart"
       ]
-    },
-    {
-      "id": "douyin-vertical",
-      "name_zh": "抖音直播预告",
-      "name_en": "Douyin Vertical",
-      "tier": "B",
-      "scenarios_zh": ["直播预热", "视频号封面", "9:16 海报"],
-      "scenarios_en": ["douyin", "tiktok", "live-stream-promo", "vertical-poster"],
-      "audience": "Douyin / TikTok live streamers, short-video creators",
-      "default_ratio": "9:16",
-      "vibe": "Glitchy, neon, scroll-stopping vertical",
-      "best_for": "Pick this when the user mentions 抖音 / 直播预告 / 视频号 / 9:16 海报 / 倒计时",
-      "color_palette": "Pure black with Douyin red (#FE2C55) and Douyin cyan (#25F4EE)",
-      "theme_path": "src/themes/douyin-vertical/theme.css",
-      "meta_path": "src/themes/douyin-vertical/meta.ts",
-      "example_path": "src/examples/douyin-vertical.md",
-      "screenshots": []
-    },
-    {
-      "id": "mp-horizontal",
-      "name_zh": "公众号头图",
-      "name_en": "WeChat Public Account Hero",
-      "tier": "B",
-      "scenarios_zh": ["公众号文章封面", "横版分享"],
-      "scenarios_en": ["wechat-public-account", "article-hero", "horizontal-share"],
-      "audience": "WeChat public account editors, content marketers",
-      "default_ratio": "2.35:1",
-      "vibe": "Headline-friendly, ultrawide cinematic",
-      "best_for": "Pick this when the user mentions 公众号 / 头图 / 文章封面 / 横版海报",
-      "color_palette": "Clean white with WeChat green (#07C160) accents",
-      "theme_path": "src/themes/mp-horizontal/theme.css",
-      "meta_path": "src/themes/mp-horizontal/meta.ts",
-      "example_path": "src/examples/mp-horizontal.md",
-      "screenshots": []
-    },
-    {
-      "id": "wechat-share",
-      "name_zh": "朋友圈分享",
-      "name_en": "WeChat Moments Share",
-      "tier": "B",
-      "scenarios_zh": ["年终总结", "长图分享", "系统感"],
-      "scenarios_en": ["wechat-moments", "year-in-review", "long-image"],
-      "audience": "Anyone sharing a long-form personal recap to WeChat Moments",
-      "default_ratio": "4:5",
-      "vibe": "Clean iOS system feel, WeChat-native",
-      "best_for": "Pick this when the user mentions 朋友圈 / 年终总结 / 长图 / 个人复盘",
-      "color_palette": "White with WeChat green (#07C160) accents, PingFang typography",
-      "theme_path": "src/themes/wechat-share/theme.css",
-      "meta_path": "src/themes/wechat-share/meta.ts",
-      "example_path": "src/examples/wechat-share.md",
-      "screenshots": []
     },
     {
       "id": "book-quote",
       "name_zh": "读书金句",
       "name_en": "Book Quote",
       "tier": "B",
-      "scenarios_zh": ["阅读分享", "笔记摘抄", "读后感"],
-      "scenarios_en": ["reading", "book-notes", "literary-quote"],
+      "scenarios_zh": [
+        "阅读分享",
+        "笔记摘抄",
+        "读后感"
+      ],
+      "scenarios_en": [
+        "reading",
+        "book-notes",
+        "literary-quote"
+      ],
       "audience": "Book club hosts, readers sharing notes, literary creators",
       "default_ratio": "4:5",
       "vibe": "Literary, kraft-paper, serif and warm",
@@ -254,6 +552,155 @@
         "screenshots/book-quote-1.png",
         "screenshots/book-quote-2.png",
         "screenshots/book-quote-3.png"
+      ],
+      "palette": {
+        "bg": "#E8DCC0",
+        "bg_alt": "#DCC9A8",
+        "fg": "#3D2817",
+        "fg_muted": "rgba(61, 40, 23, 0.6)",
+        "accent": "#8B4513",
+        "accent_2": "#3D2817"
+      },
+      "typography": {
+        "display": "Songti SC / STSong (Serif)",
+        "body": "Iowan Old Style",
+        "display_weight": 700,
+        "tracking": "-0.005em"
+      },
+      "slide_types": [
+        "cover",
+        "bigText",
+        "bigNumber",
+        "list",
+        "quote",
+        "section",
+        "priceCard",
+        "contact",
+        "qrCode",
+        "posterHero",
+        "image",
+        "iconRow",
+        "chapter",
+        "split",
+        "stats",
+        "compare",
+        "chart"
+      ]
+    },
+    {
+      "id": "douyin-vertical",
+      "name_zh": "抖音直播预告",
+      "name_en": "Douyin Vertical",
+      "tier": "B",
+      "scenarios_zh": [
+        "直播预热",
+        "视频号封面",
+        "9:16 海报"
+      ],
+      "scenarios_en": [
+        "douyin",
+        "tiktok",
+        "live-stream-promo",
+        "vertical-poster"
+      ],
+      "audience": "Douyin / TikTok live streamers, short-video creators",
+      "default_ratio": "9:16",
+      "vibe": "Glitchy, neon, scroll-stopping vertical",
+      "best_for": "Pick this when the user mentions 抖音 / 直播预告 / 视频号 / 9:16 海报 / 倒计时",
+      "color_palette": "Pure black with Douyin red (#FE2C55) and Douyin cyan (#25F4EE)",
+      "theme_path": "src/themes/douyin-vertical/theme.css",
+      "meta_path": "src/themes/douyin-vertical/meta.ts",
+      "example_path": "src/examples/douyin-vertical.md",
+      "screenshots": [],
+      "palette": {
+        "bg": "#000000",
+        "bg_alt": "#1a0a14",
+        "fg": "#FFFFFF",
+        "fg_muted": "rgba(255, 255, 255, 0.6)",
+        "accent": "#FE2C55",
+        "accent_2": "#25F4EE"
+      },
+      "typography": {
+        "display": "PingFang SC",
+        "body": "PingFang SC",
+        "display_weight": 900,
+        "tracking": "-0.03em"
+      },
+      "slide_types": [
+        "cover",
+        "bigText",
+        "bigNumber",
+        "list",
+        "quote",
+        "section",
+        "priceCard",
+        "contact",
+        "qrCode",
+        "posterHero",
+        "image",
+        "iconRow",
+        "chapter",
+        "split",
+        "stats",
+        "compare",
+        "chart"
+      ]
+    },
+    {
+      "id": "mp-horizontal",
+      "name_zh": "公众号头图",
+      "name_en": "WeChat Public Account Hero",
+      "tier": "B",
+      "scenarios_zh": [
+        "公众号文章封面",
+        "横版分享"
+      ],
+      "scenarios_en": [
+        "wechat-public-account",
+        "article-hero",
+        "horizontal-share"
+      ],
+      "audience": "WeChat public account editors, content marketers",
+      "default_ratio": "2.35:1",
+      "vibe": "Headline-friendly, ultrawide cinematic",
+      "best_for": "Pick this when the user mentions 公众号 / 头图 / 文章封面 / 横版海报",
+      "color_palette": "Clean white with WeChat green (#07C160) accents",
+      "theme_path": "src/themes/mp-horizontal/theme.css",
+      "meta_path": "src/themes/mp-horizontal/meta.ts",
+      "example_path": "src/examples/mp-horizontal.md",
+      "screenshots": [],
+      "palette": {
+        "bg": "#FFFFFF",
+        "bg_alt": "#F0FAF4",
+        "fg": "#0E2A1E",
+        "fg_muted": "rgba(14, 42, 30, 0.6)",
+        "accent": "#07C160",
+        "accent_2": "#0E2A1E"
+      },
+      "typography": {
+        "display": "PingFang SC",
+        "body": "PingFang SC",
+        "display_weight": 800,
+        "tracking": "-0.02em"
+      },
+      "slide_types": [
+        "cover",
+        "bigText",
+        "bigNumber",
+        "list",
+        "quote",
+        "section",
+        "priceCard",
+        "contact",
+        "qrCode",
+        "posterHero",
+        "image",
+        "iconRow",
+        "chapter",
+        "split",
+        "stats",
+        "compare",
+        "chart"
       ]
     },
     {
@@ -261,8 +708,16 @@
       "name_zh": "知识科普",
       "name_en": "Science Popularization",
       "tier": "B",
-      "scenarios_zh": ["冷知识", "科普卡片", "长文配图"],
-      "scenarios_en": ["science-popularization", "trivia", "explainer"],
+      "scenarios_zh": [
+        "冷知识",
+        "科普卡片",
+        "长文配图"
+      ],
+      "scenarios_en": [
+        "science-popularization",
+        "trivia",
+        "explainer"
+      ],
       "audience": "Science communicators, educators creating shareable explainers",
       "default_ratio": "4:5",
       "vibe": "Authoritative, calm, intellectual blue",
@@ -271,15 +726,353 @@
       "theme_path": "src/themes/sci-popular/theme.css",
       "meta_path": "src/themes/sci-popular/meta.ts",
       "example_path": "src/examples/sci-popular.md",
-      "screenshots": []
+      "screenshots": [],
+      "palette": {
+        "bg": "#F8F6F1",
+        "bg_alt": "#F8F6F1",
+        "fg": "#1B1B1B",
+        "fg_muted": "rgba(27, 27, 27, 0.55)",
+        "accent": "#0066CC",
+        "accent_2": "#1B1B1B"
+      },
+      "typography": {
+        "display": "Songti SC / STSong (Serif)",
+        "body": "PingFang SC",
+        "display_weight": 700,
+        "tracking": "-0.01em"
+      },
+      "slide_types": [
+        "cover",
+        "bigText",
+        "bigNumber",
+        "list",
+        "quote",
+        "section",
+        "priceCard",
+        "contact",
+        "qrCode",
+        "posterHero",
+        "image",
+        "iconRow",
+        "chapter",
+        "split",
+        "stats",
+        "compare",
+        "chart"
+      ]
+    },
+    {
+      "id": "wechat-share",
+      "name_zh": "朋友圈分享",
+      "name_en": "WeChat Moments Share",
+      "tier": "B",
+      "scenarios_zh": [
+        "年终总结",
+        "长图分享",
+        "系统感"
+      ],
+      "scenarios_en": [
+        "wechat-moments",
+        "year-in-review",
+        "long-image"
+      ],
+      "audience": "Anyone sharing a long-form personal recap to WeChat Moments",
+      "default_ratio": "4:5",
+      "vibe": "Clean iOS system feel, WeChat-native",
+      "best_for": "Pick this when the user mentions 朋友圈 / 年终总结 / 长图 / 个人复盘",
+      "color_palette": "White with WeChat green (#07C160) accents, PingFang typography",
+      "theme_path": "src/themes/wechat-share/theme.css",
+      "meta_path": "src/themes/wechat-share/meta.ts",
+      "example_path": "src/examples/wechat-share.md",
+      "screenshots": [],
+      "palette": {
+        "bg": "#FFFFFF",
+        "bg_alt": "#FAFAFA",
+        "fg": "#1A1A1A",
+        "fg_muted": "rgba(26, 26, 26, 0.55)",
+        "accent": "#07C160",
+        "accent_2": "#1A1A1A"
+      },
+      "typography": {
+        "display": "PingFang SC",
+        "body": "PingFang SC",
+        "display_weight": 600,
+        "tracking": "-0.01em"
+      },
+      "slide_types": [
+        "cover",
+        "bigText",
+        "bigNumber",
+        "list",
+        "quote",
+        "section",
+        "priceCard",
+        "contact",
+        "qrCode",
+        "posterHero",
+        "image",
+        "iconRow",
+        "chapter",
+        "split",
+        "stats",
+        "compare",
+        "chart"
+      ]
+    },
+    {
+      "id": "xhs-pastel",
+      "name_zh": "小红书种草",
+      "name_en": "Xiaohongshu Pastel",
+      "tier": "B",
+      "scenarios_zh": [
+        "测评",
+        "攻略",
+        "个人分享",
+        "种草"
+      ],
+      "scenarios_en": [
+        "xiaohongshu",
+        "lifestyle",
+        "product-review",
+        "guide"
+      ],
+      "audience": "Xiaohongshu (RED) creators, lifestyle influencers",
+      "default_ratio": "3:4",
+      "vibe": "Soft, girly, scroll-stopping pastel",
+      "best_for": "Pick this when the user mentions 小红书 / 种草 / 测评 / 攻略 / 好物推荐",
+      "color_palette": "Cherry-blossom pink (#FFF5F7) with hot pink (#FF4D6D) and grape purple (#A06CD5)",
+      "theme_path": "src/themes/xhs-pastel/theme.css",
+      "meta_path": "src/themes/xhs-pastel/meta.ts",
+      "example_path": "src/examples/xhs-pastel.md",
+      "screenshots": [
+        "screenshots/xhs-pastel-1.png",
+        "screenshots/xhs-pastel-2.png",
+        "screenshots/xhs-pastel-3.png"
+      ],
+      "palette": {
+        "bg": "#FFF5F7",
+        "bg_alt": "#FFE6EC",
+        "fg": "#2A1A22",
+        "fg_muted": "rgba(42, 26, 34, 0.55)",
+        "accent": "#FF4D6D",
+        "accent_2": "#A06CD5"
+      },
+      "typography": {
+        "display": "PingFang SC",
+        "body": "PingFang SC",
+        "display_weight": 800,
+        "tracking": "-0.02em"
+      },
+      "slide_types": [
+        "cover",
+        "bigText",
+        "bigNumber",
+        "list",
+        "quote",
+        "section",
+        "priceCard",
+        "contact",
+        "qrCode",
+        "posterHero",
+        "image",
+        "iconRow",
+        "chapter",
+        "split",
+        "stats",
+        "compare",
+        "chart"
+      ]
+    },
+    {
+      "id": "data-dashboard",
+      "name_zh": "数据仪表板",
+      "name_en": "Data Dashboard",
+      "tier": "C",
+      "scenarios_zh": [
+        "KPI 看板",
+        "季度复盘",
+        "数据驱动汇报"
+      ],
+      "scenarios_en": [
+        "dashboard",
+        "kpi-review",
+        "quarterly-business-review"
+      ],
+      "audience": "Operations leads, data analysts, exec reviewers",
+      "default_ratio": "16:9",
+      "vibe": "Dark theme, numbers-first, cyan/green highlights",
+      "best_for": "Pick this when the user mentions KPI / 看板 / 数据复盘 / QBR / 季度业绩",
+      "color_palette": "Dark (#0F1419) with electric cyan (#00D4FF) and green (#00FF88)",
+      "theme_path": "src/themes/data-dashboard/theme.css",
+      "meta_path": "src/themes/data-dashboard/meta.ts",
+      "example_path": "src/examples/data-dashboard.md",
+      "screenshots": [],
+      "palette": {
+        "bg": "#0F1419",
+        "bg_alt": "#14202B",
+        "fg": "#E6EDF3",
+        "fg_muted": "rgba(230, 237, 243, 0.55)",
+        "accent": "#00D4FF",
+        "accent_2": "#00FF88"
+      },
+      "typography": {
+        "display": "Inter",
+        "body": "JetBrains Mono",
+        "display_weight": 800,
+        "tracking": "-0.02em"
+      },
+      "slide_types": [
+        "cover",
+        "bigText",
+        "bigNumber",
+        "list",
+        "quote",
+        "section",
+        "priceCard",
+        "contact",
+        "qrCode",
+        "posterHero",
+        "image",
+        "iconRow",
+        "chapter",
+        "split",
+        "stats",
+        "compare",
+        "chart"
+      ]
+    },
+    {
+      "id": "meeting-minutes",
+      "name_zh": "会议纪要",
+      "name_en": "Meeting Minutes",
+      "tier": "C",
+      "scenarios_zh": [
+        "团队周会",
+        "决议同步",
+        "内部沟通"
+      ],
+      "scenarios_en": [
+        "meeting-minutes",
+        "team-sync",
+        "internal-comms"
+      ],
+      "audience": "Engineering / product team leads, internal weekly sync owners",
+      "default_ratio": "16:9",
+      "vibe": "Efficient, white-and-black with red highlights",
+      "best_for": "Pick this when the user mentions 周会 / 纪要 / 决议 / 团队同步 / 内部沟通",
+      "color_palette": "White with ink text and red key-point highlights (#E63946)",
+      "theme_path": "src/themes/meeting-minutes/theme.css",
+      "meta_path": "src/themes/meeting-minutes/meta.ts",
+      "example_path": "src/examples/meeting-minutes.md",
+      "screenshots": [],
+      "palette": {
+        "bg": "#FFFFFF",
+        "bg_alt": "#FFFFFF",
+        "fg": "#1A1A1A",
+        "fg_muted": "rgba(26, 26, 26, 0.6)",
+        "accent": "#E63946",
+        "accent_2": "#1A1A1A"
+      },
+      "typography": {
+        "display": "PingFang SC",
+        "body": "JetBrains Mono",
+        "display_weight": 700,
+        "tracking": "-0.01em"
+      },
+      "slide_types": [
+        "cover",
+        "bigText",
+        "bigNumber",
+        "list",
+        "quote",
+        "section",
+        "priceCard",
+        "contact",
+        "qrCode",
+        "posterHero",
+        "image",
+        "iconRow",
+        "chapter",
+        "split",
+        "stats",
+        "compare",
+        "chart"
+      ]
+    },
+    {
+      "id": "resume-card",
+      "name_zh": "个人简历 / 作品集",
+      "name_en": "Resume / Portfolio",
+      "tier": "C",
+      "scenarios_zh": [
+        "求职",
+        "接单",
+        "一页纸自我介绍"
+      ],
+      "scenarios_en": [
+        "resume",
+        "portfolio",
+        "self-intro"
+      ],
+      "audience": "Job seekers, freelancers, anyone presenting a personal brand",
+      "default_ratio": "4:5",
+      "vibe": "Professional, restrained, single-accent serif",
+      "best_for": "Pick this when the user mentions 简历 / 作品集 / 自我介绍 / 接单 / 求职",
+      "color_palette": "Off-white (#FAFAF7) with ink text and single blue accent (#2D6CDF)",
+      "theme_path": "src/themes/resume-card/theme.css",
+      "meta_path": "src/themes/resume-card/meta.ts",
+      "example_path": "src/examples/resume-card.md",
+      "screenshots": [],
+      "palette": {
+        "bg": "#FAFAF7",
+        "bg_alt": "#FAFAF7",
+        "fg": "#1A1A1A",
+        "fg_muted": "rgba(26, 26, 26, 0.55)",
+        "accent": "#2D6CDF",
+        "accent_2": "#1A1A1A"
+      },
+      "typography": {
+        "display": "Songti SC / STSong (Serif)",
+        "body": "PingFang SC",
+        "display_weight": 700,
+        "tracking": "-0.01em"
+      },
+      "slide_types": [
+        "cover",
+        "bigText",
+        "bigNumber",
+        "list",
+        "quote",
+        "section",
+        "priceCard",
+        "contact",
+        "qrCode",
+        "posterHero",
+        "image",
+        "iconRow",
+        "chapter",
+        "split",
+        "stats",
+        "compare",
+        "chart"
+      ]
     },
     {
       "id": "solo-founder",
       "name_zh": "一人公司 Pitch",
       "name_en": "Solo Founder Pitch",
       "tier": "C",
-      "scenarios_zh": ["创业 BP", "投资人 pitch", "个人故事"],
-      "scenarios_en": ["startup", "pitch-deck", "solo-business", "founder-story"],
+      "scenarios_zh": [
+        "创业 BP",
+        "投资人 pitch",
+        "个人故事"
+      ],
+      "scenarios_en": [
+        "startup",
+        "pitch-deck",
+        "solo-business",
+        "founder-story"
+      ],
       "audience": "Solo founders, indie hackers, one-person businesses pitching investors or customers",
       "default_ratio": "16:9",
       "vibe": "Minimal, confident, founder-grade, pure black and white",
@@ -292,66 +1085,55 @@
         "screenshots/solo-founder-1.png",
         "screenshots/solo-founder-2.png",
         "screenshots/solo-founder-3.png"
+      ],
+      "palette": {
+        "bg": "#0A0A0A",
+        "bg_alt": "#0A0A0A",
+        "fg": "#FFFFFF",
+        "fg_muted": "rgba(255, 255, 255, 0.6)",
+        "accent": "#FFFFFF",
+        "accent_2": "#FFFFFF"
+      },
+      "typography": {
+        "display": "Inter",
+        "body": "Inter",
+        "display_weight": 900,
+        "tracking": "-0.04em"
+      },
+      "slide_types": [
+        "cover",
+        "bigText",
+        "bigNumber",
+        "list",
+        "quote",
+        "section",
+        "priceCard",
+        "contact",
+        "qrCode",
+        "posterHero",
+        "image",
+        "iconRow",
+        "chapter",
+        "split",
+        "stats",
+        "compare",
+        "chart"
       ]
-    },
-    {
-      "id": "resume-card",
-      "name_zh": "个人简历 / 作品集",
-      "name_en": "Resume / Portfolio",
-      "tier": "C",
-      "scenarios_zh": ["求职", "接单", "一页纸自我介绍"],
-      "scenarios_en": ["resume", "portfolio", "self-intro"],
-      "audience": "Job seekers, freelancers, anyone presenting a personal brand",
-      "default_ratio": "4:5",
-      "vibe": "Professional, restrained, single-accent serif",
-      "best_for": "Pick this when the user mentions 简历 / 作品集 / 自我介绍 / 接单 / 求职",
-      "color_palette": "Off-white (#FAFAF7) with ink text and single blue accent (#2D6CDF)",
-      "theme_path": "src/themes/resume-card/theme.css",
-      "meta_path": "src/themes/resume-card/meta.ts",
-      "example_path": "src/examples/resume-card.md",
-      "screenshots": []
-    },
-    {
-      "id": "meeting-minutes",
-      "name_zh": "会议纪要",
-      "name_en": "Meeting Minutes",
-      "tier": "C",
-      "scenarios_zh": ["团队周会", "决议同步", "内部沟通"],
-      "scenarios_en": ["meeting-minutes", "team-sync", "internal-comms"],
-      "audience": "Engineering / product team leads, internal weekly sync owners",
-      "default_ratio": "16:9",
-      "vibe": "Efficient, white-and-black with red highlights",
-      "best_for": "Pick this when the user mentions 周会 / 纪要 / 决议 / 团队同步 / 内部沟通",
-      "color_palette": "White with ink text and red key-point highlights (#E63946)",
-      "theme_path": "src/themes/meeting-minutes/theme.css",
-      "meta_path": "src/themes/meeting-minutes/meta.ts",
-      "example_path": "src/examples/meeting-minutes.md",
-      "screenshots": []
-    },
-    {
-      "id": "data-dashboard",
-      "name_zh": "数据仪表板",
-      "name_en": "Data Dashboard",
-      "tier": "C",
-      "scenarios_zh": ["KPI 看板", "季度复盘", "数据驱动汇报"],
-      "scenarios_en": ["dashboard", "kpi-review", "quarterly-business-review"],
-      "audience": "Operations leads, data analysts, exec reviewers",
-      "default_ratio": "16:9",
-      "vibe": "Dark theme, numbers-first, cyan/green highlights",
-      "best_for": "Pick this when the user mentions KPI / 看板 / 数据复盘 / QBR / 季度业绩",
-      "color_palette": "Dark (#0F1419) with electric cyan (#00D4FF) and green (#00FF88)",
-      "theme_path": "src/themes/data-dashboard/theme.css",
-      "meta_path": "src/themes/data-dashboard/meta.ts",
-      "example_path": "src/examples/data-dashboard.md",
-      "screenshots": []
     },
     {
       "id": "keynote-dark",
       "name_zh": "Keynote · 发布会",
       "name_en": "Keynote Launch",
       "tier": "D",
-      "scenarios_zh": ["产品发布", "创业 pitch"],
-      "scenarios_en": ["product-launch", "keynote", "pitch"],
+      "scenarios_zh": [
+        "产品发布",
+        "创业 pitch"
+      ],
+      "scenarios_en": [
+        "product-launch",
+        "keynote",
+        "pitch"
+      ],
       "audience": "Product launches, big-stage announcements, founder keynotes",
       "default_ratio": "16:9",
       "vibe": "Apple-keynote DNA: cinematic black canvas, oversized type, indigo glow",
@@ -364,6 +1146,39 @@
         "screenshots/keynote-dark-1.png",
         "screenshots/keynote-dark-2.png",
         "screenshots/keynote-dark-3.png"
+      ],
+      "palette": {
+        "bg": "#0a0a0a",
+        "bg_alt": "#1a1a2e",
+        "fg": "#fafafa",
+        "fg_muted": "rgba(250, 250, 250, 0.6)",
+        "accent": "#6366f1",
+        "accent_2": "#818cf8"
+      },
+      "typography": {
+        "display": "Inter",
+        "body": "Inter",
+        "display_weight": 800,
+        "tracking": "-0.04em"
+      },
+      "slide_types": [
+        "cover",
+        "bigText",
+        "bigNumber",
+        "list",
+        "quote",
+        "section",
+        "priceCard",
+        "contact",
+        "qrCode",
+        "posterHero",
+        "image",
+        "iconRow",
+        "chapter",
+        "split",
+        "stats",
+        "compare",
+        "chart"
       ]
     },
     {
@@ -371,8 +1186,15 @@
       "name_zh": "Swiss · 瑞士极简",
       "name_en": "Swiss Paper",
       "tier": "D",
-      "scenarios_zh": ["编辑设计", "高端汇报"],
-      "scenarios_en": ["editorial", "swiss-design", "premium-report"],
+      "scenarios_zh": [
+        "编辑设计",
+        "高端汇报"
+      ],
+      "scenarios_en": [
+        "editorial",
+        "swiss-design",
+        "premium-report"
+      ],
       "audience": "Editorial designers, premium reports, design-conscious audiences",
       "default_ratio": "16:9",
       "vibe": "Swiss-grid editorial: cream paper, ink serif, red key accent",
@@ -381,7 +1203,41 @@
       "theme_path": "src/themes/swiss-paper/theme.css",
       "meta_path": "src/themes/swiss-paper/meta.ts",
       "example_path": "src/examples/swiss-paper.md",
-      "screenshots": []
+      "screenshots": [],
+      "palette": {
+        "bg": "#f5f4ef",
+        "bg_alt": "#f5f4ef",
+        "fg": "#111111",
+        "fg_muted": "rgba(17, 17, 17, 0.55)",
+        "accent": "#d72638",
+        "accent_2": "#d72638"
+      },
+      "typography": {
+        "display": "Songti SC / STSong (Serif)",
+        "body": "Inter",
+        "display_weight": 700,
+        "tracking": "-0.02em"
+      },
+      "slide_types": [
+        "cover",
+        "bigText",
+        "bigNumber",
+        "list",
+        "quote",
+        "section",
+        "priceCard",
+        "contact",
+        "qrCode",
+        "posterHero",
+        "image",
+        "iconRow",
+        "chapter",
+        "split",
+        "stats",
+        "compare",
+        "chart"
+      ]
     }
-  ]
+  ],
+  "dsl_version": "1.1"
 }

@@ -3,8 +3,9 @@ import { Editor } from './components/Editor'
 import { DeckPreview } from './components/DeckPreview'
 import { ExportBar } from './components/ExportBar'
 import { ThemeSwitcher } from './components/ThemeSwitcher'
-import { parseMarkdown } from './parser/parseMarkdown'
-import { DEFAULT_THEME_ID, getTheme } from './themes'
+import { AspectSwitcher } from './components/AspectSwitcher'
+import { parseAspectHint, parseMarkdown } from './parser/parseMarkdown'
+import { DEFAULT_THEME_ID, getTheme, type SlideAspect } from './themes'
 import { EXAMPLES, getExample } from './examples'
 
 const ALL_EXAMPLE_BODIES = new Set(Object.values(EXAMPLES))
@@ -12,12 +13,16 @@ const ALL_EXAMPLE_BODIES = new Set(Object.values(EXAMPLES))
 export default function App() {
   const [theme, setTheme] = useState(DEFAULT_THEME_ID)
   const [md, setMd] = useState(() => getExample(DEFAULT_THEME_ID))
+  const [aspectOverride, setAspectOverride] = useState<SlideAspect | null>(null)
   const [exportBusy, setExportBusy] = useState(false)
   const [pendingExample, setPendingExample] = useState<{ themeId: string; example: string } | null>(null)
   const deckRef = useRef<HTMLDivElement>(null)
 
   const themeMeta = getTheme(theme)
-  const aspect = themeMeta?.defaultAspect ?? '16:9'
+  const themeDefaultAspect: SlideAspect = themeMeta?.defaultAspect ?? '16:9'
+  const frontmatterAspect = useMemo(() => parseAspectHint(md), [md])
+  // Priority: explicit UI override > markdown `@ratio` frontmatter > theme default.
+  const aspect: SlideAspect = aspectOverride ?? frontmatterAspect ?? themeDefaultAspect
 
   const slides = useMemo(() => parseMarkdown(md), [md])
   const title = useMemo(() => {
@@ -28,6 +33,9 @@ export default function App() {
   const handleThemeChange = useCallback(
     (id: string) => {
       setTheme(id)
+      // Switching themes resets the manual aspect override so the new theme's
+      // default takes effect; the user can re-override after if they want.
+      setAspectOverride(null)
       const example = EXAMPLES[id]
       if (!example) return
       // If the user has edited away from any known example, ask before replacing.
@@ -56,6 +64,12 @@ export default function App() {
         </div>
         <div className="flex items-center gap-4">
           <ThemeSwitcher value={theme} onChange={handleThemeChange} disabled={exportBusy} />
+          <AspectSwitcher
+            value={aspect}
+            themeDefault={themeDefaultAspect}
+            onChange={setAspectOverride}
+            disabled={exportBusy}
+          />
           <div className="h-5 w-px bg-white/10" />
           <ExportBar deckRef={deckRef} title={title} aspect={aspect} onBusyChange={setExportBusy} />
         </div>

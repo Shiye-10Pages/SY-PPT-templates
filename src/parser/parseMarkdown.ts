@@ -1,4 +1,29 @@
 import type { ContactChannel, SlideAST } from './types'
+import type { SlideAspect } from '../themes/types'
+
+const ASPECT_DIRECTIVE_RE = /^@ratio\s+(16:9|4:5|9:16|2\.35:1|3:4)\s*$/i
+
+/** Read the optional `@ratio 9:16` frontmatter from the first non-empty line. */
+export function parseAspectHint(md: string): SlideAspect | undefined {
+  const lines = md.replace(/\r\n/g, '\n').split('\n')
+  let i = 0
+  while (i < lines.length && !lines[i].trim()) i++
+  if (i >= lines.length) return undefined
+  const m = lines[i].trim().match(ASPECT_DIRECTIVE_RE)
+  return m ? (m[1] as SlideAspect) : undefined
+}
+
+/** Remove the `@ratio` frontmatter line so it never reaches slide chunking. */
+function stripFrontmatter(md: string): string {
+  const normalized = md.replace(/\r\n/g, '\n')
+  const lines = normalized.split('\n')
+  let i = 0
+  while (i < lines.length && !lines[i].trim()) i++
+  if (i < lines.length && ASPECT_DIRECTIVE_RE.test(lines[i].trim())) {
+    return lines.slice(i + 1).join('\n')
+  }
+  return normalized
+}
 
 /**
  * Split markdown into per-slide chunks.
@@ -28,6 +53,25 @@ function splitChunks(md: string): string[] {
   }
   if (buf.length > 0) chunks.push(buf.join('\n').trim())
   return chunks.filter(Boolean)
+}
+
+const IMAGE_LINE_RE = /^!\[([^\]]*)\]\(([^)]+)\)$/
+
+/**
+ * Pull the first markdown-image line (`![alt](url)`) out of a chunk's lines.
+ * Returns the extracted image (if any) plus the remaining lines (image line removed).
+ */
+function extractImage(lines: string[]): { image?: { src: string; alt?: string }; rest: string[] } {
+  for (let i = 0; i < lines.length; i++) {
+    const m = lines[i].trim().match(IMAGE_LINE_RE)
+    if (m) {
+      const alt = m[1].trim() || undefined
+      const src = m[2].trim()
+      const rest = [...lines.slice(0, i), ...lines.slice(i + 1)]
+      return { image: { src, alt }, rest }
+    }
+  }
+  return { rest: lines }
 }
 
 const BIG_NUMBER_RE = /^[$￥]?\s*[+-]?\d+(?:[.,]\d+)?\s*(?:[%×]|[xXKMBkmb])?\s*$/
@@ -135,7 +179,8 @@ function parseQrChunk(lines: string[]): SlideAST {
 }
 
 function parsePosterChunk(lines: string[]): SlideAST {
-  const body = lines.slice(1)
+  // Lines after the `@poster` directive. Strip any `![](...)` image and remember it.
+  const { image, rest: body } = extractImage(lines.slice(1))
   let eyebrow: string | undefined
   let title = ''
   let subtitle: string | undefined
@@ -173,7 +218,60 @@ function parsePosterChunk(lines: string[]): SlideAST {
     eyebrow = undefined
   }
 
-  return { type: 'posterHero', eyebrow, title, subtitle, cta, countdown }
+  return { type: 'posterHero', eyebrow, title, subtitle, cta, countdown, image: image?.src }
+}
+
+/** `@icons` directive: a row of icon-label pairs. Body lines look like `- :icon-name: label text`. */
+function parseIconsChunk(lines: string[]): SlideAST {
+  const body = lines.slice(1)
+  let heading: string | undefined
+  const items: { icon: string; label: string }[] = []
+  for (const line of body) {
+    if (!line.trim()) continue
+    const h = line.match(/^##\s+(.+)$/)
+    if (h && !heading && items.length === 0) {
+      heading = h[1].trim()
+      continue
+    }
+    // accept `- :icon: label` or `:icon: label`
+    const item = line
+      .replace(/^[-*+]\s+/, '')
+      .trim()
+      .match(/^:([a-z0-9-]+):\s*(.*)$/i)
+    if (item) {
+      items.push({ icon: item[1].toLowerCase(), label: item[2].trim() })
+    }
+  }
+  return { type: 'iconRow', heading, items }
+}
+
+/** `@image <url>` directive: a single-image slide with optional caption line below. */
+function parseImageChunk(lines: string[]): SlideAST {
+  const body = lines.slice(1)
+  let src: string | undefined
+  let alt: string | undefined
+  let caption: string | undefined
+  for (const line of body) {
+    if (!line.trim()) continue
+    const md = line.trim().match(IMAGE_LINE_RE)
+    if (md && !src) {
+      src = md[2].trim()
+      alt = md[1].trim() || undefined
+      continue
+    }
+    if (!src && /^https?:\/\//.test(line.trim())) {
+      src = line.trim()
+      continue
+    }
+    if (!src && line.trim().startsWith('data:')) {
+      src = line.trim()
+      continue
+    }
+    if (src && !caption) {
+      caption = line.trim()
+    }
+  }
+  return { type: 'image', src: src ?? '', alt, caption }
 }
 
 function parseChunk(chunk: string, index: number): SlideAST {
@@ -191,13 +289,20 @@ function parseChunk(chunk: string, index: number): SlideAST {
   if (lines[0].trim().toLowerCase() === '@qr') {
     return parseQrChunk(lines)
   }
+  if (lines[0].trim().toLowerCase() === '@image') {
+    return parseImageChunk(lines)
+  }
+  if (lines[0].trim().toLowerCase() === '@icons') {
+    return parseIconsChunk(lines)
+  }
 
   // ---- Cover detection: first slide with H1 ----
   const h1Match = lines[0].match(/^#\s+(.+)$/)
   if (index === 0 && h1Match) {
     const title = h1Match[1].trim()
-    const rest = lines.slice(1).filter(l => l.trim()).join(' ').trim()
-    return { type: 'cover', title, subtitle: rest || undefined }
+    const { image, rest: afterImg } = extractImage(lines.slice(1))
+    const rest = afterImg.filter(l => l.trim()).join(' ').trim()
+    return { type: 'cover', title, subtitle: rest || undefined, image: image?.src }
   }
 
   // ---- Big text: single `# Title` or `## eyebrow + # Big` ----
@@ -283,10 +388,11 @@ function parseChunk(chunk: string, index: number): SlideAST {
   const headingMatch = lines[0].match(/^#{1,6}\s+(.+)$/)
   const sectionHeading = headingMatch ? headingMatch[1].trim() : ''
   const bodyLines = headingMatch ? lines.slice(1) : lines
-  const body = bodyLines.join('\n').trim()
-  return { type: 'section', heading: sectionHeading, body }
+  const { image, rest: textLines } = extractImage(bodyLines)
+  const body = textLines.join('\n').trim()
+  return { type: 'section', heading: sectionHeading, body, image: image?.src }
 }
 
 export function parseMarkdown(md: string): SlideAST[] {
-  return splitChunks(md).map(parseChunk)
+  return splitChunks(stripFrontmatter(md)).map(parseChunk)
 }

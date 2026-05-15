@@ -39,6 +39,35 @@
   transform: none;
 }
 
+/* Element-level stagger — children with [data-anim] animate in sequence
+   once the parent [data-slide-anim] gains .slide-visible.              */
+[data-slide-anim] [data-anim] {
+  opacity: 0;
+  transition: opacity 650ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 650ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-slide-anim] [data-anim="fade-up"]      { transform: translateY(24px); }
+[data-slide-anim] [data-anim="fade-in"]      { transform: none; }
+[data-slide-anim] [data-anim="reveal-right"] { transform: scaleX(0); transform-origin: left; }
+
+[data-slide-anim].slide-visible [data-anim] { opacity: 1; transform: none; }
+
+/* Stagger delay levels */
+[data-delay="0"] { transition-delay:   0ms; }
+[data-delay="1"] { transition-delay: 120ms; }
+[data-delay="2"] { transition-delay: 240ms; }
+[data-delay="3"] { transition-delay: 360ms; }
+[data-delay="4"] { transition-delay: 480ms; }
+[data-delay="5"] { transition-delay: 600ms; }
+[data-delay="6"] { transition-delay: 720ms; }
+
+/* Ensure elements are visible during card export (.exporting) */
+.exporting [data-anim] {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
 /* Container query context: typography inside scales with slide width, not viewport. */
 [data-slide-inner] {
   container-type: inline-size;

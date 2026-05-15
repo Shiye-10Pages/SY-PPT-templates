@@ -34,8 +34,52 @@ export function exportHtml(deckRoot: HTMLElement, opts?: { title?: string }): st
 </head>
 <body data-theme="${escapeAttr(theme)}">
 ${html}
+<script>${exportedDeckScript()}</script>
 </body>
 </html>`
+}
+
+/**
+ * Tiny self-contained runtime injected into every exported HTML. Mirrors the
+ * effects that DeckPreview.tsx runs in the editor:
+ *  - Promote each theme's `--fx-foo: 1` CSS var to a matching `data-fx-foo`
+ *    attribute on the deck root so fx.css selectors light up.
+ *  - Track mouse position into `--mx`/`--my` for the cursor-glow effect.
+ *  - Run the IntersectionObserver that adds `.slide-visible` for entry anims.
+ * Total weight ≈ 1.2 KB unminified.
+ */
+function exportedDeckScript(): string {
+  return `
+(function(){
+  var FX=['mouse-glow','hover-lift','bg-breathe','accent-rule','bignum-pop','progress'];
+  var root=document.querySelector('[data-deck-root]');
+  if(!root)return;
+  var cs=getComputedStyle(root);
+  FX.forEach(function(name){
+    if((cs.getPropertyValue('--fx-'+name)||'').trim()==='1') root.setAttribute('data-fx-'+name,'1');
+  });
+  if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    var raf=0,px=0,py=0;
+    root.addEventListener('mousemove',function(e){
+      var r=root.getBoundingClientRect();
+      px=(e.clientX-r.left)/r.width; py=(e.clientY-r.top)/r.height;
+      if(!raf){raf=requestAnimationFrame(function(){
+        root.style.setProperty('--mx',Math.max(0,Math.min(1,px)));
+        root.style.setProperty('--my',Math.max(0,Math.min(1,py)));
+        raf=0;
+      });}
+    },{passive:true});
+  }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('slide-visible'); });
+    },{root:root,threshold:0.25});
+    root.querySelectorAll('[data-slide-anim]').forEach(function(el){ io.observe(el); });
+  } else {
+    root.querySelectorAll('[data-slide-anim]').forEach(function(el){ el.classList.add('slide-visible'); });
+  }
+})();
+`.trim()
 }
 
 function collectStyles(): string {

@@ -13,4 +13,6 @@
   --display-weight: 700;
   --display-tracking: -0.02em;
   --slide-radius: 0px;
+  /* FX opt-in: editorial red rule animates in on each slide */
+  --fx-accent-rule: 1;
 }

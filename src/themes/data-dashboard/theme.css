@@ -13,4 +13,8 @@
   --display-weight: 800;
   --display-tracking: -0.02em;
   --slide-radius: 0px;
+  /* FX opt-in: cursor glow + count-up pop + list progress bars */
+  --fx-mouse-glow: 1;
+  --fx-bignum-pop: 1;
+  --fx-progress: 1;
 }

@@ -1,0 +1,129 @@
+/**
+ * FX layer — opt-in visual effects controlled by per-theme CSS variables.
+ * A theme enables effects by writing `--fx-*: 1` in its theme.css; otherwise
+ * these rules no-op via @container queries fail-soft and `0`-multiplier tricks.
+ *
+ * Cooperating JS (deckRef mouse-tracking in DeckPreview.tsx + same logic
+ * inlined into exportHtml.ts) writes `--mx` / `--my` (each 0..1) to the deck
+ * root on mousemove. Themes that opt into mouse glow read those vars.
+ */
+
+/* ---- mouse-glow: a soft accent halo that follows the cursor ---- */
+[data-deck-root] {
+  --mx: 0.5;
+  --my: 0.5;
+}
+[data-theme] [data-slide]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: calc(var(--fx-mouse-glow, 0) * 1);
+  background: radial-gradient(
+    36% 28% at calc(var(--mx) * 100%) calc(var(--my) * 100%),
+    color-mix(in srgb, var(--accent) 28%, transparent) 0%,
+    transparent 70%
+  );
+  transition: background 80ms linear;
+}
+
+/* ---- stagger entry: child elements fade-up with a per-index delay ----
+   Applied automatically when --fx-stagger-entry is on. Children that have an
+   `data-fx-step` attribute (or are direct flex children of `.slide-body`)
+   get a staggered delay relative to the slide entry.                       */
+[data-theme] [data-slide-anim] > * {
+  transition: opacity 700ms ease, transform 700ms cubic-bezier(0.2, 0.7, 0.1, 1);
+}
+[data-theme] [data-fx-stagger="1"] [data-slide-anim].slide-visible .slide-body > * {
+  animation: fx-stagger 700ms cubic-bezier(0.2, 0.7, 0.1, 1) both;
+}
+[data-theme] [data-fx-stagger="1"] [data-slide-anim].slide-visible .slide-body > *:nth-child(1) { animation-delay: 0ms; }
+[data-theme] [data-fx-stagger="1"] [data-slide-anim].slide-visible .slide-body > *:nth-child(2) { animation-delay: 120ms; }
+[data-theme] [data-fx-stagger="1"] [data-slide-anim].slide-visible .slide-body > *:nth-child(3) { animation-delay: 240ms; }
+[data-theme] [data-fx-stagger="1"] [data-slide-anim].slide-visible .slide-body > *:nth-child(4) { animation-delay: 360ms; }
+[data-theme] [data-fx-stagger="1"] [data-slide-anim].slide-visible .slide-body > *:nth-child(5) { animation-delay: 480ms; }
+@keyframes fx-stagger {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- hover-lift: priceCard / list items lift on hover ---- */
+[data-fx-hover-lift="1"] [data-slide]:hover .pc-tag,
+[data-fx-hover-lift="1"] [data-slide] li {
+  transition: transform 240ms cubic-bezier(0.2, 0.7, 0.1, 1), box-shadow 240ms ease;
+}
+[data-fx-hover-lift="1"] [data-slide] li:hover {
+  transform: translateY(-3px);
+}
+[data-fx-hover-lift="1"] [data-slide] .pc-tag:hover {
+  transform: translateY(-2px) scale(1.03);
+}
+
+/* ---- bg-breathe: subtle gradient drift used by xhs-pastel ---- */
+[data-fx-bg-breathe="1"] [data-slide] {
+  animation: fx-breathe 16s ease-in-out infinite alternate;
+}
+@keyframes fx-breathe {
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 100% 50%; }
+}
+[data-fx-bg-breathe="1"] [data-slide] {
+  background-size: 200% 200%;
+}
+
+/* ---- accent-line-draw: swiss-paper draws a red horizontal rule ---- */
+[data-fx-accent-rule="1"] [data-slide] .slide-body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 4px;
+  width: 0;
+  background: var(--accent);
+  animation: fx-rule-draw 900ms cubic-bezier(0.2, 0.7, 0.1, 1) 200ms forwards;
+}
+@keyframes fx-rule-draw {
+  to { width: 30%; }
+}
+
+/* ---- bignum-pop: zoom-in stagger for big number / big text ---- */
+[data-fx-bignum-pop="1"] [data-slide-anim].slide-visible .num,
+[data-fx-bignum-pop="1"] [data-slide-anim].slide-visible blockquote {
+  animation: fx-bignum-pop 1000ms cubic-bezier(0.2, 0.7, 0.1, 1) both;
+}
+@keyframes fx-bignum-pop {
+  from { opacity: 0; transform: translateY(28px) scale(0.92); letter-spacing: -0.12em; }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---- progress-bar: data-dashboard list ord grows from 0 -> full width ---- */
+[data-fx-progress="1"] [data-slide-anim].slide-visible li .ord {
+  position: relative;
+}
+[data-fx-progress="1"] [data-slide-anim].slide-visible li .ord::after {
+  content: "";
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  height: 3px;
+  width: 0;
+  margin-left: 0.75rem;
+  background: var(--accent);
+  border-radius: 999px;
+  animation: fx-progress-grow 900ms cubic-bezier(0.2, 0.7, 0.1, 1) 300ms forwards;
+}
+@keyframes fx-progress-grow {
+  to { width: clamp(60px, 18cqi, 220px); }
+}
+
+/* ---- Respect reduced-motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  [data-theme] [data-slide]::after { background: none !important; }
+  [data-theme] [data-fx-stagger="1"] [data-slide-anim].slide-visible .slide-body > * { animation: none !important; }
+  [data-fx-bg-breathe="1"] [data-slide] { animation: none !important; }
+  [data-fx-accent-rule="1"] [data-slide] .slide-body::before { animation: none !important; width: 30%; }
+  [data-fx-bignum-pop="1"] [data-slide-anim].slide-visible .num,
+  [data-fx-bignum-pop="1"] [data-slide-anim].slide-visible blockquote { animation: none !important; }
+  [data-fx-progress="1"] [data-slide-anim].slide-visible li .ord::after { animation: none !important; width: clamp(60px,18cqi,220px); }
+}

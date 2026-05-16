@@ -1,5 +1,5 @@
 {
-  "version": "1.2.0",
+  "version": "1.3.0",
   "name": "SY-PPT-templates",
   "description": "20 templates for Markdown-driven PPT generation, 14 designed for Chinese local scenarios. Agent-native: clone the repo, read AGENTS.md, generate a single-file HTML deck. v1.1 adds custom aspect override, image embedding, a Lucide icon system, and an opt-in FX layer on 4 themes.",
   "supported_ratios": [
@@ -1217,6 +1217,73 @@
         "body": "Inter",
         "display_weight": 700,
         "tracking": "-0.02em"
+      },
+      "slide_types": [
+        "cover",
+        "bigText",
+        "bigNumber",
+        "list",
+        "quote",
+        "section",
+        "priceCard",
+        "contact",
+        "qrCode",
+        "posterHero",
+        "image",
+        "iconRow",
+        "chapter",
+        "split",
+        "stats",
+        "compare",
+        "chart"
+      ]
+    },
+    {
+      "id": "editorial-warm",
+      "name_zh": "编辑暖色",
+      "name_en": "Editorial Warm",
+      "tier": "C",
+      "scenarios_zh": [
+        "创意工作室",
+        "个人品牌",
+        "内容创作者",
+        "年度回顾",
+        "品牌故事"
+      ],
+      "scenarios_en": [
+        "creative-studio",
+        "personal-brand",
+        "content-creator",
+        "annual-review",
+        "brand-story"
+      ],
+      "audience": "Content creators, indie brands, creative studios, solopreneurs sharing a year-in-review or brand narrative",
+      "default_ratio": "4:5",
+      "vibe": "Editorial, tactile, warm, typographically confident",
+      "best_for": "Pick this when the user mentions 创意工作室 / 个人品牌 / 年度回顾 / 内容创作者 / 品牌故事 / 有设计感",
+      "color_palette": "Warm parchment (#F5F0E8) + brick terracotta (#C44B2A) + amber gold (#E8A33C) + ink (#1C1410). Paper grain overlay.",
+      "theme_path": "src/themes/editorial-warm/theme.css",
+      "meta_path": "src/themes/editorial-warm/meta.ts",
+      "example_path": "src/examples/editorial-warm.md",
+      "screenshots": [
+        "screenshots/editorial-warm-1.png",
+        "screenshots/editorial-warm-2.png",
+        "screenshots/editorial-warm-3.png"
+      ],
+      "palette": {
+        "bg": "#F5F0E8",
+        "bg_alt": "#EAE1CE",
+        "fg": "#1C1410",
+        "fg_muted": "rgba(28,20,16,0.50)",
+        "accent": "#C44B2A",
+        "accent_2": "#E8A33C"
+      },
+      "typography": {
+        "display": "Bricolage Grotesque",
+        "body": "Instrument Serif",
+        "display_weight": 800,
+        "tracking": "-0.03em",
+        "chinese_support": "PingFang SC / Hiragino Sans GB (system)"
       },
       "slide_types": [
         "cover",

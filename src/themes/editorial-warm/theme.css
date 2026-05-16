@@ -1,0 +1,89 @@
+/* ============================================================
+   editorial-warm — 编辑暖色
+   Kinfolk × high-end lifestyle editorial.
+   Typographic tension: Bricolage Grotesque ✕ Instrument Serif italic
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Instrument+Serif:ital@0;1&display=swap");
+
+[data-theme="editorial-warm"] {
+  /* ── 4-color palette ─────────────────────────────────── */
+  --bg:           #F5F0E8;          /* warm parchment */
+  --bg-grad-from: #F5F0E8;
+  --bg-grad-to:   #EAE1CE;          /* slightly richer towards edges */
+  --fg:           #1C1410;          /* near-black with warmth */
+  --fg-muted:     rgba(28, 20, 16, 0.50);
+  --accent:       #C44B2A;          /* brick / terracotta */
+  --accent-2:     #E8A33C;          /* amber gold */
+
+  /* Candlelight glow — not neon, warm */
+  --accent-glow-1: rgba(232, 163, 60, 0.18);
+  --accent-glow-2: rgba(196,  75, 42, 0.10);
+
+  /* ── Typography: the Bricolage ✕ Serif collision ──────── */
+  --display-font:     "Bricolage Grotesque", "PingFang SC", "Hiragino Sans GB", system-ui, sans-serif;
+  --body-font:        "Instrument Serif", "Source Han Serif SC", "Songti SC", Georgia, serif;
+  --display-weight:   800;
+  --display-tracking: -0.03em;
+
+  --slide-radius:  0px;
+  --slide-padding: 8vw;
+
+  /* ── FX opt-in: accent-rule draws in on each slide enter ── */
+  --fx-accent-rule: 1;
+}
+
+/* ── Atmospheric warm glow layer (agent harness & export mode) ── */
+/* Applies to section[data-slide] in the static harness; ignored by
+   the React editor because bg is applied as inline style on the inner div. */
+[data-theme="editorial-warm"] section[data-slide] {
+  background-image:
+    radial-gradient(ellipse 55% 48% at 22% 65%,
+      rgba(232, 163, 60, 0.20) 0%,
+      rgba(196,  75, 42, 0.09) 55%,
+      transparent 80%),
+    linear-gradient(150deg, var(--bg-grad-from) 0%, var(--bg-grad-to) 100%);
+}
+
+/* ── Quote: replace curly-mark with left accent rule ───────── */
+/* Targets the rendered blockquote in Slide.tsx (no class dependency) */
+[data-theme="editorial-warm"] [data-slide-anim] blockquote {
+  font-style: italic;
+  border-left: 3px solid var(--accent);
+  padding-left: 2rem;
+  font-family: "Instrument Serif", Georgia, serif;
+}
+/* Hide the large " glyph — the border rule replaces it */
+[data-theme="editorial-warm"] [data-slide-anim] .mb-8.leading-none {
+  display: none;
+}
+
+/* ── Big number: deeper negative tracking (monumental feel) ── */
+[data-theme="editorial-warm"] [data-slide-anim] .tabular-nums:first-child {
+  letter-spacing: -0.07em;
+}
+
+/* ── Stats cards: parchment-on-parchment with ink border ───── */
+[data-theme="editorial-warm"] [data-slide-anim] [style*="color-mix(in srgb, var(--fg) 5%"] {
+  background: rgba(28, 20, 16, 0.04) !important;
+  border-color: rgba(28, 20, 16, 0.14) !important;
+}
+
+/* ── Chart bars: warm accent gradient ─────────────────────── */
+/* color-mix cascade already uses --accent / --accent-2, no override needed */
+
+/* ── Paper grain overlay (agents / export harness only) ─────
+   In exported HTML, .grain-overlay is injected by generate-blank-decks.mjs.
+   Not applied in the React editor to avoid z-index conflicts.
+   ────────────────────────────────────────────────────────── */
+[data-theme="editorial-warm"] .grain-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0.045;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.68' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 300px 300px;
+}

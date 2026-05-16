@@ -1116,6 +1116,91 @@ function SlideBody({ slide }: { slide: SlideAST }) {
       )
     }
 
+    case 'features': {
+      const cols = Math.min(slide.items.length, 3)
+      return (
+        <div className="flex h-full flex-col justify-center">
+          {slide.heading && (
+            <h3
+              data-anim="fade-up" data-delay="0"
+              className="mb-8 text-balance"
+              style={{
+                fontFamily: 'var(--display-font)', fontSize: 'clamp(28px,5cqi,54px)',
+                fontWeight: 'var(--display-weight)', letterSpacing: 'var(--display-tracking)',
+                lineHeight: 1.1,
+              }}
+            >
+              {slide.heading}
+            </h3>
+          )}
+          <div
+            className="grid gap-6"
+            style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}
+          >
+            {slide.items.map((item, i) => {
+              const iconSvg = item.icon ? getIconSvg(item.icon) : null
+              return (
+                <div
+                  key={i}
+                  data-anim="fade-up"
+                  data-delay={String(Math.min(i + 1, 6))}
+                  className="flex flex-col gap-4 rounded-2xl p-7"
+                  style={{
+                    background: '#fff',
+                    border: '1.5px solid color-mix(in srgb, var(--fg) 10%, transparent)',
+                    boxShadow: '0 4px 24px -8px rgba(0,0,0,0.10)',
+                  }}
+                >
+                  {/* Icon tile */}
+                  <div
+                    style={{
+                      width: 'clamp(56px,8cqi,88px)', height: 'clamp(56px,8cqi,88px)',
+                      borderRadius: '1.2rem', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      background: `color-mix(in srgb, var(--accent) 10%, transparent)`,
+                      border: `1.5px solid color-mix(in srgb, var(--accent) 22%, transparent)`,
+                      color: 'var(--accent)', flexShrink: 0,
+                    }}
+                  >
+                    {iconSvg ? (
+                      <span
+                        style={{ width: '55%', height: '55%', display: 'block' }}
+                        dangerouslySetInnerHTML={{
+                          __html: iconSvg.replace('width="24"', 'width="100%"').replace('height="24"', 'height="100%"'),
+                        }}
+                      />
+                    ) : (
+                      <span style={{ fontSize: '1.6em', lineHeight: 1 }}>◈</span>
+                    )}
+                  </div>
+                  {/* Title */}
+                  <div
+                    style={{
+                      fontFamily: 'var(--display-font)', fontWeight: 700,
+                      fontSize: 'clamp(18px,3cqi,32px)', lineHeight: 1.2,
+                    }}
+                  >
+                    {renderInlineIcons(item.title)}
+                  </div>
+                  {/* Sub */}
+                  {item.sub && (
+                    <div style={{ fontSize: 'clamp(13px,1.8cqi,20px)', color: 'var(--accent)', fontWeight: 600, lineHeight: 1.3 }}>
+                      {item.sub}
+                    </div>
+                  )}
+                  {/* Desc */}
+                  {item.desc && (
+                    <div style={{ fontSize: 'clamp(13px,1.7cqi,18px)', color: 'var(--fg-muted)', lineHeight: 1.5, marginTop: 'auto' }}>
+                      {renderInlineIcons(item.desc)}
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )
+    }
+
     case 'toc': {
       const cols = Math.min(slide.items.length, 3)
       return (

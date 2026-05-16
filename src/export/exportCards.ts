@@ -61,11 +61,22 @@ export async function exportCardsAsZip(deckRoot: HTMLElement): Promise<Blob> {
       clone.style.minHeight = `${CARD_H}px`
       stage.replaceChildren(clone)
 
+      // Freeze entry animations.
       clone.querySelectorAll<HTMLElement>('[data-slide-anim]').forEach(el => {
         el.style.opacity = '1'
         el.style.transform = 'none'
         el.style.transition = 'none'
       })
+      // Also freeze element-level animations (data-anim + data-delay) added in P1-B.
+      clone.querySelectorAll<HTMLElement>('[data-anim]').forEach(el => {
+        el.style.opacity = '1'
+        el.style.transform = 'none'
+        el.style.transition = 'none'
+        el.style.animationDelay = '0s'
+      })
+      // For complex layout types (matrix, flow) that use overflow:hidden + border-radius,
+      // ensure the clone doesn't clip content outside the card boundary.
+      clone.style.overflow = 'visible'
 
       await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))
 

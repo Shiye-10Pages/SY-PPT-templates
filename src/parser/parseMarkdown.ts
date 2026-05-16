@@ -490,6 +490,34 @@ function parseMatrixChunk(lines: string[]): SlideAST {
   return { type: 'matrix', heading, cols, rows }
 }
 
+/**
+ * `@features` — three-column feature cards.
+ * Each bullet: `:icon: Title / Sub-title / Description text`
+ */
+function parseFeaturesChunk(lines: string[]): SlideAST {
+  const body = lines.slice(1)
+  let heading: string | undefined
+  const items: { icon: string; title: string; sub?: string; desc?: string }[] = []
+  for (const line of body) {
+    if (!line.trim()) continue
+    const h = line.match(/^##\s+(.+)$/)
+    if (h && !heading && items.length === 0) { heading = h[1].trim(); continue }
+    const raw = line.replace(/^[-*+]\s+/, '').trim()
+    // Format: `:icon: Title / Sub / Description`
+    const iconMatch = raw.match(/^:([a-z0-9-]+):\s*(.+)$/i)
+    if (iconMatch) {
+      const icon = iconMatch[1].toLowerCase()
+      const parts = iconMatch[2].split('/').map(p => p.trim())
+      items.push({ icon, title: parts[0] ?? '', sub: parts[1], desc: parts[2] })
+    } else {
+      // No icon prefix — treat as plain title / sub / desc
+      const parts = raw.split('/').map(p => p.trim())
+      if (parts[0]) items.push({ icon: '', title: parts[0], sub: parts[1], desc: parts[2] })
+    }
+  }
+  return { type: 'features', heading, items }
+}
+
 function parseChunk(chunk: string, index: number): SlideAST {
   const lines = chunk.split('\n').map(l => l.trimEnd())
 
@@ -537,6 +565,9 @@ function parseChunk(chunk: string, index: number): SlideAST {
   }
   if (lines[0].trim().toLowerCase() === '@matrix') {
     return parseMatrixChunk(lines)
+  }
+  if (lines[0].trim().toLowerCase() === '@features') {
+    return parseFeaturesChunk(lines)
   }
 
   // ---- Cover detection: first slide with H1 ----

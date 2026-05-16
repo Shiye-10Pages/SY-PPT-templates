@@ -734,6 +734,101 @@ Paste this **after** the theme.css block, inside a single `<style>` tag. It is p
   /* inline icon (`:icon-name:` in any text) */
   .icon-inline { display: inline-flex; align-items: center; width: 1em; height: 1em; margin-inline: 0.12em; color: var(--accent); vertical-align: -0.15em; }
   .icon-inline svg { width: 100%; height: 100%; }
+
+  /* chapter — accent background set at slide wrapper; content is centered */
+  .s-chapter { justify-content: center; align-items: center; text-align: center; }
+  .s-chapter .eyebrow { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.4em; opacity: 0.65; margin-bottom: 2.5rem; color: var(--bg); }
+  .s-chapter h2 { font-family: var(--display-font); font-size: clamp(40px,10cqi,110px); font-weight: var(--display-weight,800); letter-spacing: var(--display-tracking,-0.02em); line-height: 1.02; margin: 0; color: var(--bg); }
+  .s-chapter .sub { margin-top: 2rem; font-style: italic; font-size: clamp(16px,2.2cqi,26px); opacity: 0.75; line-height: 1.45; max-width: 660px; color: var(--bg); }
+
+  /* split — two-column grid with hairline divider */
+  .s-split { display: grid; grid-template-columns: 1fr 1px 1fr; gap: 2.5rem; align-items: center; height: 100%; }
+  .s-split .split-col { display: flex; flex-direction: column; justify-content: center; gap: 1.5rem; }
+  .s-split .split-col h3 { font-family: var(--display-font); font-size: clamp(26px,5cqi,52px); font-weight: var(--display-weight,800); letter-spacing: var(--display-tracking,-0.02em); line-height: 1.1; margin: 0; }
+  .s-split .split-col .body { font-size: clamp(16px,2cqi,24px); color: var(--fg-muted); line-height: 1.55; white-space: pre-wrap; }
+  .s-split .split-col img { max-height: 55%; width: 100%; border-radius: 1.5rem; object-fit: cover; }
+  .s-split .split-divider { background: color-mix(in srgb, var(--fg) 15%, transparent); height: 60%; align-self: center; }
+
+  /* stats — KPI card grid (2–4 columns via inline style --stat-cols) */
+  .s-stats { justify-content: center; }
+  .s-stats h3 { font-family: var(--display-font); font-size: clamp(28px,5cqi,54px); font-weight: var(--display-weight,800); letter-spacing: var(--display-tracking,-0.02em); line-height: 1.1; margin: 0 0 2.5rem; }
+  .s-stats .stats-grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(var(--stat-cols,4), minmax(0,1fr)); }
+  .s-stats .stat-card { display: flex; flex-direction: column; gap: .75rem; border-radius: 1rem; padding: 1.5rem; background: color-mix(in srgb, var(--fg) 5%, transparent); border: 1.5px solid color-mix(in srgb, var(--fg) 10%, transparent); }
+  .s-stats .stat-value { font-family: var(--display-font); font-size: clamp(32px,6cqi,64px); font-weight: 900; letter-spacing: -0.04em; line-height: 1; }
+  .s-stats .stat-label { font-size: clamp(13px,1.8cqi,20px); font-weight: 600; line-height: 1.3; }
+  .s-stats .stat-note { font-size: clamp(11px,1.4cqi,16px); color: var(--fg-muted); line-height: 1.4; font-style: italic; }
+  .s-stats .stat-bar { height: 3px; border-radius: 999px; margin-top: auto; }
+
+  /* compare — two contrast columns (muted left, accent right) */
+  .s-compare { justify-content: center; }
+  .s-compare h3 { font-family: var(--display-font); font-size: clamp(28px,5cqi,54px); font-weight: var(--display-weight,800); letter-spacing: var(--display-tracking,-0.02em); line-height: 1.1; margin: 0 0 2rem; }
+  .s-compare .cmp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .s-compare .cmp-col { display: flex; flex-direction: column; gap: 1rem; border-radius: 1rem; padding: 1.75rem; }
+  .s-compare .cmp-col.muted { background: color-mix(in srgb, var(--fg) 6%, transparent); border: 1.5px solid color-mix(in srgb, var(--fg) 12%, transparent); }
+  .s-compare .cmp-col.accent { background: color-mix(in srgb, var(--accent) 14%, transparent); border: 1.5px solid color-mix(in srgb, var(--accent) 35%, transparent); }
+  .s-compare .cmp-header { display: inline-block; align-self: flex-start; border-radius: 999px; padding: .3rem 1.1rem; font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; }
+  .s-compare .cmp-header.muted { border: 1.5px solid color-mix(in srgb, var(--fg) 22%, transparent); color: var(--fg-muted); }
+  .s-compare .cmp-header.accent { background: var(--accent); color: var(--bg); }
+  .s-compare .cmp-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .9rem; }
+  .s-compare .cmp-col li { display: flex; align-items: flex-start; gap: .75rem; font-size: clamp(14px,2cqi,22px); line-height: 1.4; }
+  .s-compare .cmp-col li .marker { flex-shrink: 0; font-weight: 700; font-size: .9em; margin-top: .1em; }
+
+  /* chart — horizontal bar chart */
+  .s-chart { justify-content: center; }
+  .s-chart h3 { font-family: var(--display-font); font-size: clamp(28px,5cqi,54px); font-weight: var(--display-weight,800); letter-spacing: var(--display-tracking,-0.02em); line-height: 1.1; margin: 0 0 2rem; }
+  .s-chart .chart-card { display: flex; flex-direction: column; gap: 1.5rem; border-radius: 1.5rem; padding: 2rem; background: color-mix(in srgb, var(--fg) 5%, transparent); border: 1.5px solid color-mix(in srgb, var(--fg) 9%, transparent); }
+  .s-chart .chart-row { display: flex; align-items: center; gap: 1.5rem; }
+  .s-chart .chart-label { flex-shrink: 0; text-align: right; font-size: clamp(13px,1.8cqi,20px); font-weight: 600; color: var(--fg-muted); font-style: italic; width: clamp(110px,20cqi,240px); }
+  .s-chart .chart-track { flex: 1; height: clamp(32px,5cqi,52px); border-radius: 999px; background: color-mix(in srgb, var(--fg) 8%, transparent); border: 1.5px solid color-mix(in srgb, var(--fg) 12%, transparent); overflow: hidden; }
+  .s-chart .chart-fill { height: 100%; border-radius: 999px; display: flex; align-items: center; justify-content: flex-end; padding-right: 1rem; }
+  .s-chart .chart-fill span { font-size: clamp(12px,1.6cqi,18px); font-weight: 700; color: var(--bg); letter-spacing: -0.01em; }
+
+  /* toc — numbered agenda grid */
+  .s-toc { justify-content: center; }
+  .s-toc h3 { font-family: var(--display-font); font-size: clamp(28px,5cqi,52px); font-weight: var(--display-weight,800); letter-spacing: var(--display-tracking,-0.02em); line-height: 1.1; margin: 0 0 2rem; }
+  .s-toc .toc-grid { display: grid; gap: 1rem; grid-template-columns: repeat(var(--toc-cols,3), minmax(0,1fr)); }
+  .s-toc .toc-card { display: flex; flex-direction: column; gap: .5rem; border-radius: 1.25rem; padding: 1.25rem 1.5rem; background: color-mix(in srgb, var(--accent) 8%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent); }
+  .s-toc .toc-num { font-family: var(--display-font); font-weight: 800; font-size: clamp(18px,3.5cqi,36px); color: var(--accent); letter-spacing: -0.03em; line-height: 1; }
+  .s-toc .toc-title { font-family: var(--display-font); font-weight: var(--display-weight,800); font-size: clamp(15px,2.2cqi,24px); line-height: 1.2; }
+  .s-toc .toc-sub { font-size: clamp(11px,1.4cqi,15px); color: var(--fg-muted); line-height: 1.4; }
+
+  /* flow / process diagram — horizontal (default) or vertical */
+  .s-flow { justify-content: center; }
+  .s-flow h3 { font-family: var(--display-font); font-size: clamp(28px,5cqi,52px); font-weight: var(--display-weight,800); letter-spacing: var(--display-tracking,-0.02em); line-height: 1.1; margin: 0 0 3rem; }
+  .s-flow .flow-row { display: flex; align-items: flex-start; gap: 0; }
+  .s-flow .flow-col { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; }
+  .s-flow .flow-node { width: clamp(44px,6cqi,64px); height: clamp(44px,6cqi,64px); border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-family: var(--display-font); font-weight: 800; font-size: clamp(14px,2cqi,22px); color: var(--bg); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent); position: relative; z-index: 2; }
+  .s-flow .flow-connector { position: absolute; right: -50%; top: 50%; height: 3px; width: 100%; background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 25%, transparent)); border-radius: 999px; z-index: 1; transform: translateY(-50%); }
+  .s-flow .flow-text { margin-top: 1rem; text-align: center; padding: 0 .5rem; }
+  .s-flow .flow-label { font-family: var(--display-font); font-weight: 700; font-size: clamp(13px,1.8cqi,20px); line-height: 1.25; }
+  .s-flow .flow-desc { font-size: clamp(11px,1.3cqi,15px); color: var(--fg-muted); margin-top: .3rem; line-height: 1.4; }
+
+  /* timeline — vertical event list with date + dot + track */
+  .s-timeline { justify-content: center; }
+  .s-timeline h3 { font-family: var(--display-font); font-size: clamp(28px,5cqi,52px); font-weight: var(--display-weight,800); letter-spacing: var(--display-tracking,-0.02em); line-height: 1.1; margin: 0 0 2.5rem; }
+  .s-timeline .tl-col { display: flex; flex-direction: column; gap: 0; }
+  .s-timeline .tl-event { display: flex; align-items: flex-start; gap: 1.5rem; }
+  .s-timeline .tl-date-col { flex-shrink: 0; width: clamp(80px,12cqi,140px); text-align: right; display: flex; flex-direction: column; align-items: flex-end; }
+  .s-timeline .tl-date { font-family: var(--display-font); font-weight: 700; font-size: clamp(13px,1.8cqi,20px); color: var(--accent); letter-spacing: -0.02em; line-height: 1; }
+  .s-timeline .tl-track { width: 3px; flex: 1; margin-top: 6px; min-height: clamp(14px,2cqi,28px); background: linear-gradient(to bottom, var(--accent), color-mix(in srgb, var(--accent) 15%, transparent)); border-radius: 999px; }
+  .s-timeline .tl-dot { width: clamp(12px,1.6cqi,18px); height: clamp(12px,1.6cqi,18px); border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 3px; box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent); }
+  .s-timeline .tl-content { display: flex; flex-direction: column; gap: .25rem; padding-bottom: clamp(16px,2.5cqi,32px); }
+  .s-timeline .tl-title { font-family: var(--display-font); font-weight: 700; font-size: clamp(16px,2.2cqi,26px); line-height: 1.2; }
+  .s-timeline .tl-desc { font-size: clamp(12px,1.5cqi,18px); color: var(--fg-muted); line-height: 1.4; }
+
+  /* matrix — feature comparison table */
+  .s-matrix { justify-content: center; }
+  .s-matrix h3 { font-family: var(--display-font); font-size: clamp(26px,4.5cqi,50px); font-weight: var(--display-weight,800); letter-spacing: var(--display-tracking,-0.02em); line-height: 1.1; margin: 0 0 1.5rem; }
+  .s-matrix .mx-table { border-radius: 1.25rem; overflow: hidden; border: 1px solid color-mix(in srgb, var(--fg) 12%, transparent); }
+  .s-matrix .mx-header { display: grid; background: color-mix(in srgb, var(--accent) 10%, transparent); border-bottom: 2px solid color-mix(in srgb, var(--accent) 25%, transparent); }
+  .s-matrix .mx-col-head { padding: clamp(10px,1.4cqi,16px); font-family: var(--display-font); font-weight: 700; font-size: clamp(13px,1.7cqi,19px); text-align: center; color: var(--accent); }
+  .s-matrix .mx-row { display: grid; }
+  .s-matrix .mx-row.alt { background: color-mix(in srgb, var(--fg) 3%, transparent); }
+  .s-matrix .mx-row-label { padding: clamp(10px,1.4cqi,16px) clamp(12px,2cqi,20px); font-weight: 600; font-size: clamp(13px,1.7cqi,19px); line-height: 1.3; }
+  .s-matrix .mx-cell { padding: clamp(10px,1.4cqi,16px); text-align: center; font-size: clamp(16px,2.2cqi,26px); font-weight: 700; }
+  .s-matrix .mx-cell.yes { color: var(--accent); }
+  .s-matrix .mx-cell.no { color: var(--fg-muted); }
+  .s-matrix .mx-cell.partial { color: var(--accent-2, var(--fg-muted)); }
 </style>
 ```
 
@@ -1040,6 +1135,249 @@ For 3 items use `--icon-cols:3`; for 4+ items use `--icon-cols:4`. `{ICON_SVG}` 
       </ul>
     </div>
     <div class="slide-footer">05 / 08</div>
+  </div>
+</section>
+```
+
+#### chapter
+
+The `chapter` slide uses the **accent color as a full-bleed background**. In the exported HTML the agent must set `background: color-mix(in srgb, var(--accent) 88%, var(--fg))` and `color: var(--bg)` on the `<section>` itself (not inside `.slide-inner`), because the harness CSS uses the section's background property.
+
+The chapter full-bleed background is an absolute `<div>` overlay (not an inline background on `<section>`) to avoid CSS specificity conflicts with the render harness.
+
+```html
+<section data-slide aspect="16:9" style="position:relative">
+  <div style="position:absolute;inset:0;background:color-mix(in srgb,var(--accent) 88%,var(--fg));z-index:0"></div>
+  <div class="slide-inner">
+    <div class="slide-body s-chapter" style="position:relative;z-index:1;color:var(--bg)">
+      <!-- omit eyebrow if no number -->
+      <div class="eyebrow">Chapter {NUMBER}</div>
+      <h2>{HEADING}</h2>
+      <!-- omit if no sub -->
+      <p class="sub">{SUB-TEXT}</p>
+    </div>
+    <div class="slide-footer" style="color:color-mix(in srgb,var(--bg) 50%,transparent)">06 / 08</div>
+  </div>
+</section>
+```
+
+#### split
+
+Use `reversed` class on `.s-split` to swap columns. The divider `<div>` must sit between the two column divs.
+
+```html
+<section data-slide aspect="16:9">
+  <div class="slide-inner">
+    <div class="slide-body s-split">
+      <div class="split-col">
+        <h3>{LEFT HEADING}</h3>
+        <div class="body">{LEFT BODY}</div>
+        <!-- optional: <img src="{URL}" alt=""> -->
+      </div>
+      <div class="split-divider"></div>
+      <div class="split-col">
+        <h3>{RIGHT HEADING}</h3>
+        <div class="body">{RIGHT BODY}</div>
+      </div>
+    </div>
+    <div class="slide-footer">07 / 08</div>
+  </div>
+</section>
+```
+
+#### stats
+
+Set `--stat-cols` to 2, 3, or 4 depending on item count. Each card gets its own accent color via inline `style="color:{ACCENT}"` on `.stat-value` and `style="background:{ACCENT}"` on `.stat-bar`.
+
+```html
+<section data-slide aspect="16:9">
+  <div class="slide-inner">
+    <div class="slide-body s-stats">
+      <h3>{HEADING}</h3>
+      <div class="stats-grid" style="--stat-cols:4">
+        <div class="stat-card">
+          <div class="stat-value" style="color:var(--accent)">{VALUE}</div>
+          <div class="stat-label">{LABEL}</div>
+          <div class="stat-note">{NOTE}</div>  <!-- omit if none -->
+          <div class="stat-bar" style="background:var(--accent)"></div>
+        </div>
+        <!-- repeat stat-card for each KPI -->
+      </div>
+    </div>
+    <div class="slide-footer">08 / 08</div>
+  </div>
+</section>
+```
+
+#### compare
+
+Left column uses `cmp-col muted`, right column uses `cmp-col accent`. The marker for muted column is `–`; for accent column is `✓`.
+
+```html
+<section data-slide aspect="16:9">
+  <div class="slide-inner">
+    <div class="slide-body s-compare">
+      <h3>{HEADING}</h3>
+      <div class="cmp-grid">
+        <div class="cmp-col muted">
+          <div class="cmp-header muted">{COLUMN A LABEL}</div>
+          <ul>
+            <li><span class="marker" style="color:var(--fg-muted)">–</span><span style="color:var(--fg-muted)">{ITEM}</span></li>
+          </ul>
+        </div>
+        <div class="cmp-col accent">
+          <div class="cmp-header accent">{COLUMN B LABEL}</div>
+          <ul>
+            <li><span class="marker" style="color:var(--accent)">✓</span><span>{ITEM}</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">08 / 08</div>
+  </div>
+</section>
+```
+
+#### chart
+
+Each `.chart-fill` width is set inline as a percentage. Use `color-mix` to create color variation across bars.
+
+```html
+<section data-slide aspect="16:9">
+  <div class="slide-inner">
+    <div class="slide-body s-chart">
+      <h3>{HEADING}</h3>
+      <div class="chart-card">
+        <div class="chart-row">
+          <div class="chart-label">{LABEL}</div>
+          <div class="chart-track">
+            <div class="chart-fill" style="width:80%;background:var(--accent)">
+              <span>{VALUE}</span>
+            </div>
+          </div>
+        </div>
+        <!-- repeat chart-row for each bar -->
+      </div>
+    </div>
+    <div class="slide-footer">08 / 08</div>
+  </div>
+</section>
+```
+
+#### toc
+
+Set `--toc-cols` to 2 or 3. Each `.toc-num` auto-pads: write `01`, `02`, etc.
+
+```html
+<section data-slide aspect="16:9">
+  <div class="slide-inner">
+    <div class="slide-body s-toc">
+      <h3>{HEADING}</h3>
+      <div class="toc-grid" style="--toc-cols:3">
+        <div class="toc-card">
+          <div class="toc-num">01</div>
+          <div class="toc-title">{TITLE}</div>
+          <div class="toc-sub">{SUB}</div>  <!-- omit if none -->
+        </div>
+        <!-- repeat toc-card for each item -->
+      </div>
+    </div>
+    <div class="slide-footer">08 / 08</div>
+  </div>
+</section>
+```
+
+#### flow
+
+Each `.flow-col` is one step. The `.flow-connector` sits inside `.flow-node` wrapper as `position:absolute`. Omit `.flow-connector` on the **last** node.
+
+```html
+<section data-slide aspect="16:9">
+  <div class="slide-inner">
+    <div class="slide-body s-flow">
+      <h3>{HEADING}</h3>
+      <div class="flow-row">
+        <div class="flow-col">
+          <div style="position:relative">
+            <div class="flow-node">01</div>
+            <!-- connector: omit on last step -->
+            <div class="flow-connector"></div>
+          </div>
+          <div class="flow-text">
+            <div class="flow-label">{STEP LABEL}</div>
+            <div class="flow-desc">{DESCRIPTION}</div>  <!-- omit if none -->
+          </div>
+        </div>
+        <!-- repeat flow-col for each step -->
+      </div>
+    </div>
+    <div class="slide-footer">08 / 08</div>
+  </div>
+</section>
+```
+
+#### timeline
+
+Each event: `.tl-event` contains `.tl-date-col` (date + optional track line) + `.tl-dot` + `.tl-content`. Omit `.tl-track` on the **last** event.
+
+```html
+<section data-slide aspect="16:9">
+  <div class="slide-inner">
+    <div class="slide-body s-timeline">
+      <h3>{HEADING}</h3>
+      <div class="tl-col">
+        <div class="tl-event">
+          <div class="tl-date-col">
+            <div class="tl-date">{DATE}</div>
+            <div class="tl-track"></div>  <!-- omit on last event -->
+          </div>
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-title">{EVENT TITLE}</div>
+            <div class="tl-desc">{DESCRIPTION}</div>  <!-- omit if none -->
+          </div>
+        </div>
+        <!-- repeat tl-event for each event -->
+      </div>
+    </div>
+    <div class="slide-footer">08 / 08</div>
+  </div>
+</section>
+```
+
+#### matrix
+
+Set `grid-template-columns` on `.mx-header` and each `.mx-row` to `1fr` repeat for the row-label column plus one `1fr` per data column. Add class `alt` on every other `.mx-row` for zebra striping.
+
+```html
+<section data-slide aspect="16:9">
+  <div class="slide-inner">
+    <div class="slide-body s-matrix">
+      <h3>{HEADING}</h3>
+      <div class="mx-table">
+        <!-- Header -->
+        <div class="mx-header" style="grid-template-columns:1fr 1fr 1fr 1fr">
+          <div></div>  <!-- empty corner -->
+          <div class="mx-col-head">{COL 1}</div>
+          <div class="mx-col-head">{COL 2}</div>
+          <div class="mx-col-head">{COL 3}</div>
+        </div>
+        <!-- Data rows -->
+        <div class="mx-row" style="grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:1px solid color-mix(in srgb,var(--fg) 8%,transparent)">
+          <div class="mx-row-label">{FEATURE}</div>
+          <div class="mx-cell yes">✓</div>
+          <div class="mx-cell no">✗</div>
+          <div class="mx-cell yes">✓</div>
+        </div>
+        <div class="mx-row alt" style="grid-template-columns:1fr 1fr 1fr 1fr">
+          <div class="mx-row-label">{FEATURE}</div>
+          <div class="mx-cell no">✗</div>
+          <div class="mx-cell partial">◐</div>
+          <div class="mx-cell yes">✓</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">08 / 08</div>
   </div>
 </section>
 ```

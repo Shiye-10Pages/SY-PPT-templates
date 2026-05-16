@@ -51,3 +51,4 @@ export type SlideAST =
       cols: string[]
       rows: { label: string; values: ('yes' | 'no' | 'partial' | string)[] }[]
     }
+  | { type: 'features'; heading?: string; items: { icon: string; title: string; sub?: string; desc?: string }[] }

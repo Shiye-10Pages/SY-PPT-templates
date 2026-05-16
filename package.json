@@ -11,7 +11,9 @@
     "screenshots": "node scripts/generate-screenshots.mjs",
     "blank-decks": "node scripts/generate-blank-decks.mjs",
     "build-index": "node scripts/build-index.mjs",
-    "analyze-templates": "node scripts/analyze-bt-templates.mjs"
+    "analyze-templates": "node scripts/analyze-bt-templates.mjs",
+    "verify": "node scripts/verify-all-types.mjs",
+    "e2e": "node scripts/agent-e2e-test.mjs"
   },
   "dependencies": {
     "html-to-image": "^1.11.13",

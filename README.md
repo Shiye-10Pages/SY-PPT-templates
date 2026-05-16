@@ -83,6 +83,30 @@ A taste of what the library can do. Click any title to open the theme directory.
 
 *Apple-keynote DNA. Product launches with cinematic black canvas and oversized type.*
 
+#### [编辑暖色 · Editorial Warm](src/themes/editorial-warm)
+
+<img src="screenshots/editorial-warm-1.png" width="32%" /> <img src="screenshots/editorial-warm-2.png" width="32%" /> <img src="screenshots/editorial-warm-3.png" width="32%" />
+
+*Bricolage Grotesque × Instrument Serif italic on warm parchment. Kinfolk-grade editorial for creator year-in-reviews and brand narratives.*
+
+#### [脉冲霓虹 · Neon Pulse](src/themes/neon-pulse)
+
+<img src="screenshots/neon-pulse-1.png" width="32%" /> <img src="screenshots/neon-pulse-2.png" width="32%" /> <img src="screenshots/neon-pulse-3.png" width="32%" />
+
+*Black void with electric mint (#00E5B4) and hot coral (#FF4B36). Scanline texture, cursor-follow glow, terminal energy. Built for tech product launches.*
+
+#### [色彩爆破 · Chroma Pop](src/themes/chroma-pop)
+
+<img src="screenshots/chroma-pop-1.png" width="32%" /> <img src="screenshots/chroma-pop-2.png" width="32%" /> <img src="screenshots/chroma-pop-3.png" width="32%" />
+
+*Pure white × electric blue × vivid orange. Neo-brutalist thick black borders + offset shadows. Maximum visual impact for creative pitches.*
+
+#### [太阳爆破 · Solar Blast](src/themes/solar-blast)
+
+<img src="screenshots/solar-blast-1.png" width="32%" /> <img src="screenshots/solar-blast-2.png" width="32%" /> <img src="screenshots/solar-blast-3.png" width="32%" />
+
+*Cream paper × electric yellow × ultra red. Barlow Condensed 900w poster typography — the words themselves are the design.*
+
 ### Tier A — 中国 B 端实用（8 个）
 | 模板 | 场景 | 默认尺寸 |
 |---|---|---|

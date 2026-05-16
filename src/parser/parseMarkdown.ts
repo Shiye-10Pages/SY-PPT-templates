@@ -397,6 +397,99 @@ function parseChartChunk(lines: string[]): SlideAST {
   return { type: 'chart', heading, items }
 }
 
+/** `@toc` — table of contents grid. Items: `- Title / Sub-text` */
+function parseTocChunk(lines: string[]): SlideAST {
+  const body = lines.slice(1)
+  let heading: string | undefined
+  const items: { title: string; sub?: string; num?: string }[] = []
+  for (const line of body) {
+    if (!line.trim()) continue
+    const h = line.match(/^##\s+(.+)$/)
+    if (h && !heading && items.length === 0) { heading = h[1].trim(); continue }
+    const raw = line.replace(/^[-*+]\s+/, '').trim()
+    const parts = raw.split('/').map(p => p.trim())
+    if (parts.length >= 1 && parts[0]) {
+      items.push({ title: parts[0], sub: parts[1], num: String(items.length + 1).padStart(2, '0') })
+    }
+  }
+  return { type: 'toc', heading, items }
+}
+
+/** `@flow` / `@process` — linear process diagram. Steps: `- Step Label / Optional description` */
+function parseFlowChunk(lines: string[]): SlideAST {
+  const body = lines.slice(1)
+  let heading: string | undefined
+  let direction: 'horizontal' | 'vertical' = 'horizontal'
+  const steps: { label: string; desc?: string }[] = []
+  for (const line of body) {
+    if (!line.trim()) continue
+    if (line.trim().toLowerCase() === 'vertical') { direction = 'vertical'; continue }
+    const h = line.match(/^##\s+(.+)$/)
+    if (h && !heading && steps.length === 0) { heading = h[1].trim(); continue }
+    const raw = line.replace(/^[-*+]\s+/, '').trim()
+    const parts = raw.split('/').map(p => p.trim())
+    if (parts[0]) steps.push({ label: parts[0], desc: parts[1] })
+  }
+  return { type: 'flow', heading, steps, direction }
+}
+
+/** `@timeline` — events list. Items: `- 2024 / Event title / Optional desc` */
+function parseTimelineChunk(lines: string[]): SlideAST {
+  const body = lines.slice(1)
+  let heading: string | undefined
+  const events: { date: string; title: string; desc?: string }[] = []
+  for (const line of body) {
+    if (!line.trim()) continue
+    const h = line.match(/^##\s+(.+)$/)
+    if (h && !heading && events.length === 0) { heading = h[1].trim(); continue }
+    const raw = line.replace(/^[-*+]\s+/, '').trim()
+    const parts = raw.split('/').map(p => p.trim())
+    if (parts.length >= 2) events.push({ date: parts[0], title: parts[1], desc: parts[2] })
+  }
+  return { type: 'timeline', heading, events }
+}
+
+/**
+ * `@matrix` — feature comparison matrix.
+ * Line 1 after directive: `||| Col1 | Col2 | Col3` (column headers)
+ * Body lines: `- Row Label | ✓ | ✗ | partial`
+ */
+function parseMatrixChunk(lines: string[]): SlideAST {
+  const body = lines.slice(1)
+  let heading: string | undefined
+  let cols: string[] = []
+  const rows: { label: string; values: string[] }[] = []
+  for (const line of body) {
+    if (!line.trim()) continue
+    const h = line.match(/^##\s+(.+)$/)
+    if (h && !heading && cols.length === 0) { heading = h[1].trim(); continue }
+    // Column header row starts with |||
+    if (line.trim().startsWith('|||')) {
+      const raw = line.replace(/^\|\|\|/, '').trim()
+      cols = raw.split('|').map(c => c.trim()).filter(Boolean)
+      continue
+    }
+    // Data row: `- Label | val | val | val`
+    const rowRaw = line.replace(/^[-*+]\s+/, '').trim()
+    if (!rowRaw.includes('|')) continue
+    const parts = rowRaw.split('|').map(c => c.trim())
+    if (parts[0]) {
+      const label = parts[0]
+      // Normalise values: ✓→yes, ✗/×→no, partial→partial, else keep string
+      const values = parts.slice(1).map(v => {
+        const t = v.trim()
+        if (!t) return ''
+        if (/^(✓|yes|是|○)$/i.test(t)) return 'yes'
+        if (/^(✗|×|no|否|✕)$/i.test(t)) return 'no'
+        if (/^(partial|部分|△|~)$/i.test(t)) return 'partial'
+        return t
+      })
+      rows.push({ label, values })
+    }
+  }
+  return { type: 'matrix', heading, cols, rows }
+}
+
 function parseChunk(chunk: string, index: number): SlideAST {
   const lines = chunk.split('\n').map(l => l.trimEnd())
 
@@ -432,6 +525,18 @@ function parseChunk(chunk: string, index: number): SlideAST {
   }
   if (lines[0].trim().toLowerCase() === '@chart') {
     return parseChartChunk(lines)
+  }
+  if (lines[0].trim().toLowerCase() === '@toc') {
+    return parseTocChunk(lines)
+  }
+  if (lines[0].trim().toLowerCase() === '@flow' || lines[0].trim().toLowerCase() === '@process') {
+    return parseFlowChunk(lines)
+  }
+  if (lines[0].trim().toLowerCase() === '@timeline') {
+    return parseTimelineChunk(lines)
+  }
+  if (lines[0].trim().toLowerCase() === '@matrix') {
+    return parseMatrixChunk(lines)
   }
 
   // ---- Cover detection: first slide with H1 ----

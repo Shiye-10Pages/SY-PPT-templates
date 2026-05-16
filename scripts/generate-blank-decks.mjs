@@ -275,20 +275,150 @@ const SLIDE_SKELETONS = `
   </section>
 
   <!-- ═══════════════════════════════════════════════════
-       SLIDE 6 — ADD MORE SLIDES ABOVE THIS LINE
+       SLIDE 6 — TOC (@toc type) — numbered agenda grid
+  ═══════════════════════════════════════════════════ -->
+  <section data-slide>
+    <div class="slide-inner">
+      <div class="slide-body" style="justify-content:center">
+        <h3 style="font-family:var(--display-font);font-size:clamp(28px,5cqi,52px);font-weight:var(--display-weight,800);letter-spacing:var(--display-tracking,-0.02em);line-height:1.1;margin:0 0 2rem">AGENDA HEADING</h3>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem">
+          <div style="display:flex;flex-direction:column;gap:.5rem;border-radius:1.25rem;padding:1.25rem 1.5rem;background:color-mix(in srgb,var(--accent) 8%,transparent);border:1px solid color-mix(in srgb,var(--accent) 20%,transparent)">
+            <span style="font-family:var(--display-font);font-weight:800;font-size:clamp(20px,3.5cqi,36px);color:var(--accent);letter-spacing:-.03em;line-height:1">01</span>
+            <span style="font-family:var(--display-font);font-weight:700;font-size:clamp(15px,2.2cqi,24px);line-height:1.2">ITEM TITLE</span>
+            <span style="font-size:clamp(11px,1.4cqi,15px);color:var(--fg-muted);line-height:1.4">Sub-text here</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:.5rem;border-radius:1.25rem;padding:1.25rem 1.5rem;background:color-mix(in srgb,var(--accent) 8%,transparent);border:1px solid color-mix(in srgb,var(--accent) 20%,transparent)">
+            <span style="font-family:var(--display-font);font-weight:800;font-size:clamp(20px,3.5cqi,36px);color:var(--accent);letter-spacing:-.03em;line-height:1">02</span>
+            <span style="font-family:var(--display-font);font-weight:700;font-size:clamp(15px,2.2cqi,24px);line-height:1.2">ITEM TITLE</span>
+            <span style="font-size:clamp(11px,1.4cqi,15px);color:var(--fg-muted);line-height:1.4">Sub-text here</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:.5rem;border-radius:1.25rem;padding:1.25rem 1.5rem;background:color-mix(in srgb,var(--accent) 8%,transparent);border:1px solid color-mix(in srgb,var(--accent) 20%,transparent)">
+            <span style="font-family:var(--display-font);font-weight:800;font-size:clamp(20px,3.5cqi,36px);color:var(--accent);letter-spacing:-.03em;line-height:1">03</span>
+            <span style="font-family:var(--display-font);font-weight:700;font-size:clamp(15px,2.2cqi,24px);line-height:1.2">ITEM TITLE</span>
+            <span style="font-size:clamp(11px,1.4cqi,15px);color:var(--fg-muted);line-height:1.4">Sub-text here</span>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">06 / TT</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 7 — FLOW (@flow type) — process diagram nodes
+  ═══════════════════════════════════════════════════ -->
+  <section data-slide>
+    <div class="slide-inner">
+      <div class="slide-body" style="justify-content:center">
+        <h3 style="font-family:var(--display-font);font-size:clamp(28px,5cqi,52px);font-weight:var(--display-weight,800);letter-spacing:var(--display-tracking,-0.02em);line-height:1.1;margin:0 0 3rem">PROCESS HEADING</h3>
+        <div style="display:flex;align-items:flex-start;gap:0">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;position:relative">
+            <div style="width:clamp(44px,6cqi,64px);height:clamp(44px,6cqi,64px);border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--display-font);font-weight:800;font-size:clamp(14px,2cqi,22px);color:var(--bg);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 18%,transparent)">01</div>
+            <div style="margin-top:1rem;text-align:center;padding:0 .5rem">
+              <div style="font-family:var(--display-font);font-weight:700;font-size:clamp(13px,1.8cqi,20px);line-height:1.25">STEP ONE</div>
+              <div style="font-size:clamp(11px,1.3cqi,15px);color:var(--fg-muted);margin-top:.3rem;line-height:1.4">Description</div>
+            </div>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;position:relative">
+            <div style="width:clamp(44px,6cqi,64px);height:clamp(44px,6cqi,64px);border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--display-font);font-weight:800;font-size:clamp(14px,2cqi,22px);color:var(--bg);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 18%,transparent)">02</div>
+            <div style="margin-top:1rem;text-align:center;padding:0 .5rem">
+              <div style="font-family:var(--display-font);font-weight:700;font-size:clamp(13px,1.8cqi,20px);line-height:1.25">STEP TWO</div>
+              <div style="font-size:clamp(11px,1.3cqi,15px);color:var(--fg-muted);margin-top:.3rem;line-height:1.4">Description</div>
+            </div>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;position:relative">
+            <div style="width:clamp(44px,6cqi,64px);height:clamp(44px,6cqi,64px);border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--display-font);font-weight:800;font-size:clamp(14px,2cqi,22px);color:var(--bg);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 18%,transparent)">03</div>
+            <div style="margin-top:1rem;text-align:center;padding:0 .5rem">
+              <div style="font-family:var(--display-font);font-weight:700;font-size:clamp(13px,1.8cqi,20px);line-height:1.25">STEP THREE</div>
+              <div style="font-size:clamp(11px,1.3cqi,15px);color:var(--fg-muted);margin-top:.3rem;line-height:1.4">Description</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">07 / TT</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 8 — TIMELINE (@timeline type) — vertical event list
+  ═══════════════════════════════════════════════════ -->
+  <section data-slide>
+    <div class="slide-inner">
+      <div class="slide-body" style="justify-content:center">
+        <h3 style="font-family:var(--display-font);font-size:clamp(28px,5cqi,52px);font-weight:var(--display-weight,800);letter-spacing:var(--display-tracking,-0.02em);line-height:1.1;margin:0 0 2.5rem">TIMELINE HEADING</h3>
+        <div style="display:flex;flex-direction:column;gap:0">
+          <div style="display:flex;align-items:flex-start;gap:1.5rem;padding-bottom:clamp(16px,2.5cqi,32px)">
+            <div style="flex-shrink:0;width:clamp(80px,12cqi,140px);text-align:right">
+              <span style="font-family:var(--display-font);font-weight:700;font-size:clamp(13px,1.8cqi,20px);color:var(--accent);letter-spacing:-.02em">DATE</span>
+            </div>
+            <div style="width:clamp(12px,1.6cqi,18px);height:clamp(12px,1.6cqi,18px);border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:3px;box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 18%,transparent)"></div>
+            <div>
+              <div style="font-family:var(--display-font);font-weight:700;font-size:clamp(16px,2.2cqi,26px);line-height:1.2">EVENT TITLE</div>
+              <div style="font-size:clamp(12px,1.5cqi,18px);color:var(--fg-muted);line-height:1.4;margin-top:.25rem">Event description here</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:1.5rem">
+            <div style="flex-shrink:0;width:clamp(80px,12cqi,140px);text-align:right">
+              <span style="font-family:var(--display-font);font-weight:700;font-size:clamp(13px,1.8cqi,20px);color:var(--accent);letter-spacing:-.02em">DATE</span>
+            </div>
+            <div style="width:clamp(12px,1.6cqi,18px);height:clamp(12px,1.6cqi,18px);border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:3px;box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 18%,transparent)"></div>
+            <div>
+              <div style="font-family:var(--display-font);font-weight:700;font-size:clamp(16px,2.2cqi,26px);line-height:1.2">EVENT TITLE</div>
+              <div style="font-size:clamp(12px,1.5cqi,18px);color:var(--fg-muted);line-height:1.4;margin-top:.25rem">Event description here</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">08 / TT</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 9 — MATRIX (@matrix type) — feature comparison table
+  ═══════════════════════════════════════════════════ -->
+  <section data-slide>
+    <div class="slide-inner">
+      <div class="slide-body" style="justify-content:center">
+        <h3 style="font-family:var(--display-font);font-size:clamp(26px,4.5cqi,50px);font-weight:var(--display-weight,800);letter-spacing:var(--display-tracking,-0.02em);line-height:1.1;margin:0 0 1.5rem">COMPARISON HEADING</h3>
+        <div style="border-radius:1.25rem;overflow:hidden;border:1px solid color-mix(in srgb,var(--fg) 12%,transparent)">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;background:color-mix(in srgb,var(--accent) 10%,transparent);border-bottom:2px solid color-mix(in srgb,var(--accent) 25%,transparent)">
+            <div style="padding:clamp(10px,1.4cqi,16px) clamp(12px,2cqi,20px)"></div>
+            <div style="padding:clamp(10px,1.4cqi,16px);font-family:var(--display-font);font-weight:700;font-size:clamp(13px,1.7cqi,19px);text-align:center;color:var(--accent)">COL A</div>
+            <div style="padding:clamp(10px,1.4cqi,16px);font-family:var(--display-font);font-weight:700;font-size:clamp(13px,1.7cqi,19px);text-align:center;color:var(--accent)">COL B</div>
+            <div style="padding:clamp(10px,1.4cqi,16px);font-family:var(--display-font);font-weight:700;font-size:clamp(13px,1.7cqi,19px);text-align:center;color:var(--accent)">COL C</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:1px solid color-mix(in srgb,var(--fg) 8%,transparent)">
+            <div style="padding:clamp(10px,1.4cqi,16px) clamp(12px,2cqi,20px);font-weight:600;font-size:clamp(13px,1.7cqi,19px)">Feature One</div>
+            <div style="padding:clamp(10px,1.4cqi,16px);text-align:center;font-size:clamp(16px,2.2cqi,26px);font-weight:700;color:var(--accent)">✓</div>
+            <div style="padding:clamp(10px,1.4cqi,16px);text-align:center;font-size:clamp(16px,2.2cqi,26px);font-weight:700;color:var(--fg-muted)">✗</div>
+            <div style="padding:clamp(10px,1.4cqi,16px);text-align:center;font-size:clamp(16px,2.2cqi,26px);font-weight:700;color:var(--accent)">✓</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr">
+            <div style="padding:clamp(10px,1.4cqi,16px) clamp(12px,2cqi,20px);font-weight:600;font-size:clamp(13px,1.7cqi,19px)">Feature Two</div>
+            <div style="padding:clamp(10px,1.4cqi,16px);text-align:center;font-size:clamp(16px,2.2cqi,26px);font-weight:700;color:var(--fg-muted)">✗</div>
+            <div style="padding:clamp(10px,1.4cqi,16px);text-align:center;font-size:clamp(16px,2.2cqi,26px);font-weight:700;color:var(--accent-2,var(--fg-muted))">◐</div>
+            <div style="padding:clamp(10px,1.4cqi,16px);text-align:center;font-size:clamp(16px,2.2cqi,26px);font-weight:700;color:var(--accent)">✓</div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">09 / TT</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       SLIDE 10 — ADD MORE SLIDES ABOVE THIS LINE
        After adding slides: update NN / TT in all slide-footer elements.
   ═══════════════════════════════════════════════════ -->
 `
 
 function buildBlankDeck(themeId, themeCss, aspect) {
   const [W, H] = ASPECT_DIMS[aspect] ?? [1920, 1080]
-  const totalSlides = 5
+  const totalSlides = 9
   return `<!doctype html>
 <!-- THEME: ${themeId} | ASPECT: ${aspect} | DESIGN: ${W}x${H}px -->
 <!-- USAGE: Clone this file, replace slide content marked with CAPS PLACEHOLDERS,
      update all "NN / TT" slide footers with real numbers.
      Do NOT modify the <style> blocks or the <script> at the bottom.
-     AGENTS.md documents all 17 DSL slide types you can use. -->
+     AGENTS.md documents all 21 DSL slide types you can use. -->
 <html lang="zh">
 <head>
 <meta charset="utf-8">

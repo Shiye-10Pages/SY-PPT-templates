@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- THEME: soe-blue | ASPECT: 16:9 | DESIGN: 1920x1080px -->
+<!-- THEME: solar-blast | ASPECT: 4:5 | DESIGN: 1080x1350px -->
 <!-- USAGE: Clone this file, replace slide content marked with CAPS PLACEHOLDERS,
      update all "NN / TT" slide footers with real numbers.
      Do NOT modify the <style> blocks or the <script> at the bottom.
@@ -8,27 +8,102 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>soe-blue — SY PPT 模板</title>
+<title>solar-blast — SY PPT 模板</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-/* Theme: soe-blue */
-[data-theme="soe-blue"] {
-  --bg: #FFFFFF;
-  --bg-grad-from: #FFFFFF;
-  --bg-grad-to: #F4F7FB;
-  --fg: #0B1F3A;
-  --fg-muted: rgba(11, 31, 58, 0.6);
-  --accent: #003366;
-  --accent-2: #B8985A;
-  --accent-glow-1: rgba(0, 51, 102, 0.05);
-  --accent-glow-2: rgba(184, 152, 90, 0.05);
-  --display-font: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
-  --body-font: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
-  --display-weight: 800;
-  --display-tracking: -0.01em;
-  --slide-radius: 0px;
+/* Theme: solar-blast */
+/* ============================================================
+   solar-blast — 太阳爆破
+   Cream paper × electric yellow × ultra red. Poster energy.
+   Barlow Condensed 900w + Instrument Serif italic.
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,700&family=Instrument+Serif:ital@0;1&display=swap");
+
+[data-theme="solar-blast"] {
+  --bg:           #F8F5EC;
+  --bg-grad-from: #F8F5EC;
+  --bg-grad-to:   #F1EBDA;
+  --fg:           #0F0F0F;
+  --fg-muted:     rgba(15, 15, 15, 0.52);
+  --accent:       #F5E000;   /* electric yellow */
+  --accent-2:     #E31010;   /* ultra red */
+
+  --accent-glow-1: rgba(245, 224, 0,  0.20);
+  --accent-glow-2: rgba(227,  16, 16, 0.12);
+
+  /* Ultra-condensed display — this IS the design */
+  --display-font:     "Barlow Condensed", "PingFang SC", system-ui, sans-serif;
+  --body-font:        "Instrument Serif", "Source Han Serif SC", "Songti SC", Georgia, serif;
+  --display-weight:   900;
+  --display-tracking: -0.02em;
+
+  --slide-radius:  0px;
+  --slide-padding: 8vw;
+
+  /* FX: accent-rule draws in on enter */
+  --fx-accent-rule: 1;
 }
+
+/* ── Atmospheric solar haze ───────────────────────────────── */
+[data-theme="solar-blast"] section[data-slide] {
+  background-image:
+    radial-gradient(ellipse 60% 45% at 80% 20%,
+      rgba(245, 224, 0,  0.22) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 35% at 15% 85%,
+      rgba(227,  16, 16, 0.12) 0%, transparent 60%),
+    linear-gradient(155deg, var(--bg-grad-from) 0%, var(--bg-grad-to) 100%);
+}
+
+/* ── FX accent rule: yellow not red (overrides fx.css) ───── */
+[data-theme="solar-blast"] [data-slide] .slide-body::before {
+  background: var(--accent) !important;
+  height: 5px !important;
+  width: 0;
+  animation: fx-rule-draw 850ms cubic-bezier(0.2,0.7,0.1,1) 120ms forwards;
+}
+
+/* ── Quote: red left rule, condensed italic body ─────────── */
+[data-theme="solar-blast"] [data-slide-anim] blockquote {
+  border-left: 5px solid var(--accent-2);
+  padding-left: 2rem;
+  font-family: "Barlow Condensed", sans-serif;
+  font-style: italic;
+  font-weight: 700;
+}
+[data-theme="solar-blast"] [data-slide-anim] .mb-8.leading-none {
+  /* Hide curly-quote mark — rule replaces it */
+  display: none;
+}
+
+/* ── Body text: Instrument Serif italic ──────────────────── */
+[data-theme="solar-blast"] [data-slide-anim] .whitespace-pre-wrap,
+[data-theme="solar-blast"] [data-slide-anim] p {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* ── BigNumber: yellow, oversized feel, ultra-condensed ────── */
+[data-theme="solar-blast"] [data-slide-anim] .tabular-nums:first-child {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.06em;
+}
+
+/* ── Stats cards: cream-on-cream with yellow bar ──────────── */
+[data-theme="solar-blast"] section[data-slide] [style*="color-mix(in srgb, var(--fg) 5%"] {
+  background: rgba(15, 15, 15, 0.04) !important;
+  border-color: rgba(15, 15, 15, 0.15) !important;
+}
+
+/* ── Chapter: alternates between yellow and red ─────────────
+   Chapter 01 = yellow, 02 = red, 03 = yellow …
+   The isChapter logic sets --accent as the bg; to get red on
+   odd chapters, we leverage a CSS trick on .chapter-n class.
+   (Full alternation requires Slide.tsx changes — for now, the
+   default accent-based color works and is already striking.) */
 </style>
 <style>
 /* Render harness + presentation mode */
@@ -218,8 +293,8 @@
 }
 </style>
 </head>
-<body data-theme="soe-blue">
-<div data-deck-root data-theme="soe-blue" data-aspect="16:9">
+<body data-theme="solar-blast">
+<div data-deck-root data-theme="solar-blast" data-aspect="4:5">
 <!-- ═══════════════════════════════════════════════════
        SLIDE 1 — COVER (cover type)
        Replace: DECK TITLE, SUBTITLE, NN, TT
@@ -511,7 +586,7 @@ var root=document.querySelector('[data-deck-root]');if(!root)return;
 var slides=Array.from(root.querySelectorAll('section[data-slide]'));
 var cs=getComputedStyle(root);
 FX.forEach(function(n){if((cs.getPropertyValue('--fx-'+n)||'').trim()==='1')root.setAttribute('data-fx-'+n,'1');});
-var W=1920,H=1080;
+var W=1080,H=1350;
 function scale(){var s=Math.min(innerWidth/W,innerHeight/H);slides.forEach(function(sl){sl.style.width=W+'px';sl.style.height=H+'px';sl.style.transform='scale('+s+') translate('+Math.round((innerWidth-W*s)/2/s)+'px,'+Math.round((innerHeight-H*s)/2/s)+'px)';sl.style.transformOrigin='top left';});}
 scale();window.addEventListener('resize',scale,{passive:true});
 function goTo(n){if(n<0)n=0;if(n>=TOTAL)n=TOTAL-1;if(n===current)return;slides[current].classList.remove('deck-active');slides[n].classList.add('deck-active');slides[n].querySelectorAll('[data-slide-anim]').forEach(function(el){el.classList.add('slide-visible');});current=n;updateChrome();resetIdle();}

@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- THEME: soe-blue | ASPECT: 16:9 | DESIGN: 1920x1080px -->
+<!-- THEME: chroma-pop | ASPECT: 4:5 | DESIGN: 1080x1350px -->
 <!-- USAGE: Clone this file, replace slide content marked with CAPS PLACEHOLDERS,
      update all "NN / TT" slide footers with real numbers.
      Do NOT modify the <style> blocks or the <script> at the bottom.
@@ -8,26 +8,92 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>soe-blue — SY PPT 模板</title>
+<title>chroma-pop — SY PPT 模板</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-/* Theme: soe-blue */
-[data-theme="soe-blue"] {
-  --bg: #FFFFFF;
+/* Theme: chroma-pop */
+/* ============================================================
+   chroma-pop — 色彩爆破
+   Pure white × electric blue × vivid orange. Neo-brutalist energy.
+   Space Grotesk 800w + DM Mono. Chunky black borders everywhere.
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;800&family=DM+Mono:wght@400;500&display=swap");
+
+[data-theme="chroma-pop"] {
+  --bg:           #FFFFFF;
   --bg-grad-from: #FFFFFF;
-  --bg-grad-to: #F4F7FB;
-  --fg: #0B1F3A;
-  --fg-muted: rgba(11, 31, 58, 0.6);
-  --accent: #003366;
-  --accent-2: #B8985A;
-  --accent-glow-1: rgba(0, 51, 102, 0.05);
-  --accent-glow-2: rgba(184, 152, 90, 0.05);
-  --display-font: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
-  --body-font: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
-  --display-weight: 800;
-  --display-tracking: -0.01em;
-  --slide-radius: 0px;
+  --bg-grad-to:   #F7F7F5;
+  --fg:           #0A0A0A;
+  --fg-muted:     rgba(10, 10, 10, 0.52);
+  --accent:       #2050FF;   /* electric blue */
+  --accent-2:     #FF5E19;   /* vivid orange */
+
+  /* Glow kept subtle — light bg, don't oversaturate */
+  --accent-glow-1: rgba(32,  80, 255, 0.07);
+  --accent-glow-2: rgba(255, 94,  25, 0.05);
+
+  --display-font:     "Space Grotesk", "PingFang SC", "Hiragino Sans GB", system-ui, sans-serif;
+  --body-font:        "DM Mono", "SF Mono", "Cascadia Code", monospace;
+  --display-weight:   800;
+  --display-tracking: -0.025em;
+
+  --slide-radius:  0px;
+  --slide-padding: 8vw;
+
+  /* FX: hover lift + bignum pop */
+  --fx-hover-lift: 1;
+  --fx-bignum-pop: 1;
+}
+
+/* ── Neo-brutalist: thick black border + offset shadow on cards ── */
+[data-theme="chroma-pop"] section[data-slide] [style*="color-mix(in srgb, var(--fg) 5%"] {
+  background: #FFFFFF !important;
+  border: 2.5px solid #0A0A0A !important;
+  box-shadow: 5px 5px 0 #0A0A0A !important;
+  border-radius: 1rem !important;
+}
+
+/* ── Stats accent bar: thicker, stronger ─────────────────── */
+[data-theme="chroma-pop"] section[data-slide] [style*="height:2.5px"] {
+  height: 4px !important;
+}
+
+/* ── Quote: electric-blue left rule, bold + upright ─────── */
+[data-theme="chroma-pop"] [data-slide-anim] blockquote {
+  border-left: 5px solid var(--accent);
+  padding-left: 2rem;
+  font-family: "Space Grotesk", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+}
+
+/* ── Monospace body — techy label energy ─────────────────── */
+[data-theme="chroma-pop"] [data-slide-anim] .whitespace-pre-wrap {
+  font-family: "DM Mono", monospace;
+  font-size: 0.88em;
+  line-height: 1.6;
+}
+
+/* ── Compare columns: blue+black vs orange+black border ────── */
+[data-theme="chroma-pop"] section[data-slide] [style*="color-mix(in srgb, var(--accent) 14%"] {
+  border: 2.5px solid color-mix(in srgb, var(--accent) 60%, transparent) !important;
+  box-shadow: 4px 4px 0 var(--accent) !important;
+}
+
+/* ── Chart track: grey border, white fill ────────────────── */
+[data-theme="chroma-pop"] section[data-slide] [style*="color-mix(in srgb, var(--fg) 8%"] {
+  background: #F0F0F0 !important;
+  border: 2px solid #0A0A0A !important;
+}
+
+/* ── Orange accent on bigNumber ─────────────────────────── */
+/* --accent (#2050FF) used by default. For alternating color use accent-2 */
+
+/* ── Lime as tertiary decorator (CSS var extension) ────────── */
+[data-theme="chroma-pop"] {
+  --accent-3: #C8F020;  /* lime — for decorative spots */
 }
 </style>
 <style>
@@ -218,8 +284,8 @@
 }
 </style>
 </head>
-<body data-theme="soe-blue">
-<div data-deck-root data-theme="soe-blue" data-aspect="16:9">
+<body data-theme="chroma-pop">
+<div data-deck-root data-theme="chroma-pop" data-aspect="4:5">
 <!-- ═══════════════════════════════════════════════════
        SLIDE 1 — COVER (cover type)
        Replace: DECK TITLE, SUBTITLE, NN, TT
@@ -511,7 +577,7 @@ var root=document.querySelector('[data-deck-root]');if(!root)return;
 var slides=Array.from(root.querySelectorAll('section[data-slide]'));
 var cs=getComputedStyle(root);
 FX.forEach(function(n){if((cs.getPropertyValue('--fx-'+n)||'').trim()==='1')root.setAttribute('data-fx-'+n,'1');});
-var W=1920,H=1080;
+var W=1080,H=1350;
 function scale(){var s=Math.min(innerWidth/W,innerHeight/H);slides.forEach(function(sl){sl.style.width=W+'px';sl.style.height=H+'px';sl.style.transform='scale('+s+') translate('+Math.round((innerWidth-W*s)/2/s)+'px,'+Math.round((innerHeight-H*s)/2/s)+'px)';sl.style.transformOrigin='top left';});}
 scale();window.addEventListener('resize',scale,{passive:true});
 function goTo(n){if(n<0)n=0;if(n>=TOTAL)n=TOTAL-1;if(n===current)return;slides[current].classList.remove('deck-active');slides[n].classList.add('deck-active');slides[n].querySelectorAll('[data-slide-anim]').forEach(function(el){el.classList.add('slide-visible');});current=n;updateChrome();resetIdle();}

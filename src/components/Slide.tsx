@@ -1115,5 +1115,325 @@ function SlideBody({ slide }: { slide: SlideAST }) {
         </div>
       )
     }
+
+    case 'toc': {
+      const cols = Math.min(slide.items.length, 3)
+      return (
+        <div className="flex h-full flex-col justify-center">
+          {slide.heading && (
+            <h3
+              data-anim="fade-up" data-delay="0"
+              className="mb-8 text-balance"
+              style={{
+                fontFamily: 'var(--display-font)', fontSize: 'clamp(28px,5cqi,52px)',
+                fontWeight: 'var(--display-weight)', letterSpacing: 'var(--display-tracking)',
+                lineHeight: 1.1,
+              }}
+            >
+              {slide.heading}
+            </h3>
+          )}
+          <div
+            className="grid gap-4"
+            style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}
+          >
+            {slide.items.map((item, i) => (
+              <div
+                key={i}
+                data-anim="fade-up"
+                data-delay={String(Math.min(i + 1, 6))}
+                className="flex flex-col gap-2 rounded-2xl p-5"
+                style={{
+                  background: 'color-mix(in srgb, var(--fg) 5%, transparent)',
+                  border: '1px solid color-mix(in srgb, var(--fg) 10%, transparent)',
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: 'var(--display-font)', fontWeight: 700,
+                    fontSize: 'clamp(18px,3.5cqi,36px)', color: 'var(--accent)',
+                    letterSpacing: '-0.03em', lineHeight: 1,
+                  }}
+                >
+                  {item.num}
+                </span>
+                <span
+                  style={{
+                    fontFamily: 'var(--display-font)', fontWeight: 'var(--display-weight)',
+                    fontSize: 'clamp(16px,2.5cqi,26px)', lineHeight: 1.2,
+                  }}
+                >
+                  {item.title}
+                </span>
+                {item.sub && (
+                  <span style={{ fontSize: 'clamp(12px,1.6cqi,16px)', color: 'var(--fg-muted)', lineHeight: 1.4 }}>
+                    {item.sub}
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )
+    }
+
+    case 'flow': {
+      const isV = slide.direction === 'vertical'
+      return (
+        <div className="flex h-full flex-col justify-center">
+          {slide.heading && (
+            <h3
+              data-anim="fade-up" data-delay="0"
+              className="mb-8 text-balance"
+              style={{
+                fontFamily: 'var(--display-font)', fontSize: 'clamp(28px,5cqi,52px)',
+                fontWeight: 'var(--display-weight)', letterSpacing: 'var(--display-tracking)',
+                lineHeight: 1.1,
+              }}
+            >
+              {slide.heading}
+            </h3>
+          )}
+          <div
+            className={isV ? 'flex flex-col gap-0' : 'flex items-start gap-0'}
+            style={{ overflowX: isV ? 'visible' : 'auto' }}
+          >
+            {slide.steps.map((step, i) => (
+              <div
+                key={i}
+                data-anim="fade-up"
+                data-delay={String(Math.min(i + 1, 6))}
+                className={isV ? 'flex items-start gap-4' : 'flex flex-col items-center'}
+                style={{ flex: isV ? undefined : '1 1 0', minWidth: isV ? undefined : 'clamp(100px,15cqi,200px)' }}
+              >
+                {/* Node */}
+                <div style={{ position: 'relative', zIndex: 2, flexShrink: 0 }}>
+                  <div
+                    style={{
+                      width: 'clamp(44px,6cqi,64px)', height: 'clamp(44px,6cqi,64px)',
+                      borderRadius: '50%',
+                      background: 'var(--accent)',
+                      border: '3px solid color-mix(in srgb, var(--accent) 60%, var(--bg))',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontFamily: 'var(--display-font)', fontWeight: 800,
+                      fontSize: 'clamp(14px,2cqi,22px)', color: 'var(--bg)',
+                      boxShadow: '0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent)',
+                    }}
+                  >
+                    {String(i + 1).padStart(2, '0')}
+                  </div>
+                  {/* Connector line — between nodes */}
+                  {i < slide.steps.length - 1 && (
+                    <div
+                      aria-hidden
+                      style={{
+                        position: 'absolute',
+                        ...(isV
+                          ? { top: '100%', left: '50%', transform: 'translateX(-50%)', width: '3px', height: 'clamp(24px,4cqi,48px)' }
+                          : { left: '100%', top: '50%', transform: 'translateY(-50%)', height: '3px', width: '100%' }),
+                        background: 'linear-gradient(to right, var(--accent), color-mix(in srgb, var(--accent) 40%, transparent))',
+                        borderRadius: '999px',
+                      }}
+                    />
+                  )}
+                </div>
+                {/* Label + desc */}
+                <div
+                  className={isV ? 'pb-8' : 'mt-4 text-center px-2'}
+                  style={{ flex: isV ? 1 : undefined }}
+                >
+                  <div
+                    style={{
+                      fontFamily: 'var(--display-font)', fontWeight: 700,
+                      fontSize: 'clamp(14px,2.2cqi,22px)', lineHeight: 1.25,
+                    }}
+                  >
+                    {renderInlineIcons(step.label)}
+                  </div>
+                  {step.desc && (
+                    <div style={{ fontSize: 'clamp(11px,1.5cqi,16px)', color: 'var(--fg-muted)', lineHeight: 1.4, marginTop: '0.35rem' }}>
+                      {renderInlineIcons(step.desc)}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )
+    }
+
+    case 'timeline': {
+      return (
+        <div className="flex h-full flex-col justify-center">
+          {slide.heading && (
+            <h3
+              data-anim="fade-up" data-delay="0"
+              className="mb-8 text-balance"
+              style={{
+                fontFamily: 'var(--display-font)', fontSize: 'clamp(28px,5cqi,52px)',
+                fontWeight: 'var(--display-weight)', letterSpacing: 'var(--display-tracking)',
+                lineHeight: 1.1,
+              }}
+            >
+              {slide.heading}
+            </h3>
+          )}
+          <div className="flex flex-col gap-0">
+            {slide.events.map((ev, i) => (
+              <div
+                key={i}
+                data-anim="fade-up"
+                data-delay={String(Math.min(i + 1, 6))}
+                className="flex items-start gap-6"
+                style={{ paddingBottom: i < slide.events.length - 1 ? 'clamp(20px,3.5cqi,40px)' : 0, position: 'relative' }}
+              >
+                {/* Left: date + vertical track */}
+                <div className="flex flex-col items-center" style={{ flexShrink: 0, width: 'clamp(80px,14cqi,160px)' }}>
+                  <div
+                    style={{
+                      fontFamily: 'var(--display-font)', fontWeight: 700,
+                      fontSize: 'clamp(13px,2cqi,22px)', color: 'var(--accent)',
+                      letterSpacing: '-0.02em', lineHeight: 1, textAlign: 'right', width: '100%',
+                    }}
+                  >
+                    {ev.date}
+                  </div>
+                  {i < slide.events.length - 1 && (
+                    <div
+                      aria-hidden
+                      style={{
+                        width: '3px', flex: 1, marginTop: '8px',
+                        background: 'linear-gradient(to bottom, var(--accent), color-mix(in srgb, var(--accent) 20%, transparent))',
+                        borderRadius: '999px', minHeight: 'clamp(20px,3cqi,40px)',
+                      }}
+                    />
+                  )}
+                </div>
+                {/* Dot */}
+                <div
+                  style={{
+                    width: 'clamp(12px,2cqi,18px)', height: 'clamp(12px,2cqi,18px)',
+                    borderRadius: '50%', background: 'var(--accent)', flexShrink: 0,
+                    marginTop: '3px',
+                    boxShadow: '0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent)',
+                  }}
+                />
+                {/* Right: title + desc */}
+                <div className="flex flex-col gap-1" style={{ paddingBottom: 'inherit' }}>
+                  <div
+                    style={{
+                      fontFamily: 'var(--display-font)', fontWeight: 700,
+                      fontSize: 'clamp(16px,2.5cqi,28px)', lineHeight: 1.2,
+                    }}
+                  >
+                    {renderInlineIcons(ev.title)}
+                  </div>
+                  {ev.desc && (
+                    <div style={{ fontSize: 'clamp(12px,1.6cqi,18px)', color: 'var(--fg-muted)', lineHeight: 1.45 }}>
+                      {renderInlineIcons(ev.desc)}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )
+    }
+
+    case 'matrix': {
+      const colCount = slide.cols.length
+      const VALUE_STYLES: Record<string, { icon: string; color: string }> = {
+        yes:     { icon: '✓', color: 'var(--accent)' },
+        no:      { icon: '✗', color: 'var(--fg-muted)' },
+        partial: { icon: '◐', color: 'var(--accent-2, var(--fg-muted))' },
+      }
+      return (
+        <div className="flex h-full flex-col justify-center">
+          {slide.heading && (
+            <h3
+              data-anim="fade-up" data-delay="0"
+              className="mb-6 text-balance"
+              style={{
+                fontFamily: 'var(--display-font)', fontSize: 'clamp(26px,4.5cqi,50px)',
+                fontWeight: 'var(--display-weight)', letterSpacing: 'var(--display-tracking)',
+                lineHeight: 1.1,
+              }}
+            >
+              {slide.heading}
+            </h3>
+          )}
+          <div
+            className="rounded-2xl overflow-hidden"
+            style={{ border: '1px solid color-mix(in srgb, var(--fg) 12%, transparent)' }}
+          >
+            {/* Header row */}
+            <div
+              className="grid"
+              style={{
+                gridTemplateColumns: `1fr ${Array(colCount).fill('minmax(0,1fr)').join(' ')}`,
+                background: 'color-mix(in srgb, var(--accent) 10%, transparent)',
+                borderBottom: '2px solid color-mix(in srgb, var(--accent) 25%, transparent)',
+              }}
+            >
+              <div style={{ padding: 'clamp(10px,1.5cqi,16px) clamp(12px,2cqi,20px)' }} />
+              {slide.cols.map((col, ci) => (
+                <div
+                  key={ci}
+                  style={{
+                    padding: 'clamp(10px,1.5cqi,16px) clamp(8px,1.2cqi,14px)',
+                    fontFamily: 'var(--display-font)', fontWeight: 700,
+                    fontSize: 'clamp(12px,1.8cqi,18px)', textAlign: 'center',
+                    color: 'var(--accent)', letterSpacing: '-0.01em',
+                  }}
+                >
+                  {col}
+                </div>
+              ))}
+            </div>
+            {/* Data rows */}
+            {slide.rows.map((row, ri) => (
+              <div
+                key={ri}
+                data-anim="fade-up"
+                data-delay={String(Math.min(ri + 1, 6))}
+                className="grid"
+                style={{
+                  gridTemplateColumns: `1fr ${Array(colCount).fill('minmax(0,1fr)').join(' ')}`,
+                  background: ri % 2 === 0 ? 'transparent' : 'color-mix(in srgb, var(--fg) 3%, transparent)',
+                  borderBottom: ri < slide.rows.length - 1 ? '1px solid color-mix(in srgb, var(--fg) 8%, transparent)' : 'none',
+                }}
+              >
+                <div
+                  style={{
+                    padding: 'clamp(10px,1.5cqi,16px) clamp(12px,2cqi,20px)',
+                    fontWeight: 600, fontSize: 'clamp(12px,1.8cqi,18px)', lineHeight: 1.3,
+                  }}
+                >
+                  {renderInlineIcons(row.label)}
+                </div>
+                {row.values.map((val, vi) => {
+                  const style = VALUE_STYLES[val]
+                  return (
+                    <div
+                      key={vi}
+                      style={{
+                        padding: 'clamp(10px,1.5cqi,16px) clamp(8px,1.2cqi,14px)',
+                        textAlign: 'center', fontSize: 'clamp(14px,2cqi,22px)',
+                        fontWeight: 700,
+                        color: style ? style.color : 'var(--fg)',
+                      }}
+                    >
+                      {style ? style.icon : val}
+                    </div>
+                  )
+                })}
+              </div>
+            ))}
+          </div>
+        </div>
+      )
+    }
   }
 }

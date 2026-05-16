@@ -66,7 +66,7 @@ Do not deviate. In particular: do not start a dev server, do not modify `src/`, 
 
 ## The DSL: Markdown Syntax Reference
 
-The parser is `src/parser/parseMarkdown.ts`. The rules below match it exactly. Every slide compiles to one of **seventeen** `SlideAST` types.
+The parser is `src/parser/parseMarkdown.ts`. The rules below match it exactly. Every slide compiles to one of **twenty-one** `SlideAST` types.
 
 ### Deck-level frontmatter (optional)
 
@@ -399,6 +399,67 @@ Each bullet uses `/`-separated fields: `value / label / note` (note is optional)
 
 Each bullet: `Label / Value`. Value can be `%` notation (used as-is, max 100%) or an absolute number (auto-normalized so the largest value = 100%). Renders as a white-card bar chart with accent-gradient fills.
 
+### 18. Table of contents (`@toc` directive)
+
+```
+@toc
+## 本次议程
+
+- 战略方向 / 2026 年核心目标
+- 产品路线 / 三大版本迭代计划
+- 市场策略 / 增长飞轮与获客
+- 团队建设 / 关键岗位与文化
+- 财务展望 / 收入预测
+- 问答环节 / 开放讨论
+```
+
+Each bullet: `Title / Sub-text` (sub-text optional). Renders as a numbered grid of accent-tinted cards (auto-fits 2–3 columns). Numbers auto-pad to `01`, `02`, etc.
+
+### 19. Process / flow diagram (`@flow` or `@process` directive)
+
+```
+@flow
+## 产品上线流程
+
+- 需求评审 / PRD + 竞品分析
+- 设计阶段 / UI/UX + 原型验证
+- 开发冲刺 / 前后端并行
+- 测试验收 / QA + 用户测试
+- 灰度发布 / 10% 流量 → 全量
+```
+
+Each bullet: `Step label / Optional description`. Add `vertical` as a standalone line after the directive to switch to a vertical layout (default is horizontal). Renders as numbered circles connected by gradient lines.
+
+### 20. Timeline (`@timeline` directive)
+
+```
+@timeline
+## 公司成长轨迹
+
+- 2022 Q1 / 公司成立 / 3 人团队，从 0 开始
+- 2022 Q4 / 产品上线 / 首批 500 用户
+- 2023 Q2 / 天使轮 / 融资 200 万，扩张至 12 人
+- 2024 Q1 / 规模化 / 用户突破 10 万
+```
+
+Each bullet: `Date / Event title / Optional description`. Renders as a vertical timeline with accent-colored date labels, dot markers, and connecting gradient lines.
+
+### 21. Feature matrix (`@matrix` directive)
+
+```
+@matrix
+## 功能对比
+
+||| 基础版 | 专业版 | 企业版
+- AI 自动生成 | ✓ | ✓ | ✓
+- 自定义主题  | ✗ | ✓ | ✓
+- 团队协作   | ✗ | ✗ | ✓
+- API 接口   | ✗ | partial | ✓
+- 优先客服   | ✗ | ✗ | ✓
+```
+
+The `||| Col1 | Col2 | Col3` line defines column headers. Each data row: `- Row label | val | val | val`. Values auto-render: `✓`/`yes` → green check, `✗`/`×`/`no` → muted cross, `partial`/`◐` → amber half-circle, any other string → shown as-is.
+
 ### 12. Section (fallback)
 
 Anything that doesn't match the above falls back to `section`: the first heading becomes the section heading, everything else becomes body text. If the body contains a `![alt](url)` line, the image is rendered side-by-side with the text.
@@ -428,6 +489,10 @@ Plain body text. Multiple lines preserved.
 | Starts with `@stats`                                        | `stats`        |
 | Starts with `@compare`                                      | `compare`      |
 | Starts with `@chart`                                        | `chart`        |
+| Starts with `@toc`                                          | `toc`          |
+| Starts with `@flow` or `@process`                           | `flow`         |
+| Starts with `@timeline`                                     | `timeline`     |
+| Starts with `@matrix`                                       | `matrix`       |
 | Anything else                                               | `section`      |
 
 ---
@@ -1231,7 +1296,7 @@ This manual is at `version: 1.2.0` of `SY-PPT-templates` (matching `index.json`)
 3. Wait for user to pick one.
 4. `cat src/themes/<id>/blank-deck.html` → your starting file (has CSS + JS pre-loaded). If absent, use render harness from the Rendering section.
 5. `cat src/examples/<id>.md` → see DSL idioms for this theme.
-6. Write all slide content following the DSL (17 slide types available).
+6. Write all slide content following the DSL (21 slide types available).
 7. Clone blank-deck.html, replace slide content, save to `./output.html`.
 8. Open in browser. Send the path. Done.
 

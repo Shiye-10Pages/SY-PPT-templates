@@ -42,3 +42,12 @@ export type SlideAST =
   | { type: 'stats'; heading?: string; items: { value: string; label: string; note?: string }[] }
   | { type: 'compare'; heading?: string; a: { label: string; items: string[] }; b: { label: string; items: string[] } }
   | { type: 'chart'; heading?: string; items: { label: string; value: number; displayValue: string }[] }
+  | { type: 'toc'; heading?: string; items: { title: string; sub?: string; num?: string }[] }
+  | { type: 'flow'; heading?: string; steps: { label: string; desc?: string }[]; direction?: 'horizontal' | 'vertical' }
+  | { type: 'timeline'; heading?: string; events: { date: string; title: string; desc?: string }[] }
+  | {
+      type: 'matrix'
+      heading?: string
+      cols: string[]
+      rows: { label: string; values: ('yes' | 'no' | 'partial' | string)[] }[]
+    }

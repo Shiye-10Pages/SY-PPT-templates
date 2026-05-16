@@ -50,25 +50,32 @@ type Props = {
 }
 
 export function Slide({ slide, index, total }: Props) {
+  const isChapter = slide.type === 'chapter'
+
   return (
     <div
       className="relative flex h-full w-full items-center justify-center overflow-hidden"
       style={{
-        background:
-          'linear-gradient(135deg, var(--bg-grad-from) 0%, var(--bg-grad-to) 100%)',
-        color: 'var(--fg)',
+        // chapter: accent color fills the full slide (true full-bleed, no letterbox bars).
+        // All other types: theme gradient background.
+        background: isChapter
+          ? `color-mix(in srgb, var(--accent) 88%, var(--fg))`
+          : 'linear-gradient(135deg, var(--bg-grad-from) 0%, var(--bg-grad-to) 100%)',
+        color: isChapter ? 'var(--bg)' : 'var(--fg)',
         padding: 'var(--slide-padding)',
       }}
     >
-      {/* Glow accent (suppressed per-theme via transparent rgba) */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            'radial-gradient(60% 50% at 80% 20%, var(--accent-glow-1) 0%, transparent 60%), radial-gradient(50% 40% at 10% 90%, var(--accent-glow-2) 0%, transparent 55%)',
-        }}
-      />
+      {/* Glow accent — skipped for chapter (it has a solid accent bg) */}
+      {!isChapter && (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              'radial-gradient(60% 50% at 80% 20%, var(--accent-glow-1) 0%, transparent 60%), radial-gradient(50% 40% at 10% 90%, var(--accent-glow-2) 0%, transparent 55%)',
+          }}
+        />
+      )}
 
       <div className="relative z-10 flex h-full w-full max-w-[1200px] flex-col" data-slide-anim>
         <SlideBody slide={slide} />
@@ -77,7 +84,7 @@ export function Slide({ slide, index, total }: Props) {
       {/* Footer index */}
       <div
         className="absolute bottom-6 right-8 z-10 text-xs tracking-widest uppercase tabular-nums"
-        style={{ color: 'var(--fg-muted)' }}
+        style={{ color: isChapter ? 'color-mix(in srgb, var(--bg) 55%, transparent)' : 'var(--fg-muted)' }}
       >
         {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
       </div>
@@ -776,15 +783,10 @@ function SlideBody({ slide }: { slide: SlideAST }) {
       )
 
     case 'chapter':
+      // Background + color are applied at the Slide wrapper level (true full-bleed).
+      // SlideBody only provides the centered content.
       return (
-        <div
-          className="flex h-full flex-col items-center justify-center text-center"
-          style={{
-            background: `color-mix(in srgb, var(--accent) 88%, var(--fg))`,
-            color: 'var(--bg)',
-            padding: 'var(--slide-padding, 8vw)',
-          }}
-        >
+        <div className="flex h-full flex-col items-center justify-center text-center">
           {slide.number && (
             <div
               className="mb-6 text-sm uppercase tracking-[0.35em]"
@@ -952,38 +954,71 @@ function SlideBody({ slide }: { slide: SlideAST }) {
     }
 
     case 'compare': {
-      const renderColumn = (col: typeof slide.a, accent: string) => (
-        <div className="flex flex-col gap-5">
+      // Column A = "them" (muted/neutral card), Column B = "us" (accent card).
+      // Strong card-level background contrast so columns read differently even on dark themes.
+      const renderColumn = (col: typeof slide.a, variant: 'muted' | 'accent') => {
+        const isMuted = variant === 'muted'
+        const cardBg = isMuted
+          ? 'color-mix(in srgb, var(--fg) 6%, transparent)'
+          : 'color-mix(in srgb, var(--accent) 14%, transparent)'
+        const cardBorder = isMuted
+          ? '1px solid color-mix(in srgb, var(--fg) 12%, transparent)'
+          : '1px solid color-mix(in srgb, var(--accent) 35%, transparent)'
+        const headerBg = isMuted ? 'transparent' : 'var(--accent)'
+        const headerColor = isMuted ? 'var(--fg-muted)' : 'var(--bg)'
+        const headerBorder = isMuted ? '1px solid color-mix(in srgb, var(--fg) 25%, transparent)' : 'none'
+        const markerColor = isMuted ? 'var(--fg-muted)' : 'var(--accent)'
+        const marker = isMuted ? '–' : '✓'
+
+        return (
           <div
-            className="self-start rounded-full px-5 py-2 text-sm font-semibold uppercase tracking-wider"
-            style={{
-              background: `color-mix(in srgb, ${accent} 12%, transparent)`,
-              border: `1px solid color-mix(in srgb, ${accent} 30%, transparent)`,
-              color: accent,
-              fontSize: 'clamp(11px, 1.4cqi, 15px)',
-            }}
+            className="flex flex-col gap-5 rounded-2xl p-7"
+            style={{ background: cardBg, border: cardBorder }}
           >
-            {col.label}
+            <div
+              className="self-start rounded-full px-5 py-1.5 text-sm font-semibold uppercase tracking-wider"
+              style={{
+                background: headerBg,
+                border: headerBorder,
+                color: headerColor,
+                fontSize: 'clamp(11px, 1.4cqi, 14px)',
+                letterSpacing: '0.1em',
+              }}
+            >
+              {col.label}
+            </div>
+            <ul className="flex flex-col gap-4">
+              {col.items.map((item, i) => (
+                <li
+                  key={i}
+                  className="flex items-start gap-3"
+                  style={{ fontSize: 'clamp(14px, 2cqi, 22px)', lineHeight: 1.4 }}
+                >
+                  <span
+                    style={{
+                      color: markerColor,
+                      fontWeight: 700,
+                      flexShrink: 0,
+                      fontSize: isMuted ? '1em' : '0.9em',
+                      marginTop: '0.1em',
+                    }}
+                  >
+                    {marker}
+                  </span>
+                  <span style={{ color: isMuted ? 'var(--fg-muted)' : 'var(--fg)' }}>
+                    {renderInlineIcons(item)}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
-          <ul className="flex flex-col gap-4">
-            {col.items.map((item, i) => (
-              <li
-                key={i}
-                className="flex items-start gap-3"
-                style={{ fontSize: 'clamp(14px, 2cqi, 22px)', lineHeight: 1.4 }}
-              >
-                <span style={{ color: accent, fontWeight: 700, flexShrink: 0 }}>·</span>
-                <span>{renderInlineIcons(item)}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )
+        )
+      }
       return (
         <div className="flex h-full flex-col justify-center">
           {slide.heading && (
             <h3
-              className="mb-10 text-balance"
+              className="mb-8 text-balance"
               style={{
                 fontFamily: 'var(--display-font)',
                 fontSize: 'clamp(28px, 5cqi, 54px)',
@@ -995,9 +1030,9 @@ function SlideBody({ slide }: { slide: SlideAST }) {
               {slide.heading}
             </h3>
           )}
-          <div className="grid gap-8" style={{ gridTemplateColumns: '1fr 1fr' }}>
-            {renderColumn(slide.a, 'var(--accent)')}
-            {renderColumn(slide.b, 'var(--accent-2, var(--fg-muted))')}
+          <div className="grid gap-6" style={{ gridTemplateColumns: '1fr 1fr' }}>
+            {renderColumn(slide.a, 'muted')}
+            {renderColumn(slide.b, 'accent')}
           </div>
         </div>
       )
@@ -1022,21 +1057,22 @@ function SlideBody({ slide }: { slide: SlideAST }) {
             </h3>
           )}
           <div
-            className="flex flex-col gap-5 rounded-2xl p-8"
+            className="flex flex-col gap-6 rounded-2xl p-8"
             style={{
               background: 'color-mix(in srgb, var(--fg) 5%, transparent)',
               border: '1px solid color-mix(in srgb, var(--fg) 8%, transparent)',
             }}
           >
             {slide.items.map((item, i) => (
-              <div key={i} className="flex items-center gap-5">
+              <div key={i} className="flex items-center gap-6">
                 <div
                   className="shrink-0 text-right tabular-nums"
                   style={{
-                    width: 'clamp(100px, 18cqi, 220px)',
-                    fontSize: 'clamp(12px, 1.6cqi, 18px)',
-                    fontWeight: 500,
+                    width: 'clamp(110px, 20cqi, 240px)',
+                    fontSize: 'clamp(13px, 1.8cqi, 20px)',
+                    fontWeight: 600,
                     color: 'var(--fg-muted)',
+                    letterSpacing: '-0.01em',
                   }}
                 >
                   {item.label}
@@ -1044,27 +1080,29 @@ function SlideBody({ slide }: { slide: SlideAST }) {
                 <div
                   className="relative flex-1 overflow-hidden rounded-full"
                   style={{
-                    height: 'clamp(20px, 3.5cqi, 36px)',
+                    height: 'clamp(32px, 5cqi, 52px)',
                     background: 'color-mix(in srgb, var(--fg) 8%, transparent)',
-                    border: '1px solid color-mix(in srgb, var(--fg) 12%, transparent)',
+                    border: '1px solid color-mix(in srgb, var(--fg) 14%, transparent)',
                   }}
                 >
                   <div
                     className="h-full rounded-full"
                     style={{
-                      width: `${Math.max(5, (item.value / MAX_BAR) * 100)}%`,
-                      background: `color-mix(in srgb, var(--accent) ${85 - i * 10}%, var(--accent-2, var(--fg-muted)))`,
+                      width: `${Math.max(8, (item.value / MAX_BAR) * 100)}%`,
+                      background: `color-mix(in srgb, var(--accent) ${Math.max(45, 90 - i * 12)}%, var(--accent-2, var(--fg-muted)))`,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'flex-end',
-                      paddingRight: '0.75rem',
+                      paddingRight: '1rem',
+                      transition: 'width 900ms cubic-bezier(0.2, 0.7, 0.1, 1)',
                     }}
                   >
                     <span
                       style={{
-                        fontSize: 'clamp(10px, 1.3cqi, 14px)',
+                        fontSize: 'clamp(12px, 1.6cqi, 18px)',
                         fontWeight: 700,
                         color: 'var(--bg)',
+                        letterSpacing: '-0.01em',
                       }}
                     >
                       {item.displayValue}

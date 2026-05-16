@@ -28,6 +28,9 @@ export function exportHtml(deckRoot: HTMLElement, opts?: { title?: string }): st
   const totalSlides = sections.length
   const html = clone.outerHTML
 
+  const [designW, designH] = DESIGN_DIMS[aspect] ?? [1920, 1080]
+  const printCss = `@media print{@page{size:${designW}px ${designH}px;margin:0;}html,body{height:auto;overflow:visible;}[data-deck-root]{position:static;overflow:visible;}[data-deck-root]>section[data-slide]{position:relative;opacity:1!important;width:${designW}px;height:${designH}px;transform:none!important;break-after:page;overflow:hidden;}[data-deck-root]>section[data-slide] [data-anim],[data-deck-root]>section[data-slide] [data-slide-anim]{opacity:1!important;transform:none!important;transition:none!important;}.deck-chrome{display:none!important;}}`
+
   return `<!doctype html>
 <html lang="zh">
 <head>
@@ -36,6 +39,7 @@ export function exportHtml(deckRoot: HTMLElement, opts?: { title?: string }): st
 <title>${escapeHtml(title)}</title>
 <style>${css}</style>
 <style>${PRESENTATION_CSS}</style>
+<style>${printCss}</style>
 </head>
 <body data-theme="${escapeAttr(theme)}">
 ${html}
@@ -80,32 +84,29 @@ const PRESENTATION_CSS = `
   /* Chrome overlay */
   .deck-chrome{
     position:fixed;bottom:1.5rem;right:2rem;z-index:9999;
-    display:flex;align-items:center;gap:0.75rem;
-    font-family:monospace;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;
-    color:rgba(255,255,255,0.35);
+    display:flex;align-items:center;gap:0.5rem;
+    font-family:-apple-system,BlinkMacSystemFont,"Inter","PingFang SC",monospace;
+    font-size:0.7rem;letter-spacing:0.08em;
+    color:rgba(255,255,255,0.4);
     transition:opacity 0.5s ease;
+    background:rgba(0,0,0,0.45);
+    backdrop-filter:blur(8px);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:999px;
+    padding:0.35rem 0.75rem 0.35rem 0.6rem;
   }
-  .deck-chrome.idle{opacity:0;}
+  .deck-chrome.idle{opacity:0;pointer-events:none;}
   .deck-chrome button{
-    background:none;border:1px solid currentColor;color:inherit;
-    padding:0.2rem 0.5rem;border-radius:4px;cursor:pointer;font-size:0.65rem;
-    letter-spacing:0.08em;text-transform:uppercase;
+    background:none;border:none;color:inherit;
+    padding:0.1rem 0.4rem;border-radius:4px;cursor:pointer;
+    font-size:0.9em;font-weight:500;line-height:1;
+    transition:color 0.2s ease,background 0.2s ease;
   }
-  .deck-chrome button:hover{color:rgba(255,255,255,0.7);}
+  .deck-chrome button:hover{color:rgba(255,255,255,0.9);background:rgba(255,255,255,0.1);}
+  .deck-chrome .chrome-counter{font-variant-numeric:tabular-nums;min-width:4ch;text-align:center;}
 
-  /* Print: linear layout, one slide per page */
-  @media print{
-    html,body{height:auto;overflow:visible;}
-    [data-deck-root]{position:static;overflow:visible;}
-    [data-deck-root]>section[data-slide]{
-      position:relative;opacity:1 !important;pointer-events:all;
-      break-after:page;overflow:hidden;
-    }
-    [data-deck-root]>section[data-slide][data-slide-anim],[data-deck-root]>section[data-slide] [data-anim]{
-      opacity:1 !important;transform:none !important;
-    }
-    .deck-chrome,.deck-scaler-wrap{display:none !important;}
-  }
+  /* Print CSS is injected dynamically in exportHtml() with the correct @page size
+     for the deck's aspect ratio. See the printCss variable in exportHtml.ts. */
 `
 
 function presentationScript(totalSlides: number, aspect: AspectKey): string {
@@ -193,8 +194,9 @@ if(!matchMedia('(prefers-reduced-motion:reduce)').matches){
 var chrome=document.createElement('div');
 chrome.className='deck-chrome';
 var counter=document.createElement('span');
-var btnPrev=document.createElement('button'); btnPrev.textContent='←'; btnPrev.onclick=prev;
-var btnNext=document.createElement('button'); btnNext.textContent='→'; btnNext.onclick=next;
+counter.className='chrome-counter';
+var btnPrev=document.createElement('button'); btnPrev.textContent='‹'; btnPrev.title='Previous (←)'; btnPrev.onclick=prev;
+var btnNext=document.createElement('button'); btnNext.textContent='›'; btnNext.title='Next (→)'; btnNext.onclick=next;
 chrome.append(btnPrev,counter,btnNext);
 document.body.appendChild(chrome);
 

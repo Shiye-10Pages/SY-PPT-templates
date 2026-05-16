@@ -66,7 +66,7 @@ Do not deviate. In particular: do not start a dev server, do not modify `src/`, 
 
 ## The DSL: Markdown Syntax Reference
 
-The parser is `src/parser/parseMarkdown.ts`. The rules below match it exactly. Every slide compiles to one of eleven `SlideAST` types.
+The parser is `src/parser/parseMarkdown.ts`. The rules below match it exactly. Every slide compiles to one of **seventeen** `SlideAST` types.
 
 ### Deck-level frontmatter (optional)
 
@@ -320,6 +320,85 @@ Example:
 
 **For agents**: prefer hosted URLs (`https://...`). Don't generate data URIs unless the user explicitly hands you one; data URIs balloon the HTML size by ~33% and can't be cached. The editor's drag-paste UX produces data URIs for end users — that's the only place they're expected.
 
+### 13. Chapter divider (`@chapter` directive)
+
+```
+@chapter
+## 第二章
+产品路径规划
+```
+
+Or with a numeric prefix that auto-parses into a label:
+
+```
+@chapter
+## 02 定价策略
+聚焦于中小企业市场
+```
+
+The slide fills the viewport with the theme's accent color (true full-bleed), text in the inverted background color. The leading number `01`–`99` before the heading is extracted into a "Chapter NN" label above the title.
+
+### 14. Two-column split (`@split` directive)
+
+```
+@split
+## 左栏标题
+左侧正文内容，支持 :icon: 行内图标。
+![alt](https://example.com/image.jpg)
+|||
+## 右栏标题
+右侧正文内容，同样支持多行段落。
+```
+
+The `|||` separator on its own line divides left and right columns. Each column may contain an optional `## Heading`, body text, and/or a `![](url)` image. Add `reversed` as the second line (right after `@split`) to swap columns. Renders as a 1fr–1fr grid with a hairline divider.
+
+### 15. KPI stats grid (`@stats` directive)
+
+```
+@stats
+## 核心指标
+
+- 340% / 用户增长 / 过去 12 个月
+- 12.4M / 总触达人次 / 跨渠道累计
+- 98.2% / 系统可用率 / 全年记录
+- 4.9 / 用户满意度 / 满分 5 分
+```
+
+Each bullet uses `/`-separated fields: `value / label / note` (note is optional). Renders as a responsive grid (up to 4 columns) of rounded stat cards. Values stay as-is — `340%`, `$1.2M`, `4.9`, etc. are all valid. Accent colors cycle automatically across cards.
+
+### 16. Comparison table (`@compare` directive)
+
+```
+@compare
+## 传统工具 vs SY PPT
+
+||| 传统工具
+- 需要安装软件
+- 无法 AI 直接调用
+- 不支持中国本地场景
+
+||| SY PPT 模板
+- 克隆即用，零配置
+- AGENTS.md 一步到位
+- 14 个中国本地场景
+```
+
+`||| Column Label` markers (each on their own line) define the two columns. Items are bulleted lists under each column. No automatic ✓/✗ — write whatever symbol you want directly in the item text. Renders as a two-column layout with accent-colored pill headers.
+
+### 17. Horizontal bar chart (`@chart` directive)
+
+```
+@chart
+## 模板分布
+
+- Tier A 中国B端 / 40%
+- Tier B 中国C端 / 30%
+- Tier C 通用专业 / 20%
+- Tier D 国际经典 / 10%
+```
+
+Each bullet: `Label / Value`. Value can be `%` notation (used as-is, max 100%) or an absolute number (auto-normalized so the largest value = 100%). Renders as a white-card bar chart with accent-gradient fills.
+
 ### 12. Section (fallback)
 
 Anything that doesn't match the above falls back to `section`: the first heading becomes the section heading, everything else becomes body text. If the body contains a `![alt](url)` line, the image is rendered side-by-side with the text.
@@ -344,6 +423,11 @@ Plain body text. Multiple lines preserved.
 | Starts with `@poster`                                       | `posterHero`   |
 | Starts with `@image`                                        | `image`        |
 | Starts with `@icons`                                        | `iconRow`      |
+| Starts with `@chapter`                                      | `chapter`      |
+| Starts with `@split`                                        | `split`        |
+| Starts with `@stats`                                        | `stats`        |
+| Starts with `@compare`                                      | `compare`      |
+| Starts with `@chart`                                        | `chart`        |
 | Anything else                                               | `section`      |
 
 ---

@@ -1,5 +1,5 @@
 {
-  "version": "1.4.0",
+  "version": "1.5.0",
   "name": "SY-PPT-templates",
   "description": "20 templates for Markdown-driven PPT generation, 14 designed for Chinese local scenarios. Agent-native: clone the repo, read AGENTS.md, generate a single-file HTML deck. v1.1 adds custom aspect override, image embedding, a Lucide icon system, and an opt-in FX layer on 4 themes.",
   "supported_ratios": [
@@ -1004,6 +1004,49 @@
       ]
     },
     {
+      "id": "deep-authority",
+      "palette": {
+        "bg": "#1c2644",
+        "bg_alt": "#14213a",
+        "fg": "#e2dcd0",
+        "fg_muted": "rgba(226, 220, 208, 0.55)",
+        "accent": "#d4a574",
+        "accent_2": "#4a8a8a"
+      },
+      "typography": {
+        "display": "Songti SC / STSong (Serif)",
+        "body": "DM Sans",
+        "display_weight": 700,
+        "tracking": "0.01em"
+      },
+      "slide_types": [
+        "cover",
+        "bigText",
+        "bigNumber",
+        "list",
+        "quote",
+        "section",
+        "priceCard",
+        "contact",
+        "qrCode",
+        "posterHero",
+        "image",
+        "iconRow",
+        "chapter",
+        "split",
+        "stats",
+        "compare",
+        "chart"
+      ],
+      "name_zh": "深度汇报",
+      "name_en": "deep-authority",
+      "tier": "C",
+      "default_ratio": "16:9",
+      "theme_path": "src/themes/deep-authority/theme.css",
+      "meta_path": "src/themes/deep-authority/meta.ts",
+      "example_path": "src/examples/deep-authority.md"
+    },
+    {
       "id": "editorial-warm",
       "name_zh": "编辑暖色",
       "name_en": "Editorial Warm",
@@ -1488,6 +1531,78 @@
         "stats",
         "compare",
         "chart"
+      ]
+    },
+    {
+      "id": "deep-authority",
+      "name_zh": "深度汇报",
+      "name_en": "Deep Authority",
+      "tier": "C",
+      "scenarios_zh": [
+        "季度汇报",
+        "投资人演讲",
+        "董事会报告",
+        "咨询交付物",
+        "年度运营"
+      ],
+      "scenarios_en": [
+        "quarterly-review",
+        "investor-deck",
+        "board-presentation",
+        "consulting-deliverable",
+        "annual-review"
+      ],
+      "audience": "Executives, investors, board members, consulting clients — any high-stakes formal presentation",
+      "default_ratio": "16:9",
+      "vibe": "Institutional, authoritative, warm-dark, scholarly — not cold, not stiff",
+      "best_for": "Pick this when the user mentions 季报 / 投资人 / 董事会 / 咨询报告 / 数据驱动 / 权威感 / 深色系汇报",
+      "color_palette": "Deep navy (#1c2644) + warm bone (#e2dcd0) + institutional gold (#d4a574) + dusty teal (#4a8a8a). Paper grain overlay.",
+      "theme_path": "src/themes/deep-authority/theme.css",
+      "meta_path": "src/themes/deep-authority/meta.ts",
+      "example_path": "src/examples/deep-authority.md",
+      "screenshots": [
+        "screenshots/deep-authority-1.png",
+        "screenshots/deep-authority-2.png",
+        "screenshots/deep-authority-3.png"
+      ],
+      "palette": {
+        "bg": "#1c2644",
+        "bg_alt": "#14213a",
+        "fg": "#e2dcd0",
+        "fg_muted": "rgba(226,220,208,0.55)",
+        "accent": "#d4a574",
+        "accent_2": "#4a8a8a"
+      },
+      "typography": {
+        "display": "Source Serif 4",
+        "body": "DM Sans",
+        "display_weight": 700,
+        "tracking": "0.01em",
+        "chinese_support": "Songti SC / Source Han Serif SC (system)"
+      },
+      "slide_types": [
+        "cover",
+        "bigText",
+        "bigNumber",
+        "list",
+        "quote",
+        "section",
+        "priceCard",
+        "contact",
+        "qrCode",
+        "posterHero",
+        "image",
+        "iconRow",
+        "chapter",
+        "split",
+        "stats",
+        "compare",
+        "chart",
+        "toc",
+        "flow",
+        "timeline",
+        "matrix",
+        "features"
       ]
     }
   ],

@@ -1,0 +1,79 @@
+/* ============================================================
+   neon-pulse — 脉冲霓虹
+   Black void × electric mint × hot coral. Terminal energy.
+   Space Grotesk 800w + JetBrains Mono for data readouts.
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap");
+
+[data-theme="neon-pulse"] {
+  --bg:           #080808;
+  --bg-grad-from: #080808;
+  --bg-grad-to:   #0D1117;
+  --fg:           #F0FFFA;
+  --fg-muted:     rgba(240, 255, 250, 0.52);
+  --accent:       #00E5B4;   /* electric mint */
+  --accent-2:     #FF4B36;   /* hot coral */
+
+  --accent-glow-1: rgba(0, 229, 180, 0.25);
+  --accent-glow-2: rgba(255, 75,  54, 0.18);
+
+  --display-font:     "Space Grotesk", "PingFang SC", "Hiragino Sans GB", system-ui, sans-serif;
+  --body-font:        "JetBrains Mono", "SF Mono", "Cascadia Code", monospace;
+  --display-weight:   800;
+  --display-tracking: -0.04em;
+
+  --slide-radius:  0px;
+  --slide-padding: 8vw;
+
+  /* FX: cursor glow + bignum pop */
+  --fx-mouse-glow: 1;
+  --fx-bignum-pop: 1;
+}
+
+/* ── Scanline texture (subtle, not retro-gimmick) ─────────── */
+[data-theme="neon-pulse"] section[data-slide] {
+  background-image:
+    repeating-linear-gradient(
+      180deg,
+      transparent 0px,
+      transparent 3px,
+      rgba(0, 229, 180, 0.012) 3px,
+      rgba(0, 229, 180, 0.012) 4px
+    ),
+    radial-gradient(ellipse 65% 50% at 75% 30%,
+      rgba(0, 229, 180, 0.12) 0%, transparent 70%),
+    linear-gradient(160deg, var(--bg-grad-from) 0%, var(--bg-grad-to) 100%);
+}
+
+/* ── Neon border on stats/compare/chart cards ────────────── */
+[data-theme="neon-pulse"] section[data-slide] [style*="color-mix(in srgb, var(--fg) 5%"] {
+  background: rgba(0, 229, 180, 0.05) !important;
+  border-color: rgba(0, 229, 180, 0.25) !important;
+}
+
+/* ── Quote: mint left rule ────────────────────────────────── */
+[data-theme="neon-pulse"] [data-slide-anim] blockquote {
+  border-left: 4px solid var(--accent);
+  padding-left: 2rem;
+  font-family: "Space Grotesk", sans-serif;
+  font-style: normal;
+}
+
+/* ── Monospace body — reads like a terminal readout ──────── */
+[data-theme="neon-pulse"] [data-slide-anim] .whitespace-pre-wrap {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.9em;
+  line-height: 1.65;
+}
+
+/* ── BigNumber: mint glow on the number itself ───────────── */
+[data-theme="neon-pulse"] [data-slide-anim] .tabular-nums:first-child {
+  text-shadow: 0 0 40px rgba(0, 229, 180, 0.4), 0 0 80px rgba(0, 229, 180, 0.2);
+}
+
+/* ── Chart bars: mint → coral gradient ───────────────────── */
+/* color-mix already uses --accent / --accent-2 ✓ */
+
+/* ── Chapter: full coral blaze ───────────────────────────── */
+/* Background set at Slide wrapper level (isChapter logic) */

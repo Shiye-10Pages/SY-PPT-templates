@@ -929,7 +929,21 @@
         "screenshots/chroma-pop-1.png",
         "screenshots/chroma-pop-2.png",
         "screenshots/chroma-pop-3.png"
-      ]
+      ],
+      "scenarios_zh": [
+        "创意机构 Pitch",
+        "品牌重塑",
+        "独立 SaaS",
+        "朋友圈分享"
+      ],
+      "scenarios_en": [
+        "creative-agency",
+        "brand-redesign",
+        "indie-saas",
+        "wechat-moments"
+      ],
+      "audience": "Creative agencies, indie brand builders, SaaS founders, social media creators",
+      "best_for": "Pick this when the user mentions 创意机构 / 品牌发布 / 新粗野主义 / 粗黑边框 / 视觉冲击"
     },
     {
       "id": "data-dashboard",
@@ -1217,7 +1231,21 @@
         "screenshots/solar-blast-1.png",
         "screenshots/solar-blast-2.png",
         "screenshots/solar-blast-3.png"
-      ]
+      ],
+      "scenarios_zh": [
+        "品牌宣言",
+        "活动海报",
+        "发布会",
+        "创始人愿景"
+      ],
+      "scenarios_en": [
+        "brand-manifesto",
+        "event-poster",
+        "product-launch",
+        "founder-vision"
+      ],
+      "audience": "Brand founders, event organizers, creative directors, anyone needing poster-scale visual impact",
+      "best_for": "Pick this when the user mentions 品牌宣言 / 活动海报 / 发布会 / 大字感 / 海报能量"
     },
     {
       "id": "solo-founder",
@@ -1389,7 +1417,21 @@
         "screenshots/neon-pulse-1.png",
         "screenshots/neon-pulse-2.png",
         "screenshots/neon-pulse-3.png"
-      ]
+      ],
+      "scenarios_zh": [
+        "科技产品发布",
+        "独立开发者",
+        "创始人 Pitch",
+        "黑客松"
+      ],
+      "scenarios_en": [
+        "tech-product-launch",
+        "indie-developer",
+        "founder-pitch",
+        "hackathon"
+      ],
+      "audience": "Tech founders, indie hackers, developer-tool builders, hackathon demos",
+      "best_for": "Pick this when the user mentions 科技发布 / 独立开发者 / 黑客松 / 暗色系 / 霓虹感"
     },
     {
       "id": "swiss-paper",

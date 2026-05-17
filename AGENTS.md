@@ -53,6 +53,8 @@ The standard workflow:
    d. Open all 3 files in the browser. Tell the user their paths. Wait for them to pick.
    > "Three options to compare — [A] tone desc, [B] tone desc, [C] tone desc. Which one feels right?"
 
+   **If you cannot open the browser** (no preview tool available): describe the 3 options in text — one sentence each on tone/palette/use-case — and let the user pick by saying "1", "2", or "3". Do not skip this step; text description is an acceptable fallback.
+
    **If the user explicitly names a template** ("just use keynote-dark"), skip this step and go straight to Step 5.
 
 5. **Read** the chosen template's `theme.css` (palette + fonts) and the matching `src/examples/<id>.md` (concrete DSL example).
@@ -289,6 +291,21 @@ Body items can be bullet-prefixed (`- :icon: label`) or bare (`:icon: label`). H
 `check`, `x`, `star`, `heart`, `sparkles`, `zap`, `flame`, `award`, `trophy`, `trending-up`, `trending-down`, `bar-chart`, `pie-chart`, `activity`, `target`, `rocket`, `gauge`, `user`, `users`, `phone`, `mail`, `message-circle`, `map-pin`, `globe`, `home`, `briefcase`, `package`, `layers`, `cpu`, `database`, `code`, `smartphone`, `monitor`, `dollar-sign`, `shopping-cart`, `gift`, `tag`, `credit-card`, `arrow-right`, `arrow-up-right`, `lightbulb`, `shield`, `shield-check`, `lock`, `clock`, `calendar`, `search`, `settings`, `bookmark`, `book`, `camera`, `image`, `film`, `leaf`, `moon`, `sun`.
 
 Unknown names are kept verbatim (the slide renders with a bullet placeholder).
+
+**For agent-generated static HTML**: The SVG `<path>` data for every icon is in `src/assets/icons.ts`. Read that file to get the exact SVG markup for any icon. Format is:
+```typescript
+export const ICONS = {
+  zap: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+  // ...
+}
+```
+In the rendered HTML, wrap the path in:
+```html
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  {PATH_DATA}
+</svg>
+```
 
 ### Inline icons (any text)
 

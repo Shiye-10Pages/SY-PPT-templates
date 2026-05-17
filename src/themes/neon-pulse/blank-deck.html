@@ -309,19 +309,25 @@
        SLIDE 2 — CHAPTER (@chapter type)
        Replace: CHAPTER HEADING, optional SUB-TEXT
   ═══════════════════════════════════════════════════ -->
-  <section data-slide>
+  <!-- Chapter: absolute overlay = true full-bleed (consistent with AGENTS.md blueprint) -->
+  <section data-slide style="position:relative">
+    <div style="position:absolute;inset:0;background:color-mix(in srgb,var(--accent) 88%,var(--fg));z-index:0"></div>
     <div class="slide-inner" data-slide-anim>
-      <div class="slide-body" style="justify-content:center;align-items:center;text-align:center;background:color-mix(in srgb,var(--accent) 88%,var(--fg));margin:-8vw;padding:8vw;color:var(--bg);">
-        <h2 class="display" data-anim="fade-up" data-delay="0"
-            style="font-size:clamp(40px,10cqi,110px);line-height:1.05;">
+      <div class="slide-body" style="justify-content:center;align-items:center;text-align:center;position:relative;z-index:1;color:var(--bg)">
+        <div class="eyebrow" data-anim="fade-in" data-delay="0"
+             style="color:color-mix(in srgb,var(--bg) 65%,transparent);margin-bottom:2.5rem">
+          Chapter NN
+        </div>
+        <h2 class="display" data-anim="fade-up" data-delay="1"
+            style="font-size:clamp(40px,10cqi,110px);line-height:1.05;color:var(--bg)">
           CHAPTER HEADING
         </h2>
-        <p data-anim="fade-up" data-delay="1"
-           style="margin-top:2rem;font-size:clamp(16px,2.2cqi,26px);opacity:0.75;line-height:1.45;max-width:720px;">
+        <p data-anim="fade-up" data-delay="2"
+           style="margin-top:2rem;font-size:clamp(16px,2.2cqi,26px);opacity:0.75;line-height:1.45;max-width:720px;color:var(--bg)">
           Optional sub-text for this chapter section
         </p>
       </div>
-      <div class="slide-footer" style="color:color-mix(in srgb,var(--bg) 60%,transparent)">02 / TT</div>
+      <div class="slide-footer" style="color:color-mix(in srgb,var(--bg) 50%,transparent)">02 / TT</div>
     </div>
   </section>
 

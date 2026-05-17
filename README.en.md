@@ -76,29 +76,88 @@ The agent will automatically:
 
 ## Gallery
 
-### 🌑 Neon Pulse (Tech Launch · 16:9)
+---
 
-<img src="screenshots/neon-pulse-1.png" width="32%" /> <img src="screenshots/neon-pulse-2.png" width="32%" /> <img src="screenshots/neon-pulse-3.png" width="32%" />
+### ⚡ Neon Pulse — Tech Launch / Indie Dev / Hackathon
 
-### ☀️ Solar Blast (Brand Manifesto · 4:5)
+<img src="screenshots/neon-pulse-4.png" width="65%" /> <img src="screenshots/neon-pulse-1.png" width="32%" />
 
-<img src="screenshots/solar-blast-1.png" width="32%" /> <img src="screenshots/solar-blast-2.png" width="32%" /> <img src="screenshots/solar-blast-3.png" width="32%" />
+<img src="screenshots/neon-pulse-2.png" width="32%" /> <img src="screenshots/neon-pulse-5.png" width="32%" /> <img src="screenshots/neon-pulse-3.png" width="32%" />
 
-### 🎨 Chroma Pop (Creative Pitch · 4:5)
+> Pure black × electric mint × hot coral. Scanline texture + cursor-follow glow. Chapter slides flood the screen in vivid green. Big number pop-in animation.
 
-<img src="screenshots/chroma-pop-1.png" width="32%" /> <img src="screenshots/chroma-pop-2.png" width="32%" /> <img src="screenshots/chroma-pop-3.png" width="32%" />
+---
 
-### 📒 Editorial Warm (Personal Brand · 4:5)
+### ☀️ Solar Blast — Brand Manifesto / Event Poster / Launch
+
+<img src="screenshots/solar-blast-2.png" width="65%" /> <img src="screenshots/solar-blast-1.png" width="32%" />
+
+<img src="screenshots/solar-blast-4.png" width="32%" /> <img src="screenshots/solar-blast-3.png" width="32%" /> <img src="screenshots/solar-blast-5.png" width="32%" />
+
+> Cream paper × electric yellow × ultra red. Barlow Condensed 900w. Chapter slides explode in full-screen yellow. Poster-grade visual impact.
+
+---
+
+### 🎨 Chroma Pop — Brand Redesign / Creative Pitch / Neo-Brutalism
+
+<img src="screenshots/chroma-pop-6.png" width="65%" /> <img src="screenshots/chroma-pop-1.png" width="32%" />
+
+<img src="screenshots/chroma-pop-5.png" width="32%" /> <img src="screenshots/chroma-pop-4.png" width="32%" /> <img src="screenshots/chroma-pop-2.png" width="32%" />
+
+> Pure white × electric blue × vivid orange. 2.5px thick black borders + 6px offset shadow. Maximum visual impact, neo-brutalist energy.
+
+---
+
+### 🏛️ Deep Authority — Quarterly Report / Investor Deck / Board
+
+<img src="screenshots/deep-authority-2.png" width="65%" /> <img src="screenshots/deep-authority-1.png" width="32%" />
+
+<img src="screenshots/deep-authority-3.png" width="32%" />
+
+> Deep navy × warm gold × bone white. Source Serif 4 scholarly serif. Paper grain overlay. Institutional authority without the cold stiffness.
+
+---
+
+### 📒 Editorial Warm — Creator Year-in-Review / Personal Brand
 
 <img src="screenshots/editorial-warm-1.png" width="32%" /> <img src="screenshots/editorial-warm-2.png" width="32%" /> <img src="screenshots/editorial-warm-3.png" width="32%" />
 
-### 🏛️ Deep Authority (Quarterly Report · 16:9)
+> Warm parchment × brick terracotta × amber gold. Bricolage Grotesque × Instrument Serif italic. Magazine-grade editorial quality.
 
-<img src="screenshots/deep-authority-1.png" width="32%" /> <img src="screenshots/deep-authority-2.png" width="32%" /> <img src="screenshots/deep-authority-3.png" width="32%" />
+---
 
-### 🍎 Keynote Dark (Product Launch · 16:9)
+### 🍜 Restaurant Promo — Store Anniversaries / WeChat Moments
 
-<img src="screenshots/keynote-dark-1.png" width="32%" /> <img src="screenshots/keynote-dark-2.png" width="32%" /> <img src="screenshots/keynote-dark-3.png" width="32%" />
+<img src="screenshots/restaurant-promo-2.png" width="32%" /> <img src="screenshots/restaurant-promo-1.png" width="32%" /> <img src="screenshots/restaurant-promo-3.png" width="32%" />
+
+> Warm red × egg yellow × cream. Giant price cards with strikethrough original price + pill taglines. Built for F&B operators who don't design.
+
+---
+
+<details>
+<summary>📸 More screenshots…</summary>
+
+### 🍎 Keynote Dark
+
+<img src="screenshots/keynote-dark-2.png" width="32%" /> <img src="screenshots/keynote-dark-1.png" width="32%" /> <img src="screenshots/keynote-dark-3.png" width="32%" />
+
+### 🚀 Solo Founder Pitch
+
+<img src="screenshots/solo-founder-1.png" width="32%" /> <img src="screenshots/solo-founder-2.png" width="32%" /> <img src="screenshots/solo-founder-3.png" width="32%" />
+
+### 🌸 Xiaohongshu Pastel
+
+<img src="screenshots/xhs-pastel-1.png" width="32%" /> <img src="screenshots/xhs-pastel-2.png" width="32%" /> <img src="screenshots/xhs-pastel-3.png" width="32%" />
+
+### 🔴 Government Red
+
+<img src="screenshots/govt-red-1.png" width="32%" /> <img src="screenshots/govt-red-2.png" width="32%" /> <img src="screenshots/govt-red-3.png" width="32%" />
+
+### 📚 Book Quote
+
+<img src="screenshots/book-quote-1.png" width="32%" /> <img src="screenshots/book-quote-2.png" width="32%" /> <img src="screenshots/book-quote-3.png" width="32%" />
+
+</details>
 
 ---
 

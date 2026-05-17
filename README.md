@@ -76,45 +76,88 @@ AI 会自动：
 
 ## 效果展示
 
-### 🌑 脉冲霓虹 · Neon Pulse（科技发布 · 16:9）
+---
 
-<img src="screenshots/neon-pulse-1.png" width="32%" /> <img src="screenshots/neon-pulse-2.png" width="32%" /> <img src="screenshots/neon-pulse-3.png" width="32%" />
+### ⚡ 脉冲霓虹 · Neon Pulse — 科技发布 / 独立开发者 / 黑客松
 
-### ☀️ 太阳爆破 · Solar Blast（品牌宣言 · 4:5）
+<img src="screenshots/neon-pulse-4.png" width="65%" /> <img src="screenshots/neon-pulse-1.png" width="32%" />
 
-<img src="screenshots/solar-blast-1.png" width="32%" /> <img src="screenshots/solar-blast-2.png" width="32%" /> <img src="screenshots/solar-blast-3.png" width="32%" />
+<img src="screenshots/neon-pulse-2.png" width="32%" /> <img src="screenshots/neon-pulse-5.png" width="32%" /> <img src="screenshots/neon-pulse-3.png" width="32%" />
 
-### 🎨 色彩爆破 · Chroma Pop（创意 Pitch · 4:5）
+> 纯黑底 × 电气薄荷 × 热珊瑚。扫描线纹理 + 鼠标跟随霓虹光晕。章节屏满幕亮绿，数字弹入动画。
 
-<img src="screenshots/chroma-pop-1.png" width="32%" /> <img src="screenshots/chroma-pop-2.png" width="32%" /> <img src="screenshots/chroma-pop-3.png" width="32%" />
+---
 
-### 📒 编辑暖色 · Editorial Warm（个人品牌 · 4:5）
+### ☀️ 太阳爆破 · Solar Blast — 品牌宣言 / 活动海报 / 发布会
+
+<img src="screenshots/solar-blast-2.png" width="65%" /> <img src="screenshots/solar-blast-1.png" width="32%" />
+
+<img src="screenshots/solar-blast-4.png" width="32%" /> <img src="screenshots/solar-blast-3.png" width="32%" /> <img src="screenshots/solar-blast-5.png" width="32%" />
+
+> 奶油纸底 × 电气黄 × 极红。Barlow Condensed 900w 超窄字体，章节屏全屏电黄，海报级视觉冲击。
+
+---
+
+### 🎨 色彩爆破 · Chroma Pop — 品牌重塑 / 创意 Pitch / 新粗野主义
+
+<img src="screenshots/chroma-pop-6.png" width="65%" /> <img src="screenshots/chroma-pop-1.png" width="32%" />
+
+<img src="screenshots/chroma-pop-5.png" width="32%" /> <img src="screenshots/chroma-pop-4.png" width="32%" /> <img src="screenshots/chroma-pop-2.png" width="32%" />
+
+> 纯白 × 电蓝 × 亮橙。厚 2.5px 黑色边框 + 6px offset 阴影，neo-brutalist 图形感，视觉最大化。
+
+---
+
+### 🏛️ 深度汇报 · Deep Authority — 季报 / 投资人 / 董事会
+
+<img src="screenshots/deep-authority-2.png" width="65%" /> <img src="screenshots/deep-authority-1.png" width="32%" />
+
+<img src="screenshots/deep-authority-3.png" width="32%" />
+
+> 深海军蓝 × 温暖金 × 骨色。Source Serif 4 学术衬线，paper grain 质感，制度权威感不显冰冷。
+
+---
+
+### 📒 编辑暖色 · Editorial Warm — 创意工作室 / 个人品牌 / 年度回顾
 
 <img src="screenshots/editorial-warm-1.png" width="32%" /> <img src="screenshots/editorial-warm-2.png" width="32%" /> <img src="screenshots/editorial-warm-3.png" width="32%" />
 
-### 🏛️ 深度汇报 · Deep Authority（季度汇报 · 16:9）
+> 羊皮纸底 × 砖红 × 琥珀金。Bricolage Grotesque 重磅 × Instrument Serif 斜体，杂志编辑级质感。
 
-<img src="screenshots/deep-authority-1.png" width="32%" /> <img src="screenshots/deep-authority-2.png" width="32%" /> <img src="screenshots/deep-authority-3.png" width="32%" />
+---
 
-### 🔴 政务汇报红 · Government Red（党建/政务 · 16:9）
+### 🍜 餐饮促销 · Restaurant Promo — 门店周年 / 节日活动 / 朋友圈直发
 
-<img src="screenshots/govt-red-1.png" width="32%" /> <img src="screenshots/govt-red-2.png" width="32%" /> <img src="screenshots/govt-red-3.png" width="32%" />
+<img src="screenshots/restaurant-promo-2.png" width="32%" /> <img src="screenshots/restaurant-promo-1.png" width="32%" /> <img src="screenshots/restaurant-promo-3.png" width="32%" />
 
-### 🍜 餐饮促销 · Restaurant Promo（门店/朋友圈 · 4:5）
+> 烟火红 × 蛋黄 × 米白。巨型价格卡 + 删除线原价 + 胶囊标签，餐饮老板直接能用。
 
-<img src="screenshots/restaurant-promo-1.png" width="32%" /> <img src="screenshots/restaurant-promo-2.png" width="32%" /> <img src="screenshots/restaurant-promo-3.png" width="32%" />
+---
 
-### 🌸 小红书种草 · Xiaohongshu Pastel（小红书 · 3:4）
+<details>
+<summary>📸 还有更多主题截图……</summary>
+
+### 🍎 Keynote · 发布会
+
+<img src="screenshots/keynote-dark-2.png" width="32%" /> <img src="screenshots/keynote-dark-1.png" width="32%" /> <img src="screenshots/keynote-dark-3.png" width="32%" />
+
+### 🚀 一人公司 Pitch
+
+<img src="screenshots/solo-founder-1.png" width="32%" /> <img src="screenshots/solo-founder-2.png" width="32%" /> <img src="screenshots/solo-founder-3.png" width="32%" />
+
+### 🌸 小红书种草
 
 <img src="screenshots/xhs-pastel-1.png" width="32%" /> <img src="screenshots/xhs-pastel-2.png" width="32%" /> <img src="screenshots/xhs-pastel-3.png" width="32%" />
 
-### 📚 读书金句 · Book Quote（阅读分享 · 4:5）
+### 🔴 政务汇报红
+
+<img src="screenshots/govt-red-1.png" width="32%" /> <img src="screenshots/govt-red-2.png" width="32%" /> <img src="screenshots/govt-red-3.png" width="32%" />
+
+### 📚 读书金句
 
 <img src="screenshots/book-quote-1.png" width="32%" /> <img src="screenshots/book-quote-2.png" width="32%" /> <img src="screenshots/book-quote-3.png" width="32%" />
 
-### 🖤 Keynote · 发布会（产品发布 · 16:9）
-
-<img src="screenshots/keynote-dark-1.png" width="32%" /> <img src="screenshots/keynote-dark-2.png" width="32%" /> <img src="screenshots/keynote-dark-3.png" width="32%" />
+</details>
 
 ---
 

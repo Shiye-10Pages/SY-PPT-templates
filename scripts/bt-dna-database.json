@@ -81,7 +81,7 @@
     "density": "medium",
     "slide_count": 10,
     "best_for": "Anything that should feel like a CRT screen at 2am: cyberpunk, gaming, web3, indie dev tools, hackathon demos. Just as good for a tech talk that wants to lean into nostalgic-digital craft, a synthwave brand deck, or a creative review that wants to feel like a console.",
-    "avoid_for": "Contexts where the dark neon palette would actively work against the message — quiet institutional finance disclosures, healthcare patient-facing materials, traditional luxury.",
+    "avoid_for": "Contexts where the dark neon palette would actively work against the message \u2014 quiet institutional finance disclosures, healthcare patient-facing materials, traditional luxury.",
     "signature_elements": [
       "offset-box-shadow (brutalist)",
       "grain-texture-overlay",
@@ -91,7 +91,37 @@
       "vw-based-type-scale",
       "continuous-css-animation"
     ],
-    "closest_sy_theme": "xhs-pastel"
+    "closest_sy_theme": "xhs-pastel",
+    "signature_css_snippets": {
+      "offset-box-shadow (brutalist)": {
+        "desc": "Neo-brutalist 8px hard shadow \u2014 no blur, solid black",
+        "css": "box-shadow: 8px 8px 0 rgba(0,0,0,0.9);\nborder: 2px solid #0A0A0A;"
+      },
+      "grain-texture-overlay": {
+        "desc": "Paper grain via SVG feTurbulence \u2014 adds tactile printed quality",
+        "css": "/* Add as ::before on the slide section */\ncontent: '';\nposition: fixed; inset: 0; pointer-events: none; z-index: 9999;\nopacity: 0.045; mix-blend-mode: multiply;\nbackground-image: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)'/%3E%3C/svg%3E\");\nbackground-size: 200px 200px;"
+      },
+      "clip-path-shapes": {
+        "desc": "CSS clip-path for non-rectangular shapes \u2014 stamps, badges, polygons",
+        "css": "/* 12-point star stamp */\n.stamp { clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }\n/* Chamfered hexagon */\n.hex { clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); }"
+      },
+      "mix-blend-mode": {
+        "desc": "Blending layers for depth \u2014 typically multiply on grain overlay",
+        "css": "mix-blend-mode: multiply;\nopacity: 0.06;"
+      },
+      "ultra-heavy-display (900w)": {
+        "desc": "Maximum weight display type \u2014 Barlow Condensed 900, Bebas Neue, Alfa Slab",
+        "css": ".ultra { font-weight: 900; letter-spacing: -0.04em; line-height: 0.88;\n  font-size: clamp(80px, 16vw, 260px); text-transform: uppercase; }"
+      },
+      "vw-based-type-scale": {
+        "desc": "Typography scales with viewport width for dramatic large text",
+        "css": ".display-xl { font-size: clamp(60px, 13vw, 200px); line-height: 0.9; letter-spacing: -0.04em; }\n.display-md { font-size: clamp(32px, 6vw, 96px); }"
+      },
+      "continuous-css-animation": {
+        "desc": "Looping animation \u2014 star twinkle, floating particles, scanning line",
+        "css": "@keyframes twinkle { 0%,100%{opacity:.3;transform:scale(1)} 50%{opacity:.9;transform:scale(1.3)} }\n.star { animation: twinkle 3s ease-in-out infinite; }"
+      }
+    }
   },
   {
     "slug": "biennale-yellow",
@@ -174,13 +204,27 @@
     "density": "medium",
     "slide_count": 8,
     "best_for": "Anything that should feel like an art-biennale poster or a museum's annual programme: exhibition decks, arts-institution announcements, design conference brochures, curatorial pitches, literary publications, studio retrospectives. Equally good for any deck wanting Dutch-editorial atmosphere with an unmistakable single-color signature.",
-    "avoid_for": "Decks that need visual punch or saturated multi-color energy — the warm-paper canvas and one-yellow palette are intentionally quiet and atmospheric.",
+    "avoid_for": "Decks that need visual punch or saturated multi-color energy \u2014 the warm-paper canvas and one-yellow palette are intentionally quiet and atmospheric.",
     "signature_elements": [
       "serif-sans-collision",
       "vw-based-type-scale",
       "full-bleed-color-slide"
     ],
-    "closest_sy_theme": "editorial-warm"
+    "closest_sy_theme": "editorial-warm",
+    "signature_css_snippets": {
+      "serif-sans-collision": {
+        "desc": "High contrast font pairing: display = serif (Cormorant/Playfair/Source Serif), body = sans",
+        "css": ".display { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 700; }\n.body-text { font-family: 'Jost', 'DM Sans', system-ui, sans-serif; }"
+      },
+      "vw-based-type-scale": {
+        "desc": "Typography scales with viewport width for dramatic large text",
+        "css": ".display-xl { font-size: clamp(60px, 13vw, 200px); line-height: 0.9; letter-spacing: -0.04em; }\n.display-md { font-size: clamp(32px, 6vw, 96px); }"
+      },
+      "full-bleed-color-slide": {
+        "desc": "Entire slide background switches to accent color for chapter/section dividers",
+        "css": ".slide-chapter { background: var(--accent) !important; color: var(--bg); }\n/* Or use: position:absolute;inset:0;background:color-mix(in srgb,var(--accent) 88%,var(--fg));z-index:0 */"
+      }
+    }
   },
   {
     "slug": "block-frame",
@@ -274,7 +318,37 @@
       "large-rounded-cards",
       "decorative-pills"
     ],
-    "closest_sy_theme": "xhs-pastel"
+    "closest_sy_theme": "xhs-pastel",
+    "signature_css_snippets": {
+      "offset-box-shadow (brutalist)": {
+        "desc": "Neo-brutalist 8px hard shadow \u2014 no blur, solid black",
+        "css": "box-shadow: 8px 8px 0 rgba(0,0,0,0.9);\nborder: 2px solid #0A0A0A;"
+      },
+      "custom-svg-ornaments": {
+        "desc": "Inline SVG decorations \u2014 doodles, arrows, geometric shapes",
+        "css": "/* Use <svg> elements directly in HTML. Set fill='currentColor' or stroke='currentColor'\n   to inherit theme colors. Position with position:absolute on a relative parent. */"
+      },
+      "clip-path-shapes": {
+        "desc": "CSS clip-path for non-rectangular shapes \u2014 stamps, badges, polygons",
+        "css": "/* 12-point star stamp */\n.stamp { clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }\n/* Chamfered hexagon */\n.hex { clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); }"
+      },
+      "ultra-heavy-display (900w)": {
+        "desc": "Maximum weight display type \u2014 Barlow Condensed 900, Bebas Neue, Alfa Slab",
+        "css": ".ultra { font-weight: 900; letter-spacing: -0.04em; line-height: 0.88;\n  font-size: clamp(80px, 16vw, 260px); text-transform: uppercase; }"
+      },
+      "vw-based-type-scale": {
+        "desc": "Typography scales with viewport width for dramatic large text",
+        "css": ".display-xl { font-size: clamp(60px, 13vw, 200px); line-height: 0.9; letter-spacing: -0.04em; }\n.display-md { font-size: clamp(32px, 6vw, 96px); }"
+      },
+      "large-rounded-cards": {
+        "desc": "Cards with 20-28px border-radius \u2014 modern, approachable",
+        "css": ".card { border-radius: 1.5rem; padding: 2rem;\n  background: rgba(255,255,255,0.06);\n  border: 1px solid rgba(255,255,255,0.12); }"
+      },
+      "decorative-pills": {
+        "desc": "Floating colored pill badges scattered across slides (absolute positioned, rotated)",
+        "css": ".deco-pill { position: absolute; border-radius: 999px; border: 2px solid #0A0A0A;\n  display: flex; align-items: center; justify-content: center;\n  font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }\n/* Position individually: top: 15%; left: 8%; transform: rotate(-12deg); */"
+      }
+    }
   },
   {
     "slug": "blue-professional",
@@ -346,15 +420,33 @@
     "formality": "medium-high",
     "density": "medium",
     "slide_count": 10,
-    "best_for": "Anything that should feel modern-considered and lightly authoritative: B2B SaaS pitches, consulting deliverables, advisory updates, investor reports. Also a clean, tasteful choice whenever you want to read as professional without going stiff — research synthesis, internal reviews, brand work for service businesses.",
-    "avoid_for": "Contexts where the deck should feel hot, playful, or intentionally informal — the cool electric-blue restraint will read as overly polished.",
+    "best_for": "Anything that should feel modern-considered and lightly authoritative: B2B SaaS pitches, consulting deliverables, advisory updates, investor reports. Also a clean, tasteful choice whenever you want to read as professional without going stiff \u2014 research synthesis, internal reviews, brand work for service businesses.",
+    "avoid_for": "Contexts where the deck should feel hot, playful, or intentionally informal \u2014 the cool electric-blue restraint will read as overly polished.",
     "signature_elements": [
       "custom-svg-ornaments",
       "clip-path-shapes",
       "vw-based-type-scale",
       "large-rounded-cards"
     ],
-    "closest_sy_theme": "soe-blue"
+    "closest_sy_theme": "soe-blue",
+    "signature_css_snippets": {
+      "custom-svg-ornaments": {
+        "desc": "Inline SVG decorations \u2014 doodles, arrows, geometric shapes",
+        "css": "/* Use <svg> elements directly in HTML. Set fill='currentColor' or stroke='currentColor'\n   to inherit theme colors. Position with position:absolute on a relative parent. */"
+      },
+      "clip-path-shapes": {
+        "desc": "CSS clip-path for non-rectangular shapes \u2014 stamps, badges, polygons",
+        "css": "/* 12-point star stamp */\n.stamp { clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }\n/* Chamfered hexagon */\n.hex { clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); }"
+      },
+      "vw-based-type-scale": {
+        "desc": "Typography scales with viewport width for dramatic large text",
+        "css": ".display-xl { font-size: clamp(60px, 13vw, 200px); line-height: 0.9; letter-spacing: -0.04em; }\n.display-md { font-size: clamp(32px, 6vw, 96px); }"
+      },
+      "large-rounded-cards": {
+        "desc": "Cards with 20-28px border-radius \u2014 modern, approachable",
+        "css": ".card { border-radius: 1.5rem; padding: 2rem;\n  background: rgba(255,255,255,0.06);\n  border: 1px solid rgba(255,255,255,0.12); }"
+      }
+    }
   },
   {
     "slug": "bold-poster",
@@ -427,12 +519,18 @@
     "formality": "medium",
     "density": "low",
     "slide_count": 10,
-    "best_for": "Anything that should land like a magazine cover: brand manifestos, founder vision decks, editorial / cultural pitches, creative reviews. Excellent any time you want a few words to feel like a poster — including unexpected fits like a tech keynote or a finance manifesto that wants to be quotable.",
-    "avoid_for": "Decks that need to communicate dense information per slide — the layout is built around a few large statements, not paragraphs of detail.",
+    "best_for": "Anything that should land like a magazine cover: brand manifestos, founder vision decks, editorial / cultural pitches, creative reviews. Excellent any time you want a few words to feel like a poster \u2014 including unexpected fits like a tech keynote or a finance manifesto that wants to be quotable.",
+    "avoid_for": "Decks that need to communicate dense information per slide \u2014 the layout is built around a few large statements, not paragraphs of detail.",
     "signature_elements": [
       "vw-based-type-scale"
     ],
-    "closest_sy_theme": "meeting-minutes"
+    "closest_sy_theme": "meeting-minutes",
+    "signature_css_snippets": {
+      "vw-based-type-scale": {
+        "desc": "Typography scales with viewport width for dramatic large text",
+        "css": ".display-xl { font-size: clamp(60px, 13vw, 200px); line-height: 0.9; letter-spacing: -0.04em; }\n.display-md { font-size: clamp(32px, 6vw, 96px); }"
+      }
+    }
   },
   {
     "slug": "broadside",
@@ -509,7 +607,7 @@
     "density": "medium",
     "slide_count": 20,
     "best_for": "Anything that should land like a broadside newspaper headline: brand manifestos, magazine and cultural pitches, design talks, bilingual EN/CN decks, founder vision statements. Also a striking pick for tech, research, or business decks that want a dramatic single-accent editorial feel.",
-    "avoid_for": "Decks that need to feel quiet, warm, or institutionally traditional — the dark canvas with fire-orange accent commits to drama.",
+    "avoid_for": "Decks that need to feel quiet, warm, or institutionally traditional \u2014 the dark canvas with fire-orange accent commits to drama.",
     "signature_elements": [
       "clip-path-shapes",
       "serif-sans-collision",
@@ -518,7 +616,33 @@
       "large-rounded-cards",
       "continuous-css-animation"
     ],
-    "closest_sy_theme": "meeting-minutes"
+    "closest_sy_theme": "meeting-minutes",
+    "signature_css_snippets": {
+      "clip-path-shapes": {
+        "desc": "CSS clip-path for non-rectangular shapes \u2014 stamps, badges, polygons",
+        "css": "/* 12-point star stamp */\n.stamp { clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }\n/* Chamfered hexagon */\n.hex { clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); }"
+      },
+      "serif-sans-collision": {
+        "desc": "High contrast font pairing: display = serif (Cormorant/Playfair/Source Serif), body = sans",
+        "css": ".display { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 700; }\n.body-text { font-family: 'Jost', 'DM Sans', system-ui, sans-serif; }"
+      },
+      "ultra-heavy-display (900w)": {
+        "desc": "Maximum weight display type \u2014 Barlow Condensed 900, Bebas Neue, Alfa Slab",
+        "css": ".ultra { font-weight: 900; letter-spacing: -0.04em; line-height: 0.88;\n  font-size: clamp(80px, 16vw, 260px); text-transform: uppercase; }"
+      },
+      "vw-based-type-scale": {
+        "desc": "Typography scales with viewport width for dramatic large text",
+        "css": ".display-xl { font-size: clamp(60px, 13vw, 200px); line-height: 0.9; letter-spacing: -0.04em; }\n.display-md { font-size: clamp(32px, 6vw, 96px); }"
+      },
+      "large-rounded-cards": {
+        "desc": "Cards with 20-28px border-radius \u2014 modern, approachable",
+        "css": ".card { border-radius: 1.5rem; padding: 2rem;\n  background: rgba(255,255,255,0.06);\n  border: 1px solid rgba(255,255,255,0.12); }"
+      },
+      "continuous-css-animation": {
+        "desc": "Looping animation \u2014 star twinkle, floating particles, scanning line",
+        "css": "@keyframes twinkle { 0%,100%{opacity:.3;transform:scale(1)} 50%{opacity:.9;transform:scale(1.3)} }\n.star { animation: twinkle 3s ease-in-out infinite; }"
+      }
+    }
   },
   {
     "slug": "capsule",
@@ -594,7 +718,7 @@
     "density": "medium",
     "slide_count": 10,
     "best_for": "Anything that should feel modular, modern, and a little Y2K: lifestyle brands, creator portfolios, DTC launches, beauty / wellness, agency credentials. Also fun for a playful tech demo or a research deck that wants pop-art clarity instead of gravitas.",
-    "avoid_for": "Contexts that require traditional institutional weight — the capsule shapes and pastel pops actively soften authority.",
+    "avoid_for": "Contexts that require traditional institutional weight \u2014 the capsule shapes and pastel pops actively soften authority.",
     "signature_elements": [
       "offset-box-shadow (brutalist)",
       "grain-texture-overlay",
@@ -604,7 +728,37 @@
       "pill-shaped-elements",
       "decorative-pills"
     ],
-    "closest_sy_theme": "editorial-warm"
+    "closest_sy_theme": "editorial-warm",
+    "signature_css_snippets": {
+      "offset-box-shadow (brutalist)": {
+        "desc": "Neo-brutalist 8px hard shadow \u2014 no blur, solid black",
+        "css": "box-shadow: 8px 8px 0 rgba(0,0,0,0.9);\nborder: 2px solid #0A0A0A;"
+      },
+      "grain-texture-overlay": {
+        "desc": "Paper grain via SVG feTurbulence \u2014 adds tactile printed quality",
+        "css": "/* Add as ::before on the slide section */\ncontent: '';\nposition: fixed; inset: 0; pointer-events: none; z-index: 9999;\nopacity: 0.045; mix-blend-mode: multiply;\nbackground-image: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)'/%3E%3C/svg%3E\");\nbackground-size: 200px 200px;"
+      },
+      "mix-blend-mode": {
+        "desc": "Blending layers for depth \u2014 typically multiply on grain overlay",
+        "css": "mix-blend-mode: multiply;\nopacity: 0.06;"
+      },
+      "serif-sans-collision": {
+        "desc": "High contrast font pairing: display = serif (Cormorant/Playfair/Source Serif), body = sans",
+        "css": ".display { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 700; }\n.body-text { font-family: 'Jost', 'DM Sans', system-ui, sans-serif; }"
+      },
+      "vw-based-type-scale": {
+        "desc": "Typography scales with viewport width for dramatic large text",
+        "css": ".display-xl { font-size: clamp(60px, 13vw, 200px); line-height: 0.9; letter-spacing: -0.04em; }\n.display-md { font-size: clamp(32px, 6vw, 96px); }"
+      },
+      "pill-shaped-elements": {
+        "desc": "Rounded pill / capsule shapes \u2014 border-radius: 999px on any element",
+        "css": ".pill { display: inline-flex; align-items: center; justify-content: center;\n  border-radius: 999px; border: 2px solid currentColor;\n  padding: 0.4rem 1.2rem; font-weight: 600; font-size: 0.8rem; }"
+      },
+      "decorative-pills": {
+        "desc": "Floating colored pill badges scattered across slides (absolute positioned, rotated)",
+        "css": ".deco-pill { position: absolute; border-radius: 999px; border: 2px solid #0A0A0A;\n  display: flex; align-items: center; justify-content: center;\n  font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }\n/* Position individually: top: 15%; left: 8%; transform: rotate(-12deg); */"
+      }
+    }
   },
   {
     "slug": "cartesian",
@@ -674,14 +828,28 @@
     "formality": "high",
     "density": "low",
     "slide_count": 10,
-    "best_for": "Anything that should feel quiet, considered, and grown-up: investment theses, white papers, advisory work, longform research, gallery / cultural decks. Also a strong choice for editorial features, founder reflections, or any deck where restraint is the message — including across tech and finance.",
-    "avoid_for": "Decks that need visual heat, multiple accents, or a sense of urgency — the warm-neutral palette is intentionally low-energy.",
+    "best_for": "Anything that should feel quiet, considered, and grown-up: investment theses, white papers, advisory work, longform research, gallery / cultural decks. Also a strong choice for editorial features, founder reflections, or any deck where restraint is the message \u2014 including across tech and finance.",
+    "avoid_for": "Decks that need visual heat, multiple accents, or a sense of urgency \u2014 the warm-neutral palette is intentionally low-energy.",
     "signature_elements": [
       "serif-sans-collision",
       "vw-based-type-scale",
       "large-rounded-cards"
     ],
-    "closest_sy_theme": "keynote-dark"
+    "closest_sy_theme": "keynote-dark",
+    "signature_css_snippets": {
+      "serif-sans-collision": {
+        "desc": "High contrast font pairing: display = serif (Cormorant/Playfair/Source Serif), body = sans",
+        "css": ".display { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 700; }\n.body-text { font-family: 'Jost', 'DM Sans', system-ui, sans-serif; }"
+      },
+      "vw-based-type-scale": {
+        "desc": "Typography scales with viewport width for dramatic large text",
+        "css": ".display-xl { font-size: clamp(60px, 13vw, 200px); line-height: 0.9; letter-spacing: -0.04em; }\n.display-md { font-size: clamp(32px, 6vw, 96px); }"
+      },
+      "large-rounded-cards": {
+        "desc": "Cards with 20-28px border-radius \u2014 modern, approachable",
+        "css": ".card { border-radius: 1.5rem; padding: 2rem;\n  background: rgba(255,255,255,0.06);\n  border: 1px solid rgba(255,255,255,0.12); }"
+      }
+    }
   },
   {
     "slug": "cobalt-grid",
@@ -765,13 +933,27 @@
     "density": "medium",
     "slide_count": 8,
     "best_for": "Anything that should feel like a quietly serious design / research bulletin, art publication, or curated trend report. Strong for studio annuals, agency capabilities decks, design-research publications, architecture / art / academic decks, and any deck wanting one strict accent colour and a printed-ledger calmness rather than corporate polish.",
-    "avoid_for": "Decks that need warmth, multi-colour energy, or a casual / playful voice — the strict cobalt + cream + grid palette is intentionally austere.",
+    "avoid_for": "Decks that need warmth, multi-colour energy, or a casual / playful voice \u2014 the strict cobalt + cream + grid palette is intentionally austere.",
     "signature_elements": [
       "custom-svg-ornaments",
       "vw-based-type-scale",
       "full-bleed-color-slide"
     ],
-    "closest_sy_theme": "meeting-minutes"
+    "closest_sy_theme": "meeting-minutes",
+    "signature_css_snippets": {
+      "custom-svg-ornaments": {
+        "desc": "Inline SVG decorations \u2014 doodles, arrows, geometric shapes",
+        "css": "/* Use <svg> elements directly in HTML. Set fill='currentColor' or stroke='currentColor'\n   to inherit theme colors. Position with position:absolute on a relative parent. */"
+      },
+      "vw-based-type-scale": {
+        "desc": "Typography scales with viewport width for dramatic large text",
+        "css": ".display-xl { font-size: clamp(60px, 13vw, 200px); line-height: 0.9; letter-spacing: -0.04em; }\n.display-md { font-size: clamp(32px, 6vw, 96px); }"
+      },
+      "full-bleed-color-slide": {
+        "desc": "Entire slide background switches to accent color for chapter/section dividers",
+        "css": ".slide-chapter { background: var(--accent) !important; color: var(--bg); }\n/* Or use: position:absolute;inset:0;background:color-mix(in srgb,var(--accent) 88%,var(--fg));z-index:0 */"
+      }
+    }
   },
   {
     "slug": "coral",
@@ -841,13 +1023,27 @@
     "density": "medium",
     "slide_count": 10,
     "best_for": "Anything that should feel warm-graphic and editorial: fashion, beauty, fitness, F&B, lifestyle brands, agency credentials. Just as strong for a creator portfolio, a manifesto, or a tech / research deck that wants warmth and a single bold accent instead of corporate cool.",
-    "avoid_for": "Contexts that should feel quiet or institutional — the coral accent and oversized Bebas Neue commit hard to a confident magazine voice.",
+    "avoid_for": "Contexts that should feel quiet or institutional \u2014 the coral accent and oversized Bebas Neue commit hard to a confident magazine voice.",
     "signature_elements": [
       "custom-svg-ornaments",
       "vw-based-type-scale",
       "large-rounded-cards"
     ],
-    "closest_sy_theme": "editorial-warm"
+    "closest_sy_theme": "editorial-warm",
+    "signature_css_snippets": {
+      "custom-svg-ornaments": {
+        "desc": "Inline SVG decorations \u2014 doodles, arrows, geometric shapes",
+        "css": "/* Use <svg> elements directly in HTML. Set fill='currentColor' or stroke='currentColor'\n   to inherit theme colors. Position with position:absolute on a relative parent. */"
+      },
+      "vw-based-type-scale": {
+        "desc": "Typography scales with viewport width for dramatic large text",
+        "css": ".display-xl { font-size: clamp(60px, 13vw, 200px); line-height: 0.9; letter-spacing: -0.04em; }\n.display-md { font-size: clamp(32px, 6vw, 96px); }"
+      },
+      "large-rounded-cards": {
+        "desc": "Cards with 20-28px border-radius \u2014 modern, approachable",
+        "css": ".card { border-radius: 1.5rem; padding: 2rem;\n  background: rgba(255,255,255,0.06);\n  border: 1px solid rgba(255,255,255,0.12); }"
+      }
+    }
   },
   {
     "slug": "creative-mode",
@@ -918,12 +1114,22 @@
     "density": "medium-high",
     "slide_count": 8,
     "best_for": "Anything that should feel design-led and confident: creative agency pitches, design studio decks, ad shop credentials, brand creative reviews, art-direction reviews. Also a great unexpected pick for a tech talk, research findings, or finance review when the speaker wants to lead with taste rather than convention.",
-    "avoid_for": "Contexts that demand institutional restraint and a quiet authority — the saturated multi-accent palette will read as expressive, not formal.",
+    "avoid_for": "Contexts that demand institutional restraint and a quiet authority \u2014 the saturated multi-accent palette will read as expressive, not formal.",
     "signature_elements": [
       "offset-box-shadow (brutalist)",
       "large-rounded-cards"
     ],
-    "closest_sy_theme": "xhs-pastel"
+    "closest_sy_theme": "xhs-pastel",
+    "signature_css_snippets": {
+      "offset-box-shadow (brutalist)": {
+        "desc": "Neo-brutalist 8px hard shadow \u2014 no blur, solid black",
+        "css": "box-shadow: 8px 8px 0 rgba(0,0,0,0.9);\nborder: 2px solid #0A0A0A;"
+      },
+      "large-rounded-cards": {
+        "desc": "Cards with 20-28px border-radius \u2014 modern, approachable",
+        "css": ".card { border-radius: 1.5rem; padding: 2rem;\n  background: rgba(255,255,255,0.06);\n  border: 1px solid rgba(255,255,255,0.12); }"
+      }
+    }
   },
   {
     "slug": "daisy-days",
@@ -1004,8 +1210,8 @@
     "formality": "low",
     "density": "medium",
     "slide_count": 10,
-    "best_for": "Anything that should feel friendly, soft, and joyful: educational content, kids and family, wellness programs, community workshops, creator portfolios for craft / illustration. Also lovely for an unexpected playful internal kickoff, a wedding planning deck, or any moment where warmth is the message — including across tech or business contexts.",
-    "avoid_for": "Contexts where the audience explicitly expects authority and precision — the hand-drawn pastel SVG decorations are the opposite of buttoned-up.",
+    "best_for": "Anything that should feel friendly, soft, and joyful: educational content, kids and family, wellness programs, community workshops, creator portfolios for craft / illustration. Also lovely for an unexpected playful internal kickoff, a wedding planning deck, or any moment where warmth is the message \u2014 including across tech or business contexts.",
+    "avoid_for": "Contexts where the audience explicitly expects authority and precision \u2014 the hand-drawn pastel SVG decorations are the opposite of buttoned-up.",
     "signature_elements": [
       "custom-svg-ornaments",
       "vw-based-type-scale",
@@ -1013,7 +1219,29 @@
       "large-rounded-cards",
       "decorative-pills"
     ],
-    "closest_sy_theme": "editorial-warm"
+    "closest_sy_theme": "editorial-warm",
+    "signature_css_snippets": {
+      "custom-svg-ornaments": {
+        "desc": "Inline SVG decorations \u2014 doodles, arrows, geometric shapes",
+        "css": "/* Use <svg> elements directly in HTML. Set fill='currentColor' or stroke='currentColor'\n   to inherit theme colors. Position with position:absolute on a relative parent. */"
+      },
+      "vw-based-type-scale": {
+        "desc": "Typography scales with viewport width for dramatic large text",
+        "css": ".display-xl { font-size: clamp(60px, 13vw, 200px); line-height: 0.9; letter-spacing: -0.04em; }\n.display-md { font-size: clamp(32px, 6vw, 96px); }"
+      },
+      "full-bleed-color-slide": {
+        "desc": "Entire slide background switches to accent color for chapter/section dividers",
+        "css": ".slide-chapter { background: var(--accent) !important; color: var(--bg); }\n/* Or use: position:absolute;inset:0;background:color-mix(in srgb,var(--accent) 88%,var(--fg));z-index:0 */"
+      },
+      "large-rounded-cards": {
+        "desc": "Cards with 20-28px border-radius \u2014 modern, approachable",
+        "css": ".card { border-radius: 1.5rem; padding: 2rem;\n  background: rgba(255,255,255,0.06);\n  border: 1px solid rgba(255,255,255,0.12); }"
+      },
+      "decorative-pills": {
+        "desc": "Floating colored pill badges scattered across slides (absolute positioned, rotated)",
+        "css": ".deco-pill { position: absolute; border-radius: 999px; border: 2px solid #0A0A0A;\n  display: flex; align-items: center; justify-content: center;\n  font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }\n/* Position individually: top: 15%; left: 8%; transform: rotate(-12deg); */"
+      }
+    }
   },
   {
     "slug": "editorial-forest",
@@ -1084,12 +1312,18 @@
     "formality": "medium",
     "density": "medium",
     "slide_count": 8,
-    "best_for": "Anything that should feel like a considered editorial — quarterly reviews, internal readouts, studio updates, creative-agency presentations. Equally good for any deck that wants to feel warm and unhurried rather than corporate, including research recaps, book or program announcements, and team retrospectives.",
-    "avoid_for": "Contexts that need to feel urgent, punchy, or sales-driven — the palette and rhythm are intentionally quiet.",
+    "best_for": "Anything that should feel like a considered editorial \u2014 quarterly reviews, internal readouts, studio updates, creative-agency presentations. Equally good for any deck that wants to feel warm and unhurried rather than corporate, including research recaps, book or program announcements, and team retrospectives.",
+    "avoid_for": "Contexts that need to feel urgent, punchy, or sales-driven \u2014 the palette and rhythm are intentionally quiet.",
     "signature_elements": [
       "large-rounded-cards"
     ],
-    "closest_sy_theme": "editorial-warm"
+    "closest_sy_theme": "editorial-warm",
+    "signature_css_snippets": {
+      "large-rounded-cards": {
+        "desc": "Cards with 20-28px border-radius \u2014 modern, approachable",
+        "css": ".card { border-radius: 1.5rem; padding: 2rem;\n  background: rgba(255,255,255,0.06);\n  border: 1px solid rgba(255,255,255,0.12); }"
+      }
+    }
   },
   {
     "slug": "editorial-tri-tone",
@@ -1169,14 +1403,28 @@
     "formality": "medium-high",
     "density": "medium",
     "slide_count": 8,
-    "best_for": "Anything that should feel like a fashion-magazine spread: editorial pitches, fashion brand decks, lifestyle media, art direction reviews. Equally good for any deck — including tech, research, or business — that wants tri-tone discipline and serif/sans contrast instead of the usual neutrals.",
-    "avoid_for": "Decks that need to read as soft or comforting — the burgundy/pink/cream tri-tone is intentionally high-contrast and styled.",
+    "best_for": "Anything that should feel like a fashion-magazine spread: editorial pitches, fashion brand decks, lifestyle media, art direction reviews. Equally good for any deck \u2014 including tech, research, or business \u2014 that wants tri-tone discipline and serif/sans contrast instead of the usual neutrals.",
+    "avoid_for": "Decks that need to read as soft or comforting \u2014 the burgundy/pink/cream tri-tone is intentionally high-contrast and styled.",
     "signature_elements": [
       "custom-svg-ornaments",
       "serif-sans-collision",
       "large-rounded-cards"
     ],
-    "closest_sy_theme": "editorial-warm"
+    "closest_sy_theme": "editorial-warm",
+    "signature_css_snippets": {
+      "custom-svg-ornaments": {
+        "desc": "Inline SVG decorations \u2014 doodles, arrows, geometric shapes",
+        "css": "/* Use <svg> elements directly in HTML. Set fill='currentColor' or stroke='currentColor'\n   to inherit theme colors. Position with position:absolute on a relative parent. */"
+      },
+      "serif-sans-collision": {
+        "desc": "High contrast font pairing: display = serif (Cormorant/Playfair/Source Serif), body = sans",
+        "css": ".display { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 700; }\n.body-text { font-family: 'Jost', 'DM Sans', system-ui, sans-serif; }"
+      },
+      "large-rounded-cards": {
+        "desc": "Cards with 20-28px border-radius \u2014 modern, approachable",
+        "css": ".card { border-radius: 1.5rem; padding: 2rem;\n  background: rgba(255,255,255,0.06);\n  border: 1px solid rgba(255,255,255,0.12); }"
+      }
+    }
   },
   {
     "slug": "emerald-editorial",
@@ -1250,12 +1498,18 @@
     "formality": "medium-high",
     "density": "medium",
     "slide_count": 8,
-    "best_for": "Anything that should feel like the front of a serious magazine, including but not limited to leadership readouts, planning-office reviews, and strategy briefings. The double-rule masthead ornament gives it editorial gravitas without making it stiff — also a great unexpected pick for product launches or research recaps that want to feel considered rather than corporate.",
-    "avoid_for": "Contexts that need to read as quiet, neutral, or institutionally restrained — the emerald field is too saturated to disappear into the background.",
+    "best_for": "Anything that should feel like the front of a serious magazine, including but not limited to leadership readouts, planning-office reviews, and strategy briefings. The double-rule masthead ornament gives it editorial gravitas without making it stiff \u2014 also a great unexpected pick for product launches or research recaps that want to feel considered rather than corporate.",
+    "avoid_for": "Contexts that need to read as quiet, neutral, or institutionally restrained \u2014 the emerald field is too saturated to disappear into the background.",
     "signature_elements": [
       "ultra-heavy-display (900w)"
     ],
-    "closest_sy_theme": "meeting-minutes"
+    "closest_sy_theme": "meeting-minutes",
+    "signature_css_snippets": {
+      "ultra-heavy-display (900w)": {
+        "desc": "Maximum weight display type \u2014 Barlow Condensed 900, Bebas Neue, Alfa Slab",
+        "css": ".ultra { font-weight: 900; letter-spacing: -0.04em; line-height: 0.88;\n  font-size: clamp(80px, 16vw, 260px); text-transform: uppercase; }"
+      }
+    }
   },
   {
     "slug": "grove",
@@ -1334,7 +1588,7 @@
     "density": "medium",
     "slide_count": 12,
     "best_for": "Anything that should feel organic, considered, and grown-up: sustainability and wellness brands, outdoor / nature products, wineries and restaurants, literary or arts decks, advisory deliverables, bilingual EN/CN reports. Also a calm, distinctive choice for tech, research, or business decks that want patience over urgency.",
-    "avoid_for": "Decks that need neon energy or rapid-fire pop — the forest-green canvas and Playfair serif commit to a slow, classical voice.",
+    "avoid_for": "Decks that need neon energy or rapid-fire pop \u2014 the forest-green canvas and Playfair serif commit to a slow, classical voice.",
     "signature_elements": [
       "clip-path-shapes",
       "serif-sans-collision",
@@ -1342,7 +1596,29 @@
       "large-rounded-cards",
       "continuous-css-animation"
     ],
-    "closest_sy_theme": "editorial-warm"
+    "closest_sy_theme": "editorial-warm",
+    "signature_css_snippets": {
+      "clip-path-shapes": {
+        "desc": "CSS clip-path for non-rectangular shapes \u2014 stamps, badges, polygons",
+        "css": "/* 12-point star stamp */\n.stamp { clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }\n/* Chamfered hexagon */\n.hex { clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); }"
+      },
+      "serif-sans-collision": {
+        "desc": "High contrast font pairing: display = serif (Cormorant/Playfair/Source Serif), body = sans",
+        "css": ".display { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 700; }\n.body-text { font-family: 'Jost', 'DM Sans', system-ui, sans-serif; }"
+      },
+      "vw-based-type-scale": {
+        "desc": "Typography scales with viewport width for dramatic large text",
+        "css": ".display-xl { font-size: clamp(60px, 13vw, 200px); line-height: 0.9; letter-spacing: -0.04em; }\n.display-md { font-size: clamp(32px, 6vw, 96px); }"
+      },
+      "large-rounded-cards": {
+        "desc": "Cards with 20-28px border-radius \u2014 modern, approachable",
+        "css": ".card { border-radius: 1.5rem; padding: 2rem;\n  background: rgba(255,255,255,0.06);\n  border: 1px solid rgba(255,255,255,0.12); }"
+      },
+      "continuous-css-animation": {
+        "desc": "Looping animation \u2014 star twinkle, floating particles, scanning line",
+        "css": "@keyframes twinkle { 0%,100%{opacity:.3;transform:scale(1)} 50%{opacity:.9;transform:scale(1.3)} }\n.star { animation: twinkle 3s ease-in-out infinite; }"
+      }
+    }
   },
   {
     "slug": "long-table",
@@ -1429,12 +1705,22 @@
     "density": "medium",
     "slide_count": 8,
     "best_for": "Anything that should feel like a warm, intimate, modern hospitality / community brand: supper clubs, dinner series, small restaurants, creative-studio events, membership pitches, lifestyle and wine brands. Equally good for any deck wanting a single warm accent colour, mixed-weight typography, and a social-media-aware modern-editorial voice.",
-    "avoid_for": "Decks that need corporate polish, technical density, or a cold / minimalist register — the rust-red palette and bold serif mix are intentionally warm and people-facing.",
+    "avoid_for": "Decks that need corporate polish, technical density, or a cold / minimalist register \u2014 the rust-red palette and bold serif mix are intentionally warm and people-facing.",
     "signature_elements": [
       "vw-based-type-scale",
       "large-rounded-cards"
     ],
-    "closest_sy_theme": "editorial-warm"
+    "closest_sy_theme": "editorial-warm",
+    "signature_css_snippets": {
+      "vw-based-type-scale": {
+        "desc": "Typography scales with viewport width for dramatic large text",
+        "css": ".display-xl { font-size: clamp(60px, 13vw, 200px); line-height: 0.9; letter-spacing: -0.04em; }\n.display-md { font-size: clamp(32px, 6vw, 96px); }"
+      },
+      "large-rounded-cards": {
+        "desc": "Cards with 20-28px border-radius \u2014 modern, approachable",
+        "css": ".card { border-radius: 1.5rem; padding: 2rem;\n  background: rgba(255,255,255,0.06);\n  border: 1px solid rgba(255,255,255,0.12); }"
+      }
+    }
   },
   {
     "slug": "mat",
@@ -1514,12 +1800,22 @@
     "density": "medium",
     "slide_count": 9,
     "best_for": "Anything that should feel mid-century, tactile, and intentional: design studio credentials, architecture / interior brands, ceramics / craft / furniture, advisory decks. Also a warm, distinctive choice for tech, research, or business decks that want a considered analog feel instead of digital-cool.",
-    "avoid_for": "Contexts that need fast tech energy or institutional restraint — the muted sage and burnt-orange palette is intentionally warm and slow.",
+    "avoid_for": "Contexts that need fast tech energy or institutional restraint \u2014 the muted sage and burnt-orange palette is intentionally warm and slow.",
     "signature_elements": [
       "vw-based-type-scale",
       "large-rounded-cards"
     ],
-    "closest_sy_theme": "keynote-dark"
+    "closest_sy_theme": "keynote-dark",
+    "signature_css_snippets": {
+      "vw-based-type-scale": {
+        "desc": "Typography scales with viewport width for dramatic large text",
+        "css": ".display-xl { font-size: clamp(60px, 13vw, 200px); line-height: 0.9; letter-spacing: -0.04em; }\n.display-md { font-size: clamp(32px, 6vw, 96px); }"
+      },
+      "large-rounded-cards": {
+        "desc": "Cards with 20-28px border-radius \u2014 modern, approachable",
+        "css": ".card { border-radius: 1.5rem; padding: 2rem;\n  background: rgba(255,255,255,0.06);\n  border: 1px solid rgba(255,255,255,0.12); }"
+      }
+    }
   },
   {
     "slug": "monochrome",
@@ -1600,7 +1896,7 @@
     "density": "high",
     "slide_count": 18,
     "best_for": "Anything that should feel like a hand-typeset ledger: user research synthesis, white papers, longform reports, academic and policy briefs, advisory deliverables, bilingual EN/CN reports. Equally good for tech, design, or brand decks that want their words to be the only thing on the page.",
-    "avoid_for": "Decks that need visual personality or color-led storytelling — the all-ink palette is intentionally austere.",
+    "avoid_for": "Decks that need visual personality or color-led storytelling \u2014 the all-ink palette is intentionally austere.",
     "signature_elements": [
       "clip-path-shapes",
       "serif-sans-collision",
@@ -1608,7 +1904,29 @@
       "large-rounded-cards",
       "continuous-css-animation"
     ],
-    "closest_sy_theme": "swiss-paper"
+    "closest_sy_theme": "swiss-paper",
+    "signature_css_snippets": {
+      "clip-path-shapes": {
+        "desc": "CSS clip-path for non-rectangular shapes \u2014 stamps, badges, polygons",
+        "css": "/* 12-point star stamp */\n.stamp { clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }\n/* Chamfered hexagon */\n.hex { clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); }"
+      },
+      "serif-sans-collision": {
+        "desc": "High contrast font pairing: display = serif (Cormorant/Playfair/Source Serif), body = sans",
+        "css": ".display { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 700; }\n.body-text { font-family: 'Jost', 'DM Sans', system-ui, sans-serif; }"
+      },
+      "vw-based-type-scale": {
+        "desc": "Typography scales with viewport width for dramatic large text",
+        "css": ".display-xl { font-size: clamp(60px, 13vw, 200px); line-height: 0.9; letter-spacing: -0.04em; }\n.display-md { font-size: clamp(32px, 6vw, 96px); }"
+      },
+      "large-rounded-cards": {
+        "desc": "Cards with 20-28px border-radius \u2014 modern, approachable",
+        "css": ".card { border-radius: 1.5rem; padding: 2rem;\n  background: rgba(255,255,255,0.06);\n  border: 1px solid rgba(255,255,255,0.12); }"
+      },
+      "continuous-css-animation": {
+        "desc": "Looping animation \u2014 star twinkle, floating particles, scanning line",
+        "css": "@keyframes twinkle { 0%,100%{opacity:.3;transform:scale(1)} 50%{opacity:.9;transform:scale(1.3)} }\n.star { animation: twinkle 3s ease-in-out infinite; }"
+      }
+    }
   },
   {
     "slug": "neo-grid-bold",
@@ -1692,11 +2010,17 @@
     "density": "high",
     "slide_count": 13,
     "best_for": "Anything that should feel confident and editorial-graphic: design-led pitches, brand work, founder talks, conference keynotes. Excellent for stat-heavy slides, comparisons, and process flows. Just as strong for tech, research, or finance when the speaker wants to read as design-led rather than corporate.",
-    "avoid_for": "Contexts that need to feel quiet, traditional, or warm — the neon-yellow accent and uppercase display commit to a confident editorial voice.",
+    "avoid_for": "Contexts that need to feel quiet, traditional, or warm \u2014 the neon-yellow accent and uppercase display commit to a confident editorial voice.",
     "signature_elements": [
       "custom-svg-ornaments"
     ],
-    "closest_sy_theme": "meeting-minutes"
+    "closest_sy_theme": "meeting-minutes",
+    "signature_css_snippets": {
+      "custom-svg-ornaments": {
+        "desc": "Inline SVG decorations \u2014 doodles, arrows, geometric shapes",
+        "css": "/* Use <svg> elements directly in HTML. Set fill='currentColor' or stroke='currentColor'\n   to inherit theme colors. Position with position:absolute on a relative parent. */"
+      }
+    }
   },
   {
     "slug": "peoples-platform",
@@ -1779,8 +2103,8 @@
     "formality": "medium-low",
     "density": "medium-high",
     "slide_count": 10,
-    "best_for": "Anything that should feel honest, loud, and graphic: cultural commentary, manifestos, civic and community decks, design talks, campaign pitches. Excellent for founder-vision moments, mission statements, or any deck — including across industries — that wants protest-poster energy instead of corporate polish.",
-    "avoid_for": "Contexts where institutional restraint is the actual goal — the saturated political-poster palette commits hard to expressive energy.",
+    "best_for": "Anything that should feel honest, loud, and graphic: cultural commentary, manifestos, civic and community decks, design talks, campaign pitches. Excellent for founder-vision moments, mission statements, or any deck \u2014 including across industries \u2014 that wants protest-poster energy instead of corporate polish.",
+    "avoid_for": "Contexts where institutional restraint is the actual goal \u2014 the saturated political-poster palette commits hard to expressive energy.",
     "signature_elements": [
       "offset-box-shadow (brutalist)",
       "grain-texture-overlay",
@@ -1788,7 +2112,29 @@
       "large-rounded-cards",
       "decorative-pills"
     ],
-    "closest_sy_theme": "keynote-dark"
+    "closest_sy_theme": "keynote-dark",
+    "signature_css_snippets": {
+      "offset-box-shadow (brutalist)": {
+        "desc": "Neo-brutalist 8px hard shadow \u2014 no blur, solid black",
+        "css": "box-shadow: 8px 8px 0 rgba(0,0,0,0.9);\nborder: 2px solid #0A0A0A;"
+      },
+      "grain-texture-overlay": {
+        "desc": "Paper grain via SVG feTurbulence \u2014 adds tactile printed quality",
+        "css": "/* Add as ::before on the slide section */\ncontent: '';\nposition: fixed; inset: 0; pointer-events: none; z-index: 9999;\nopacity: 0.045; mix-blend-mode: multiply;\nbackground-image: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)'/%3E%3C/svg%3E\");\nbackground-size: 200px 200px;"
+      },
+      "mix-blend-mode": {
+        "desc": "Blending layers for depth \u2014 typically multiply on grain overlay",
+        "css": "mix-blend-mode: multiply;\nopacity: 0.06;"
+      },
+      "large-rounded-cards": {
+        "desc": "Cards with 20-28px border-radius \u2014 modern, approachable",
+        "css": ".card { border-radius: 1.5rem; padding: 2rem;\n  background: rgba(255,255,255,0.06);\n  border: 1px solid rgba(255,255,255,0.12); }"
+      },
+      "decorative-pills": {
+        "desc": "Floating colored pill badges scattered across slides (absolute positioned, rotated)",
+        "css": ".deco-pill { position: absolute; border-radius: 999px; border: 2px solid #0A0A0A;\n  display: flex; align-items: center; justify-content: center;\n  font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }\n/* Position individually: top: 15%; left: 8%; transform: rotate(-12deg); */"
+      }
+    }
   },
   {
     "slug": "pin-and-paper",
@@ -1860,16 +2206,22 @@
     "formality": "medium",
     "density": "medium",
     "slide_count": 11,
-    "best_for": "Anything that should feel hand-crafted, warm, and literary: qualitative research findings, founder reflections, longform brand stories, workshop debriefs. The signature safety-pin illustrations and paper-grain texture make it especially good for any deck — including tech or business — that wants personality and warmth over polish.",
-    "avoid_for": "Decks that need to feel digital-native polished or rigorously data-driven — handwritten Caveat is intentionally informal.",
+    "best_for": "Anything that should feel hand-crafted, warm, and literary: qualitative research findings, founder reflections, longform brand stories, workshop debriefs. The signature safety-pin illustrations and paper-grain texture make it especially good for any deck \u2014 including tech or business \u2014 that wants personality and warmth over polish.",
+    "avoid_for": "Decks that need to feel digital-native polished or rigorously data-driven \u2014 handwritten Caveat is intentionally informal.",
     "signature_elements": [
       "custom-svg-ornaments"
     ],
-    "closest_sy_theme": "editorial-warm"
+    "closest_sy_theme": "editorial-warm",
+    "signature_css_snippets": {
+      "custom-svg-ornaments": {
+        "desc": "Inline SVG decorations \u2014 doodles, arrows, geometric shapes",
+        "css": "/* Use <svg> elements directly in HTML. Set fill='currentColor' or stroke='currentColor'\n   to inherit theme colors. Position with position:absolute on a relative parent. */"
+      }
+    }
   },
   {
     "slug": "pink-script",
-    "name": "Pink Script — After Hours",
+    "name": "Pink Script \u2014 After Hours",
     "tagline": "Black canvas, hot pink accent, pearl-cream paper, Instrument Serif headlines: late-night editorial luxury.",
     "scheme": "dark",
     "palette": {
@@ -1956,7 +2308,25 @@
       "mix-blend-mode",
       "serif-sans-collision"
     ],
-    "closest_sy_theme": "keynote-dark"
+    "closest_sy_theme": "keynote-dark",
+    "signature_css_snippets": {
+      "grain-texture-overlay": {
+        "desc": "Paper grain via SVG feTurbulence \u2014 adds tactile printed quality",
+        "css": "/* Add as ::before on the slide section */\ncontent: '';\nposition: fixed; inset: 0; pointer-events: none; z-index: 9999;\nopacity: 0.045; mix-blend-mode: multiply;\nbackground-image: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)'/%3E%3C/svg%3E\");\nbackground-size: 200px 200px;"
+      },
+      "custom-svg-ornaments": {
+        "desc": "Inline SVG decorations \u2014 doodles, arrows, geometric shapes",
+        "css": "/* Use <svg> elements directly in HTML. Set fill='currentColor' or stroke='currentColor'\n   to inherit theme colors. Position with position:absolute on a relative parent. */"
+      },
+      "mix-blend-mode": {
+        "desc": "Blending layers for depth \u2014 typically multiply on grain overlay",
+        "css": "mix-blend-mode: multiply;\nopacity: 0.06;"
+      },
+      "serif-sans-collision": {
+        "desc": "High contrast font pairing: display = serif (Cormorant/Playfair/Source Serif), body = sans",
+        "css": ".display { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 700; }\n.body-text { font-family: 'Jost', 'DM Sans', system-ui, sans-serif; }"
+      }
+    }
   },
   {
     "slug": "playful",
@@ -2027,15 +2397,33 @@
     "formality": "low",
     "density": "medium",
     "slide_count": 10,
-    "best_for": "Anything that should feel warm, indie, and approachable: creator portfolios, indie product launches, lifestyle brands, small-business pitches, newsletter / community decks. Also welcoming for any deck — including tech or research — that wants to feel friendly and human rather than corporate.",
-    "avoid_for": "Contexts where institutional credibility matters more than warmth — the peach palette is intentionally informal.",
+    "best_for": "Anything that should feel warm, indie, and approachable: creator portfolios, indie product launches, lifestyle brands, small-business pitches, newsletter / community decks. Also welcoming for any deck \u2014 including tech or research \u2014 that wants to feel friendly and human rather than corporate.",
+    "avoid_for": "Contexts where institutional credibility matters more than warmth \u2014 the peach palette is intentionally informal.",
     "signature_elements": [
       "custom-svg-ornaments",
       "clip-path-shapes",
       "vw-based-type-scale",
       "large-rounded-cards"
     ],
-    "closest_sy_theme": "editorial-warm"
+    "closest_sy_theme": "editorial-warm",
+    "signature_css_snippets": {
+      "custom-svg-ornaments": {
+        "desc": "Inline SVG decorations \u2014 doodles, arrows, geometric shapes",
+        "css": "/* Use <svg> elements directly in HTML. Set fill='currentColor' or stroke='currentColor'\n   to inherit theme colors. Position with position:absolute on a relative parent. */"
+      },
+      "clip-path-shapes": {
+        "desc": "CSS clip-path for non-rectangular shapes \u2014 stamps, badges, polygons",
+        "css": "/* 12-point star stamp */\n.stamp { clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }\n/* Chamfered hexagon */\n.hex { clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); }"
+      },
+      "vw-based-type-scale": {
+        "desc": "Typography scales with viewport width for dramatic large text",
+        "css": ".display-xl { font-size: clamp(60px, 13vw, 200px); line-height: 0.9; letter-spacing: -0.04em; }\n.display-md { font-size: clamp(32px, 6vw, 96px); }"
+      },
+      "large-rounded-cards": {
+        "desc": "Cards with 20-28px border-radius \u2014 modern, approachable",
+        "css": ".card { border-radius: 1.5rem; padding: 2rem;\n  background: rgba(255,255,255,0.06);\n  border: 1px solid rgba(255,255,255,0.12); }"
+      }
+    }
   },
   {
     "slug": "raw-grid",
@@ -2050,9 +2438,12 @@
       "full_bleed_exists": false
     },
     "typography": {
-      "display_family": "system-ui",
-      "body_family": "system-ui",
-      "all_families": [],
+      "display_family": "Space Grotesk",
+      "body_family": "Space Grotesk",
+      "all_families": [
+        "Space Grotesk",
+        "JetBrains Mono"
+      ],
       "collision": "sans-only",
       "has_serif": false,
       "has_sans": false,
@@ -2103,13 +2494,27 @@
     "density": "high",
     "slide_count": 10,
     "best_for": "Anything that should feel direct and graphic-confident: founder pitches, accelerator demos, brand decks, indie launches, creator portfolios. Strong for stat slides, comparison tables, and process flows. Equally good for tech, research, or finance when the speaker wants the deck to feel scrappy-confident rather than buttoned-up.",
-    "avoid_for": "Contexts that need to feel soft, warm, or intentionally quiet — the brutalist borders and offset shadows commit to a graphic voice.",
+    "avoid_for": "Contexts that need to feel soft, warm, or intentionally quiet \u2014 the brutalist borders and offset shadows commit to a graphic voice.",
     "signature_elements": [
       "custom-svg-ornaments",
       "ultra-heavy-display (900w)",
       "vw-based-type-scale"
     ],
-    "closest_sy_theme": "keynote-dark"
+    "closest_sy_theme": "keynote-dark",
+    "signature_css_snippets": {
+      "custom-svg-ornaments": {
+        "desc": "Inline SVG decorations \u2014 doodles, arrows, geometric shapes",
+        "css": "/* Use <svg> elements directly in HTML. Set fill='currentColor' or stroke='currentColor'\n   to inherit theme colors. Position with position:absolute on a relative parent. */"
+      },
+      "ultra-heavy-display (900w)": {
+        "desc": "Maximum weight display type \u2014 Barlow Condensed 900, Bebas Neue, Alfa Slab",
+        "css": ".ultra { font-weight: 900; letter-spacing: -0.04em; line-height: 0.88;\n  font-size: clamp(80px, 16vw, 260px); text-transform: uppercase; }"
+      },
+      "vw-based-type-scale": {
+        "desc": "Typography scales with viewport width for dramatic large text",
+        "css": ".display-xl { font-size: clamp(60px, 13vw, 200px); line-height: 0.9; letter-spacing: -0.04em; }\n.display-md { font-size: clamp(32px, 6vw, 96px); }"
+      }
+    }
   },
   {
     "slug": "retro-windows",
@@ -2184,12 +2589,22 @@
     "density": "medium",
     "slide_count": 10,
     "best_for": "Anything that should feel knowingly nostalgic: retro gaming, Y2K-aesthetic brands, creator portfolios with a 90s vibe, tech-history talks, deliberately tongue-in-cheek decks. A great choice anywhere a playful retro reference is the entire point.",
-    "avoid_for": "Decks that need to read as modern, elegant, or institutionally credible — the Win95 chrome will always read as a costume.",
+    "avoid_for": "Decks that need to read as modern, elegant, or institutionally credible \u2014 the Win95 chrome will always read as a costume.",
     "signature_elements": [
       "vw-based-type-scale",
       "continuous-css-animation"
     ],
-    "closest_sy_theme": "xhs-pastel"
+    "closest_sy_theme": "xhs-pastel",
+    "signature_css_snippets": {
+      "vw-based-type-scale": {
+        "desc": "Typography scales with viewport width for dramatic large text",
+        "css": ".display-xl { font-size: clamp(60px, 13vw, 200px); line-height: 0.9; letter-spacing: -0.04em; }\n.display-md { font-size: clamp(32px, 6vw, 96px); }"
+      },
+      "continuous-css-animation": {
+        "desc": "Looping animation \u2014 star twinkle, floating particles, scanning line",
+        "css": "@keyframes twinkle { 0%,100%{opacity:.3;transform:scale(1)} 50%{opacity:.9;transform:scale(1.3)} }\n.star { animation: twinkle 3s ease-in-out infinite; }"
+      }
+    }
   },
   {
     "slug": "retro-zine",
@@ -2265,13 +2680,27 @@
     "density": "medium",
     "slide_count": 10,
     "best_for": "Anything that should feel printed, lo-fi, and crafted: indie zines and publications, music / arts brands, creator portfolios, small-batch craft launches, community decks. Also a great underdog choice for tech, research, or business decks that want a riso-print warmth instead of digital polish.",
-    "avoid_for": "Contexts that demand digital-native polish or fast modern-tech energy — the layered zine aesthetic intentionally feels handmade.",
+    "avoid_for": "Contexts that demand digital-native polish or fast modern-tech energy \u2014 the layered zine aesthetic intentionally feels handmade.",
     "signature_elements": [
       "grain-texture-overlay",
       "custom-svg-ornaments",
       "vw-based-type-scale"
     ],
-    "closest_sy_theme": "keynote-dark"
+    "closest_sy_theme": "keynote-dark",
+    "signature_css_snippets": {
+      "grain-texture-overlay": {
+        "desc": "Paper grain via SVG feTurbulence \u2014 adds tactile printed quality",
+        "css": "/* Add as ::before on the slide section */\ncontent: '';\nposition: fixed; inset: 0; pointer-events: none; z-index: 9999;\nopacity: 0.045; mix-blend-mode: multiply;\nbackground-image: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)'/%3E%3C/svg%3E\");\nbackground-size: 200px 200px;"
+      },
+      "custom-svg-ornaments": {
+        "desc": "Inline SVG decorations \u2014 doodles, arrows, geometric shapes",
+        "css": "/* Use <svg> elements directly in HTML. Set fill='currentColor' or stroke='currentColor'\n   to inherit theme colors. Position with position:absolute on a relative parent. */"
+      },
+      "vw-based-type-scale": {
+        "desc": "Typography scales with viewport width for dramatic large text",
+        "css": ".display-xl { font-size: clamp(60px, 13vw, 200px); line-height: 0.9; letter-spacing: -0.04em; }\n.display-md { font-size: clamp(32px, 6vw, 96px); }"
+      }
+    }
   },
   {
     "slug": "sakura-chroma",
@@ -2356,7 +2785,7 @@
     "density": "medium",
     "slide_count": 8,
     "best_for": "Anything that should feel like a vintage Japanese cassette package or a TDK / Sony / Sakura Color product catalogue: indie hardware brand decks, music-label release schedules, analog studio retrospectives, zine and magazine pitches, kawaii-tech product launches, creative-studio annual reports. Equally good for any deck wanting bold colour, condensed display type, and a tactile printed-product personality.",
-    "avoid_for": "Decks that need restrained, corporate, or quiet typography — the bold condensed lockups, ribbon stripes, and primary-colour palette are intentionally loud and product-page-y.",
+    "avoid_for": "Decks that need restrained, corporate, or quiet typography \u2014 the bold condensed lockups, ribbon stripes, and primary-colour palette are intentionally loud and product-page-y.",
     "signature_elements": [
       "offset-box-shadow (brutalist)",
       "clip-path-shapes",
@@ -2364,7 +2793,29 @@
       "vw-based-type-scale",
       "large-rounded-cards"
     ],
-    "closest_sy_theme": "editorial-warm"
+    "closest_sy_theme": "editorial-warm",
+    "signature_css_snippets": {
+      "offset-box-shadow (brutalist)": {
+        "desc": "Neo-brutalist 8px hard shadow \u2014 no blur, solid black",
+        "css": "box-shadow: 8px 8px 0 rgba(0,0,0,0.9);\nborder: 2px solid #0A0A0A;"
+      },
+      "clip-path-shapes": {
+        "desc": "CSS clip-path for non-rectangular shapes \u2014 stamps, badges, polygons",
+        "css": "/* 12-point star stamp */\n.stamp { clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }\n/* Chamfered hexagon */\n.hex { clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); }"
+      },
+      "ultra-heavy-display (900w)": {
+        "desc": "Maximum weight display type \u2014 Barlow Condensed 900, Bebas Neue, Alfa Slab",
+        "css": ".ultra { font-weight: 900; letter-spacing: -0.04em; line-height: 0.88;\n  font-size: clamp(80px, 16vw, 260px); text-transform: uppercase; }"
+      },
+      "vw-based-type-scale": {
+        "desc": "Typography scales with viewport width for dramatic large text",
+        "css": ".display-xl { font-size: clamp(60px, 13vw, 200px); line-height: 0.9; letter-spacing: -0.04em; }\n.display-md { font-size: clamp(32px, 6vw, 96px); }"
+      },
+      "large-rounded-cards": {
+        "desc": "Cards with 20-28px border-radius \u2014 modern, approachable",
+        "css": ".card { border-radius: 1.5rem; padding: 2rem;\n  background: rgba(255,255,255,0.06);\n  border: 1px solid rgba(255,255,255,0.12); }"
+      }
+    }
   },
   {
     "slug": "scatterbrain",
@@ -2446,8 +2897,8 @@
     "formality": "low",
     "density": "high",
     "slide_count": 10,
-    "best_for": "Anything that should feel like a designer's whiteboard: brainstorms, workshops, creative-agency credentials, design-thinking sessions, ideation pitches, art-direction reviews. Equally fun for any deck — including tech, research, or business — that wants to read as in-progress thinking rather than polished conclusions.",
-    "avoid_for": "Contexts that demand precision and institutional weight — the post-it sticky-note aesthetic intentionally reads as warm and unfinished.",
+    "best_for": "Anything that should feel like a designer's whiteboard: brainstorms, workshops, creative-agency credentials, design-thinking sessions, ideation pitches, art-direction reviews. Equally fun for any deck \u2014 including tech, research, or business \u2014 that wants to read as in-progress thinking rather than polished conclusions.",
+    "avoid_for": "Contexts that demand precision and institutional weight \u2014 the post-it sticky-note aesthetic intentionally reads as warm and unfinished.",
     "signature_elements": [
       "grain-texture-overlay",
       "custom-svg-ornaments",
@@ -2455,7 +2906,29 @@
       "large-rounded-cards",
       "continuous-css-animation"
     ],
-    "closest_sy_theme": "editorial-warm"
+    "closest_sy_theme": "editorial-warm",
+    "signature_css_snippets": {
+      "grain-texture-overlay": {
+        "desc": "Paper grain via SVG feTurbulence \u2014 adds tactile printed quality",
+        "css": "/* Add as ::before on the slide section */\ncontent: '';\nposition: fixed; inset: 0; pointer-events: none; z-index: 9999;\nopacity: 0.045; mix-blend-mode: multiply;\nbackground-image: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)'/%3E%3C/svg%3E\");\nbackground-size: 200px 200px;"
+      },
+      "custom-svg-ornaments": {
+        "desc": "Inline SVG decorations \u2014 doodles, arrows, geometric shapes",
+        "css": "/* Use <svg> elements directly in HTML. Set fill='currentColor' or stroke='currentColor'\n   to inherit theme colors. Position with position:absolute on a relative parent. */"
+      },
+      "vw-based-type-scale": {
+        "desc": "Typography scales with viewport width for dramatic large text",
+        "css": ".display-xl { font-size: clamp(60px, 13vw, 200px); line-height: 0.9; letter-spacing: -0.04em; }\n.display-md { font-size: clamp(32px, 6vw, 96px); }"
+      },
+      "large-rounded-cards": {
+        "desc": "Cards with 20-28px border-radius \u2014 modern, approachable",
+        "css": ".card { border-radius: 1.5rem; padding: 2rem;\n  background: rgba(255,255,255,0.06);\n  border: 1px solid rgba(255,255,255,0.12); }"
+      },
+      "continuous-css-animation": {
+        "desc": "Looping animation \u2014 star twinkle, floating particles, scanning line",
+        "css": "@keyframes twinkle { 0%,100%{opacity:.3;transform:scale(1)} 50%{opacity:.9;transform:scale(1.3)} }\n.star { animation: twinkle 3s ease-in-out infinite; }"
+      }
+    }
   },
   {
     "slug": "signal",
@@ -2536,7 +3009,7 @@
     "density": "high",
     "slide_count": 18,
     "best_for": "Anything that should feel weighty, considered, and credibly institutional: investor decks, board presentations, consulting deliverables, legal / policy briefs, advisory pitches. Also a strong choice for tech, research, or brand work that wants to read as quietly authoritative rather than loud.",
-    "avoid_for": "Contexts that should feel hot, fast, or intentionally playful — the navy + gold restraint commits to a sober voice.",
+    "avoid_for": "Contexts that should feel hot, fast, or intentionally playful \u2014 the navy + gold restraint commits to a sober voice.",
     "signature_elements": [
       "clip-path-shapes",
       "serif-sans-collision",
@@ -2544,7 +3017,29 @@
       "large-rounded-cards",
       "continuous-css-animation"
     ],
-    "closest_sy_theme": "soe-blue"
+    "closest_sy_theme": "soe-blue",
+    "signature_css_snippets": {
+      "clip-path-shapes": {
+        "desc": "CSS clip-path for non-rectangular shapes \u2014 stamps, badges, polygons",
+        "css": "/* 12-point star stamp */\n.stamp { clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }\n/* Chamfered hexagon */\n.hex { clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); }"
+      },
+      "serif-sans-collision": {
+        "desc": "High contrast font pairing: display = serif (Cormorant/Playfair/Source Serif), body = sans",
+        "css": ".display { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 700; }\n.body-text { font-family: 'Jost', 'DM Sans', system-ui, sans-serif; }"
+      },
+      "vw-based-type-scale": {
+        "desc": "Typography scales with viewport width for dramatic large text",
+        "css": ".display-xl { font-size: clamp(60px, 13vw, 200px); line-height: 0.9; letter-spacing: -0.04em; }\n.display-md { font-size: clamp(32px, 6vw, 96px); }"
+      },
+      "large-rounded-cards": {
+        "desc": "Cards with 20-28px border-radius \u2014 modern, approachable",
+        "css": ".card { border-radius: 1.5rem; padding: 2rem;\n  background: rgba(255,255,255,0.06);\n  border: 1px solid rgba(255,255,255,0.12); }"
+      },
+      "continuous-css-animation": {
+        "desc": "Looping animation \u2014 star twinkle, floating particles, scanning line",
+        "css": "@keyframes twinkle { 0%,100%{opacity:.3;transform:scale(1)} 50%{opacity:.9;transform:scale(1.3)} }\n.star { animation: twinkle 3s ease-in-out infinite; }"
+      }
+    }
   },
   {
     "slug": "soft-editorial",
@@ -2628,13 +3123,27 @@
     "density": "low",
     "slide_count": 12,
     "best_for": "Anything that should feel literary, elegant, and unhurried: editorial features, longform brand stories, gallery / museum decks, advisory deliverables, wedding / lifestyle media, founder essays. Equally good for tech, research, or business decks that want a Sunday-supplement warmth instead of corporate polish.",
-    "avoid_for": "Decks that need visual heat or punch — the warm-paper palette and Cormorant serif are intentionally quiet.",
+    "avoid_for": "Decks that need visual heat or punch \u2014 the warm-paper palette and Cormorant serif are intentionally quiet.",
     "signature_elements": [
       "custom-svg-ornaments",
       "serif-sans-collision",
       "large-rounded-cards"
     ],
-    "closest_sy_theme": "swiss-paper"
+    "closest_sy_theme": "swiss-paper",
+    "signature_css_snippets": {
+      "custom-svg-ornaments": {
+        "desc": "Inline SVG decorations \u2014 doodles, arrows, geometric shapes",
+        "css": "/* Use <svg> elements directly in HTML. Set fill='currentColor' or stroke='currentColor'\n   to inherit theme colors. Position with position:absolute on a relative parent. */"
+      },
+      "serif-sans-collision": {
+        "desc": "High contrast font pairing: display = serif (Cormorant/Playfair/Source Serif), body = sans",
+        "css": ".display { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 700; }\n.body-text { font-family: 'Jost', 'DM Sans', system-ui, sans-serif; }"
+      },
+      "large-rounded-cards": {
+        "desc": "Cards with 20-28px border-radius \u2014 modern, approachable",
+        "css": ".card { border-radius: 1.5rem; padding: 2rem;\n  background: rgba(255,255,255,0.06);\n  border: 1px solid rgba(255,255,255,0.12); }"
+      }
+    }
   },
   {
     "slug": "stencil-tablet",
@@ -2720,14 +3229,28 @@
     "formality": "medium-high",
     "density": "medium",
     "slide_count": 11,
-    "best_for": "Anything that should feel archival, tactile, and weighty-graphic: museum and cultural-institution decks, art / architecture brands, longform research, heritage and craft brands, manifestos. A great choice anytime — including across tech and business — when you want the deck to feel like a field manual rather than a slide deck.",
-    "avoid_for": "Contexts that demand digital-native polish or playful pop — the stencil-cut display and earth-tone palette commit to a deliberate analog feel.",
+    "best_for": "Anything that should feel archival, tactile, and weighty-graphic: museum and cultural-institution decks, art / architecture brands, longform research, heritage and craft brands, manifestos. A great choice anytime \u2014 including across tech and business \u2014 when you want the deck to feel like a field manual rather than a slide deck.",
+    "avoid_for": "Contexts that demand digital-native polish or playful pop \u2014 the stencil-cut display and earth-tone palette commit to a deliberate analog feel.",
     "signature_elements": [
       "custom-svg-ornaments",
       "serif-sans-collision",
       "large-rounded-cards"
     ],
-    "closest_sy_theme": "keynote-dark"
+    "closest_sy_theme": "keynote-dark",
+    "signature_css_snippets": {
+      "custom-svg-ornaments": {
+        "desc": "Inline SVG decorations \u2014 doodles, arrows, geometric shapes",
+        "css": "/* Use <svg> elements directly in HTML. Set fill='currentColor' or stroke='currentColor'\n   to inherit theme colors. Position with position:absolute on a relative parent. */"
+      },
+      "serif-sans-collision": {
+        "desc": "High contrast font pairing: display = serif (Cormorant/Playfair/Source Serif), body = sans",
+        "css": ".display { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 700; }\n.body-text { font-family: 'Jost', 'DM Sans', system-ui, sans-serif; }"
+      },
+      "large-rounded-cards": {
+        "desc": "Cards with 20-28px border-radius \u2014 modern, approachable",
+        "css": ".card { border-radius: 1.5rem; padding: 2rem;\n  background: rgba(255,255,255,0.06);\n  border: 1px solid rgba(255,255,255,0.12); }"
+      }
+    }
   },
   {
     "slug": "studio",
@@ -2805,7 +3328,7 @@
     "density": "medium",
     "slide_count": 12,
     "best_for": "Anything that should feel electric and design-led: studio credentials, creative agency pitches, brand showcases, art-direction reviews, fashion / sneaker brand work. Also a striking unexpected choice for tech, research, or business decks where the speaker wants the deck to *be* a brand statement.",
-    "avoid_for": "Contexts that should feel quiet or institutional — the black-and-electric-yellow palette is the loudest in the library.",
+    "avoid_for": "Contexts that should feel quiet or institutional \u2014 the black-and-electric-yellow palette is the loudest in the library.",
     "signature_elements": [
       "clip-path-shapes",
       "serif-sans-collision",
@@ -2814,7 +3337,33 @@
       "large-rounded-cards",
       "continuous-css-animation"
     ],
-    "closest_sy_theme": "keynote-dark"
+    "closest_sy_theme": "keynote-dark",
+    "signature_css_snippets": {
+      "clip-path-shapes": {
+        "desc": "CSS clip-path for non-rectangular shapes \u2014 stamps, badges, polygons",
+        "css": "/* 12-point star stamp */\n.stamp { clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }\n/* Chamfered hexagon */\n.hex { clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); }"
+      },
+      "serif-sans-collision": {
+        "desc": "High contrast font pairing: display = serif (Cormorant/Playfair/Source Serif), body = sans",
+        "css": ".display { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 700; }\n.body-text { font-family: 'Jost', 'DM Sans', system-ui, sans-serif; }"
+      },
+      "ultra-heavy-display (900w)": {
+        "desc": "Maximum weight display type \u2014 Barlow Condensed 900, Bebas Neue, Alfa Slab",
+        "css": ".ultra { font-weight: 900; letter-spacing: -0.04em; line-height: 0.88;\n  font-size: clamp(80px, 16vw, 260px); text-transform: uppercase; }"
+      },
+      "vw-based-type-scale": {
+        "desc": "Typography scales with viewport width for dramatic large text",
+        "css": ".display-xl { font-size: clamp(60px, 13vw, 200px); line-height: 0.9; letter-spacing: -0.04em; }\n.display-md { font-size: clamp(32px, 6vw, 96px); }"
+      },
+      "large-rounded-cards": {
+        "desc": "Cards with 20-28px border-radius \u2014 modern, approachable",
+        "css": ".card { border-radius: 1.5rem; padding: 2rem;\n  background: rgba(255,255,255,0.06);\n  border: 1px solid rgba(255,255,255,0.12); }"
+      },
+      "continuous-css-animation": {
+        "desc": "Looping animation \u2014 star twinkle, floating particles, scanning line",
+        "css": "@keyframes twinkle { 0%,100%{opacity:.3;transform:scale(1)} 50%{opacity:.9;transform:scale(1.3)} }\n.star { animation: twinkle 3s ease-in-out infinite; }"
+      }
+    }
   },
   {
     "slug": "vellum",
@@ -2892,13 +3441,27 @@
     "formality": "high",
     "density": "low",
     "slide_count": 9,
-    "best_for": "Anything that should feel scholarly, literary, and quietly intelligent: research synthesis, white papers, academic and policy briefs, advisory deliverables, longform editorial pieces, founder reflections. Equally strong for any deck — including tech, business, or creator work — that wants a calm, considered atmosphere instead of energetic visuals.",
-    "avoid_for": "Contexts that need visual heat or pop — the navy + warm-yellow Cormorant aesthetic is intentionally low-tempo.",
+    "best_for": "Anything that should feel scholarly, literary, and quietly intelligent: research synthesis, white papers, academic and policy briefs, advisory deliverables, longform editorial pieces, founder reflections. Equally strong for any deck \u2014 including tech, business, or creator work \u2014 that wants a calm, considered atmosphere instead of energetic visuals.",
+    "avoid_for": "Contexts that need visual heat or pop \u2014 the navy + warm-yellow Cormorant aesthetic is intentionally low-tempo.",
     "signature_elements": [
       "serif-sans-collision",
       "vw-based-type-scale",
       "large-rounded-cards"
     ],
-    "closest_sy_theme": "swiss-paper"
+    "closest_sy_theme": "swiss-paper",
+    "signature_css_snippets": {
+      "serif-sans-collision": {
+        "desc": "High contrast font pairing: display = serif (Cormorant/Playfair/Source Serif), body = sans",
+        "css": ".display { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 700; }\n.body-text { font-family: 'Jost', 'DM Sans', system-ui, sans-serif; }"
+      },
+      "vw-based-type-scale": {
+        "desc": "Typography scales with viewport width for dramatic large text",
+        "css": ".display-xl { font-size: clamp(60px, 13vw, 200px); line-height: 0.9; letter-spacing: -0.04em; }\n.display-md { font-size: clamp(32px, 6vw, 96px); }"
+      },
+      "large-rounded-cards": {
+        "desc": "Cards with 20-28px border-radius \u2014 modern, approachable",
+        "css": ".card { border-radius: 1.5rem; padding: 2rem;\n  background: rgba(255,255,255,0.06);\n  border: 1px solid rgba(255,255,255,0.12); }"
+      }
+    }
   }
 ]
